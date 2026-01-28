@@ -10,7 +10,7 @@ export const CAMERA_CONFIG = {
   viewer: {
     startZoom: 0.7,
     endZoom: 1.2,
-    introMs: 1400
+    introMs: 3000
   },
 
   editor: {
