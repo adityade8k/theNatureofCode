@@ -1,0 +1,378 @@
+{
+  "version": 1,
+  "roots": [
+    "n1",
+    "__STARRED__"
+  ],
+  "nodes": {
+    "__STARRED__": {
+      "id": "__STARRED__",
+      "label": "__STARRED__",
+      "title": "Starred",
+      "description": "",
+      "children": [
+        "n28",
+        "n29",
+        "n30",
+        "n31"
+      ],
+      "expandedChildren": [],
+      "files": {},
+      "thumbnailPath": "",
+      "kind": "root-star",
+      "starredId": ""
+    },
+    "n1": {
+      "id": "n1",
+      "label": "n1",
+      "title": "Week 1: Randomness",
+      "description": "",
+      "children": [
+        "n2"
+      ],
+      "expandedChildren": [
+        "n2"
+      ],
+      "files": {},
+      "thumbnailPath": "",
+      "kind": "root",
+      "starredId": ""
+    },
+    "n2": {
+      "id": "n2",
+      "label": "n2",
+      "title": "Basic Walker",
+      "description": "Created separate walker.js file to test linking.",
+      "children": [
+        "n4",
+        "n5",
+        "n8",
+        "n19"
+      ],
+      "expandedChildren": [
+        "n8",
+        "n19"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\n\nfunction setup() {\n  createCanvas(400, 400);\n  \n  walker = new Walker(height/2, width/2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  walker.render();\n  walker.move();\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let chance = Math.floor(random(4));\n    if (chance == 0) {\n      this.x += this.speed;\n    } else if (chance == 1) {\n      this.x -= this.speed;\n    } else if (chance == 2) {\n      this.y -= this.speed;\n    } else if (chance == 3) {\n      this.y += this.speed;\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n2.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n4": {
+      "id": "n4",
+      "label": "n4",
+      "title": "Faster Walker",
+      "description": "Multiple steps per draw call",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  walker = new Walker(height / 2, width / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let chance = Math.floor(random(4));\n    if (chance == 0) {\n      this.x += this.speed;\n    } else if (chance == 1) {\n      this.x -= this.speed;\n    } else if (chance == 2) {\n      this.y -= this.speed;\n    } else if (chance == 3) {\n      this.y += this.speed;\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n4.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n5": {
+      "id": "n5",
+      "label": "n5",
+      "title": "Faster Walker with limits",
+      "description": "Added bounds",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  walker = new Walker(height / 2, width / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let chance = Math.floor(random(4));\n    if (chance == 0) {\n      this.x += this.speed;\n    } else if (chance == 1) {\n      this.x -= this.speed;\n    } else if (chance == 2) {\n      this.y -= this.speed;\n    } else if (chance == 3) {\n      this.y += this.speed;\n    }\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n5.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n8": {
+      "id": "n8",
+      "label": "n8",
+      "title": "Faster Walker , Multiple Directions",
+      "description": "updated direction matrix in walker.js",
+      "children": [
+        "n9",
+        "n10",
+        "n26"
+      ],
+      "expandedChildren": [
+        "n10"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  walker = new Walker(height / 2, width / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n8.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n9": {
+      "id": "n9",
+      "label": "n9",
+      "title": "Colorful Walker",
+      "description": "Added Color",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet colorW = \"red\"\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  walker = new Walker(height / 2, width / 2, colorW, 2, 2);\n  background(\"yellow\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n9.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n10": {
+      "id": "n10",
+      "label": "n10",
+      "title": "Multiple walkers",
+      "description": "Added multiple simultaneous walkers",
+      "children": [
+        "n15",
+        "n17",
+        "n18"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet colorW = \"red\"\n\nlet walkers = [];\nlet speed = 5;\nlet pointSize = 3;\nlet numWalkers = 20;\nlet colorList = [\"#F80658\", \"#E91E63\", \"#9C27B0\", \"#3F51B5\", \"#FF5722\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let w = new Walker(random(width), random(height), random(colorList), speed, pointSize);\n    walkers.push(w);\n  }\n  background(\"#FAC730\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    for (let w of walkers) {\n      w.render();\n      w.move();\n    }\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n10.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n15": {
+      "id": "n15",
+      "label": "n15",
+      "title": "Blurred effect",
+      "description": "added filter blur",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet colorW = \"red\"\n\nlet walkers = [];\nlet speed = 5;\nlet pointSize = 3;\nlet numWalkers = 20;\nlet colorList = [\"#F80658\", \"#E91E63\", \"#9C27B0\", \"#3F51B5\", \"#FF5722\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let w = new Walker(random(width), random(height), random(colorList), speed, pointSize);\n    walkers.push(w);\n  }\n  background(\"#FAC730\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    for (let w of walkers) {\n      w.render();\n      w.move();\n    }\n  }\n  filter(BLUR, 1)\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n15.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n17": {
+      "id": "n17",
+      "label": "n17",
+      "title": "Holi?",
+      "description": "Giving festival of colors",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet colorW = \"red\"\n\nlet walkers = [];\nlet speed = 2;\nlet pointSize = 1;\nlet numWalkers = 20;\nlet colorList = [\"#F80658\", \"#E91E63\", \"#9C27B0\", \"#3F51B5\", \"#FF5722\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let w = new Walker(random(width), random(height), random(colorList), speed, pointSize);\n    walkers.push(w);\n  }\n  background(\"#FAC730\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    for (let w of walkers) {\n      w.render();\n      w.move();\n    }\n  }\n  filter(BLUR, 1)\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n17.png",
+      "kind": "normal",
+      "starredId": "n29"
+    },
+    "n18": {
+      "id": "n18",
+      "label": "n18",
+      "title": "Flicker",
+      "description": "Very flame-like",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 1;\nlet colorW = \"red\"\n\nlet walkers = [];\nlet speed = 40;\nlet pointSize = 100;\nlet numWalkers = 20;\nlet colorList = [\"#F80658\", \"#E91E63\", \"#9C27B0\", \"#3F51B5\", \"#FF5722\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let w = new Walker(random(width), random(height), random(colorList), speed, pointSize);\n    walkers.push(w);\n  }\n  background(\"#FAC730\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    for (let w of walkers) {\n      w.render();\n      w.move();\n    }\n  }\n  filter(BLUR, 10)\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n18.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n19": {
+      "id": "n19",
+      "label": "n19",
+      "title": "hit-test",
+      "description": "created target object for the walker to hit",
+      "children": [
+        "n20",
+        "n22",
+        "n23"
+      ],
+      "expandedChildren": [
+        "n23"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet numTargets = 20;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    let target = new Target(random(width), random(height), \"red\", 10);\n    targets.push(target);\n  }\n\n  walker = new Walker(height / 2, width / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = size;\n  }\n\n  render() {\n    fill(this.pointColor);\n    noStroke();\n    ellipse(this.x, this.y, this.size, this.size);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n19.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n20": {
+      "id": "n20",
+      "label": "n20",
+      "title": "Target Distribution",
+      "description": "Targets more likely to be closer to the center",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"red\",\n        1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = size;\n  }\n\n  render() {\n    fill(this.pointColor);\n    noStroke();\n    ellipse(this.x, this.y, this.size, this.size);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n20.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n22": {
+      "id": "n22",
+      "label": "n22",
+      "title": "Expanding Targets",
+      "description": "Targets \"react\" on being \"hit\"",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"red\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n22.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n23": {
+      "id": "n23",
+      "label": "n23",
+      "title": "Perlin Walker",
+      "description": "Updated walker",
+      "children": [
+        "n24",
+        "n27"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"red\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n    this.tx = 0;\n    this.ty = 1000000;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    this.x = map(noise(this.tx), 0, 1, 0, width);\n    this.y = map(noise(this.ty), 0, 1, 0, height);\n    this.tx += 0.01;\n    this.ty += 0.01;\n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n23.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n24": {
+      "id": "n24",
+      "label": "n24",
+      "title": "Noise variation",
+      "description": "smoother?",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 100;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"red\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n    this.tx = 0;\n    this.ty = 100000;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    this.x = map(noise(this.tx), 0, 1, 0, width);\n    this.y = map(noise(this.ty), 0, 1, 0, height);\n    this.tx += 0.001;\n    this.ty += 0.001;\n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n24.png",
+      "kind": "normal",
+      "starredId": "n30"
+    },
+    "n26": {
+      "id": "n26",
+      "label": "n26",
+      "title": "Polka Dot effect",
+      "description": "Visual exploraton",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"walker.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 10;\nlet colorW = \"red\"\n\nlet walkers = [];\nlet speed = 7;\nlet pointSize = 3;\nlet numWalkers = 20;\nlet colorList = [\"#F80658\", \"#FAC730\", \"#FAC730\", \"#FAC730\", \"#FAC730\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let w = new Walker(random(width), random(height), random(colorList), speed, pointSize);\n    walkers.push(w);\n  }\n  background(\"#FAC730\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    for (let w of walkers) {\n      w.render();\n      w.move();\n    }\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    \n    const dirs = [\n      { x: 1, y: 0 },\n      { x: -1, y: 0 },\n      { x: 0, y: 1 },\n      { x: 0, y: -1 },\n      { x: 1, y: 1 },\n      { x: -1, y: -1 },\n      { x: 1, y: -1 },\n      { x: -1, y: 1 },\n    ];\n\n    let chance = random(dirs);\n\n    this.x += this.speed * chance.x;\n    this.y += this.speed * chance.y;\n\n    this.x = constrain(this.x, 0, width);\n    this.y = constrain(this.y, 0, height);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n26.png",
+      "kind": "normal",
+      "starredId": "n28"
+    },
+    "n27": {
+      "id": "n27",
+      "label": "n27",
+      "title": "Smoother walker",
+      "description": "used trignometric functions to calculate angle based movment",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 10;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"red\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n    this.t = 0;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let angle = map(noise(this.t), 0, 1, 0, TWO_PI*2);\n\n  this.x += cos(angle) * this.speed;\n  this.y += sin(angle) * this.speed;\n\n  // wrap\n  if (this.x < 0) this.x = width;\n  if (this.x > width) this.x = 0;\n  if (this.y < 0) this.y = height;\n  if (this.y > height) this.y = 0;\n\n  this.t += 0.005;\n    \n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n27.png",
+      "kind": "normal",
+      "starredId": "n31"
+    },
+    "n28": {
+      "id": "n28",
+      "label": "n28",
+      "kind": "star",
+      "sourceId": "n26",
+      "expandedChildren": [],
+      "children": []
+    },
+    "n29": {
+      "id": "n29",
+      "label": "n29",
+      "kind": "star",
+      "sourceId": "n17",
+      "expandedChildren": [],
+      "children": []
+    },
+    "n30": {
+      "id": "n30",
+      "label": "n30",
+      "kind": "star",
+      "sourceId": "n24",
+      "expandedChildren": [],
+      "children": []
+    },
+    "n31": {
+      "id": "n31",
+      "label": "n31",
+      "kind": "star",
+      "sourceId": "n27",
+      "expandedChildren": []
+    }
+  }
+}

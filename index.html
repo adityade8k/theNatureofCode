@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>the Nature of Code</title>
+
+    <!-- Shared styling (served from /public) -->
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/osy8ylg.css">
+  </head>
+
+  <body>
+    <div id="canvas" class="canvas">
+      <svg id="wires" class="wires"></svg>
+
+      <!-- IMPORTANT: keep stable children so render() doesn't wipe them -->
+      <div id="viewport" class="viewport">
+        <div id="worldHeader" class="canvas-header"></div>
+        <div id="world"></div>
+      </div>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

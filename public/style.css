@@ -1,0 +1,1013 @@
+/* =========================================================
+   Global reset + base
+   ========================================================= */
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  background: #0f0f12;
+  color: #eaeaf0;
+}
+
+/* =========================================================
+   Canvas + viewport
+   ========================================================= */
+.canvas {
+  position: absolute;
+  inset: 0;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  overflow: hidden;
+  background: #0f0f12;
+  cursor: grab;
+}
+
+.canvas:active {
+  cursor: grabbing;
+}
+
+.canvas-header {
+  font-family: "altesse-std-64pt", sans-serif;
+  min-width: 100vw;
+  font-size: 200px;
+  font-weight: 400;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.95);
+  pointer-events: none;
+  transform: translate(-220px, -380px);
+}
+
+.viewport {
+  position: absolute;
+  left: 0;
+  top: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+  width: 1000px; /* ✅ fixed missing semicolon */
+}
+
+/* =========================================================
+   Nodes / columns
+   ========================================================= */
+.column-wrap {
+  position: absolute;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.square {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  border: 2px solid #1f1f24;
+  background: #e9e9ee;
+  color: #111;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.square.has-thumb {
+  background-size: cover;
+  background-position: center;
+  color: transparent;
+}
+
+/* =========================================================
+   Buttons
+   ========================================================= */
+.btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid #2a2a32;
+  background: #1a1a20;
+  color: #fff;
+  font-size: 16px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn-plus {
+  width: 90px;
+  height: 44px;
+  border-radius: 12px;
+  border: 2px dashed #3a3a44;
+  background: transparent;
+  color: #eaeaf0;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+/* =========================================================
+   Floating action button (new root)
+   ========================================================= */
+.fab {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  background: rgba(20, 20, 26, 0.9);
+  color: #fff;
+  font-size: 32px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.fab:active {
+  transform: translateY(1px);
+}
+
+/* =========================================================
+   SVG wires
+   ========================================================= */
+.wires {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+  transform-origin: 0 0;
+}
+
+/* =========================================================
+   Modal base (editor + viewer)
+   (No header required)
+   ========================================================= */
+#modal-root {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.modal {
+  position: absolute;
+  inset: 40px;
+  background: #121218;
+  border: 1px solid #2a2a32;
+  border-radius: 16px;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.modal.open {
+  display: flex;
+  pointer-events: auto;
+}
+
+/* keep harmless in case viewer still injects a header someday */
+.modal-header {
+  display: none;
+}
+
+/* ✅ critical flex sizing fixes */
+.modal-body {
+  flex: 1;
+  min-height: 0; /* IMPORTANT */
+  display: flex;
+  overflow: hidden;
+}
+
+.modal-footer {
+  padding: 12px 16px;
+  border-top: 1px solid #2a2a32;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Editor layout (Editor + Viewer panels)
+   ========================================================= */
+.editor-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #2a2a32;
+  min-width: 0;
+  min-height: 0;
+}
+
+.editor-right {
+  width: 50%;
+  background: #000;
+  display: flex; /* ✅ so preview wrapper can fill */
+  min-width: 0;
+  min-height: 0;
+}
+
+.editor-files {
+  padding: 8px;
+  border-bottom: 1px solid #2a2a32;
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* Code editor mount (now a DIV that CodeMirror mounts into) */
+/* CodeMirror editor styles */
+.code-area {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  background: #0d0d11;
+  color: #eaeaf0;
+  border: none;
+  resize: none;
+  padding: 0; /* moved padding into CodeMirror content */
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  outline: none;
+}
+
+/* File list rows (optional niceness) */
+.file-row:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Preview */
+.preview-wrap {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column; /* ✅ iframe + console stack */
+}
+
+.preview-iframe {
+  width: 100%;
+  flex: 1; /* ✅ fill remaining height above console */
+  height: auto; /* ✅ allow flex sizing */
+  border: 0;
+  display: block;
+  background: #000;
+}
+
+/* =========================================================
+   Inputs
+   ========================================================= */
+input,
+textarea {
+  background: #0d0d11;
+  color: #eaeaf0;
+  border: 1px solid #2a2a32;
+  border-radius: 8px;
+  padding: 8px 10px;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #777;
+}
+
+/* =========================================================
+   Root titles
+   ========================================================= */
+.root-title {
+  position: absolute;
+  left: -100px;
+  top: -156px; /* sits above first node */
+  font-size: 26px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.canvasTitleInTree {
+  margin: 0 0 14px 0;
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1;
+  pointer-events: none;
+}
+
+/* =========================================================
+   CodeMirror (CM6) styles (minimal, preserves existing layout)
+   ========================================================= */
+.code-area .cm-editor {
+  height: 100%;
+  background: #0d0d11;
+  color: #eaeaf0;
+}
+
+.code-area .cm-scroller {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.code-area .cm-content {
+  padding: 12px;
+}
+
+.code-area .cm-gutters {
+  background: #0b0b10;
+  border-right: 1px solid #2a2a32;
+  color: rgba(234, 234, 240, 0.55);
+}
+
+.code-area .cm-lineNumbers {
+  min-width: 50px;
+}
+
+.code-area .cm-lineNumbers .cm-gutterElement {
+  padding: 0 8px 0 8px;
+  text-align: right;
+  min-width: 2em;
+}
+
+.code-area .cm-activeLine {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.code-area .cm-activeLineGutter {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* Lint underline (red squiggle) */
+.code-area .cm-lintRange {
+  text-decoration: underline wavy rgba(255, 70, 70, 0.95);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 2px;
+}
+
+.code-area .cm-diagnostic {
+  border-left: 3px solid rgba(255, 70, 70, 0.9);
+  background: rgba(255, 70, 70, 0.12);
+}
+
+/* Delete file button in file list rows (matches your button style) */
+.file-del-btn:not(:disabled):hover {
+  border-color: rgba(255, 90, 90, 0.6);
+  background: rgba(255, 70, 70, 0.14);
+}
+
+/* =========================================================
+   Console drawer
+   ========================================================= */
+.console-root {
+  width: 100%;
+  flex-shrink: 0;
+  border-top: 1px solid #2a2a32;
+  background: #0b0b10;
+}
+
+.console-bar {
+  width: 100%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 0 10px;
+  border: 0;
+  background: transparent;
+  color: rgba(234, 234, 240, 0.9);
+  cursor: pointer;
+}
+
+.console-title {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  opacity: 0.95;
+}
+
+.console-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.console-arrow {
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.console-clear {
+  height: 24px;
+  padding: 0 10px;
+  border-radius: 10px;
+  border: 1px solid #2a2a32;
+  background: #121218;
+  color: rgba(234, 234, 240, 0.9);
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.console-clear:active {
+  transform: translateY(1px);
+}
+
+.console-panel {
+  display: none;
+  height: 180px; /* drawer height */
+  border-top: 1px solid #2a2a32;
+  background: #08080c;
+}
+
+.console-root.is-open .console-panel {
+  display: block;
+}
+
+.console-log {
+  height: 100%;
+  overflow: auto;
+  padding: 4px 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  line-height: 1;
+}
+
+.console-line {
+  display: flex;
+  gap: 8px;
+  padding: 2px 0;
+  margin: 0;
+  opacity: 0.95;
+  min-height: 0;
+  align-items: baseline;
+  line-height: 18px;
+  height: auto;
+}
+
+.console-time {
+  flex: 0 0 auto;
+  color: rgba(234, 234, 240, 0.4);
+  font-size: 11px;
+  padding: 0;
+  margin: 0;
+  line-height: 18px;
+  height: 18px;
+}
+
+.console-msg-container {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+  line-height: 18px;
+}
+
+.console-msg {
+  flex: 1;
+  color: rgba(234, 234, 240, 0.92);
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 18px;
+  font-size: 12px;
+  margin: 0;
+  padding: 0;
+  min-height: 18px;
+}
+
+.console-msg-collapsed .console-msg {
+  max-height: 54px;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  line-height: 18px;
+}
+
+.console-msg-expanded .console-msg {
+  max-height: none;
+  display: block;
+}
+
+.console-expand-btn {
+  flex: 0 0 auto;
+  background: transparent;
+  border: 1px solid rgba(234, 234, 240, 0.2);
+  color: rgba(234, 234, 240, 0.6);
+  cursor: pointer;
+  padding: 2px 6px;
+  font-size: 10px;
+  border-radius: 3px;
+  line-height: 1;
+  transition: all 0.15s ease;
+  margin-top: 2px;
+}
+
+.console-expand-btn:hover {
+  background: rgba(234, 234, 240, 0.1);
+  border-color: rgba(234, 234, 240, 0.4);
+  color: rgba(234, 234, 240, 0.9);
+}
+
+.console-warn .console-msg {
+  color: rgba(255, 212, 120, 0.95);
+}
+
+.console-error .console-msg {
+  color: rgba(255, 120, 120, 0.95);
+}
+
+/* subtle indicator when logs arrive while closed */
+.console-root.has-new .console-title::after {
+  content: " •";
+  color: rgba(255, 120, 120, 0.95);
+}
+
+/* =========================================================
+   Code Editor Fallback (Textarea)
+   ========================================================= */
+.code-editor-fallback-wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background-color: #0d0d11;
+  overflow: hidden;
+}
+
+.code-editor-line-numbers-container {
+  width: 50px;
+  flex-shrink: 0;
+  background-color: #0b0b10;
+  border-right: 1px solid #2a2a32;
+  overflow: hidden;
+  position: relative;
+}
+
+.code-editor-line-numbers {
+  padding: 12px 8px;
+  color: rgba(234, 234, 240, 0.55);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: right;
+  user-select: none;
+  white-space: pre;
+  box-sizing: border-box;
+  min-height: 100%;
+}
+
+.code-area-fallback {
+  flex: 1;
+  height: 100%;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.45;
+  padding: 12px;
+  background-color: #0d0d11;
+  color: #eaeaf0;
+  border: none;
+  outline: none;
+  resize: none;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+/* =========================================================
+   File Tree Row Buttons
+   ========================================================= */
+/* =========================================================
+   Panel root
+   ========================================================= */
+.panel-root {
+  display: contents;
+}
+
+/* =========================================================
+   Modal header
+   ========================================================= */
+.modal-header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.modal-header-title {
+  font-weight: 700;
+}
+
+.modal-header-hint {
+  opacity: 0.6;
+  font-size: 12px;
+}
+
+/* =========================================================
+   Root name bar (editor)
+   ========================================================= */
+.root-name-bar {
+  position: absolute;
+  left: 0px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #2a2a32;
+  border-radius: 12px;
+  background: rgba(18, 18, 24, 0.92);
+  backdrop-filter: blur(6px);
+  width: 520px;
+}
+
+.root-name-label {
+  font-size: 13px;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+
+.root-name-input {
+  flex: 1;
+}
+
+/* =========================================================
+   Meta bar
+   ========================================================= */
+.meta-bar {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  border-bottom: 1px solid #2a2a32;
+  align-items: center;
+}
+
+.meta-title {
+  flex: 1;
+  font-weight: 800;
+  opacity: 0.95;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-description {
+  flex: 2;
+  opacity: 0.8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta-title-input {
+  flex: 1;
+}
+
+.meta-desc-input {
+  flex: 2;
+}
+
+/* =========================================================
+   Workspace
+   ========================================================= */
+.workspace {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+/* =========================================================
+   Tree pane
+   ========================================================= */
+.tree-pane {
+  width: 240px;
+  border-right: 1px solid #2a2a32;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.tree-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tree-title {
+  font-weight: 700;
+}
+
+.tree-btns {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.tree-list {
+  padding: 10px 8px;
+  overflow: auto;
+  flex: 1;
+}
+
+.upload-input-hidden {
+  display: none;
+}
+
+/* =========================================================
+   Editor pane
+   ========================================================= */
+.editor-pane {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+}
+
+.file-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.path-label {
+  font-weight: 700;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-controls {
+  display: flex;
+  gap: 8px;
+}
+
+.code-mount {
+  min-height: 0;
+}
+
+/* =========================================================
+   Body root
+   ========================================================= */
+.body-root {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+}
+
+/* =========================================================
+   Panel footer
+   ========================================================= */
+.panel-footer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.panel-footer-editor {
+  justify-content: space-between;
+}
+
+/* =========================================================
+   File row
+   ========================================================= */
+.file-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.file-row-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  flex: 1;
+  cursor: pointer;
+}
+
+.file-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  opacity: 0.8;
+  font-weight: 500;
+}
+
+.file-name-active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+.file-row-buttons {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.file-row:hover .file-row-buttons {
+  opacity: 1;
+}
+
+.file-edit-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  padding: 0;
+  line-height: 1;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(234, 234, 240, 0.8);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.file-edit-btn:hover:not(:disabled) {
+  border-color: rgba(74, 158, 255, 0.6);
+  background: rgba(74, 158, 255, 0.14);
+  color: #4a9eff;
+}
+
+.file-del-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 9px;
+  padding: 0;
+  line-height: 1;
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+.file-del-btn-disabled {
+  opacity: 0.35;
+}
+
+.folder-row {
+  font-weight: 600;
+}
+
+.folder-row-expanded {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.folder-name {
+  font-weight: 600;
+  color: rgba(234, 234, 240, 0.9);
+}
+
+.folder-name-active {
+  color: #4a9eff;
+  font-weight: 700;
+}
+
+.folder-expand-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  padding: 0;
+  line-height: 1;
+  font-size: 10px;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   Button variants
+   ========================================================= */
+.btn-square {
+  width: 64px;
+  height: 32px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.btn-mini {
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  width: auto;
+}
+
+.btn-pill {
+  width: auto;
+  padding: 0 14px;
+  height: 32px;
+  border-radius: 12px;
+  font-size: 12px;
+}
+
+.btn-delete {
+  border-color: rgba(255, 80, 80, 0.55);
+}
+
+/* =========================================================
+   Canvas header positioned
+   ========================================================= */
+.canvas-header-positioned {
+  position: absolute;
+}
+
+/* =========================================================
+   Header tag (author / class / semester)
+   ========================================================= */
+.header-tag {
+  white-space: pre-line;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial,
+    sans-serif;
+  font-size: 32px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: rgba(255, 255, 255, 0.85);
+  pointer-events: none;
+
+  /* Position relative to the big canvas header */
+  transform: translate(1100px, -440px);
+}
+
+/* =========================================================
+   Star square
+   ========================================================= */
+.star-square-wrap {
+  padding: 0;
+  overflow: hidden;
+  background: #111;
+  border-radius: 14px;
+  position: relative;
+  transform-origin: 50% 50%;
+  transition: width 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              height 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+              z-index 0ms;
+  will-change: width, height;
+}
+
+.star-square-wrap .star-iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.star-square-wrap.has-thumb {
+  background-size: cover;
+  background-position: center;
+}
+
+.star-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: #000;
+}
+
+.star-delete-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  z-index: 5;
+}
