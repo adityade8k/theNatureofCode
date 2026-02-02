@@ -982,6 +982,11 @@ textarea::placeholder {
   will-change: width, height;
 }
 
+.star-square-wrap.star-expanded {
+  z-index: 999999;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+}
+
 .star-square-wrap .star-iframe {
   position: absolute;
   top: 0;
