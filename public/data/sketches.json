@@ -2,6 +2,7 @@
   "version": 1,
   "roots": [
     "n1",
+    "n35",
     "__STARRED__"
   ],
   "nodes": {
@@ -14,7 +15,7 @@
         "n28",
         "n29",
         "n30",
-        "n31"
+        "n33"
       ],
       "expandedChildren": [],
       "files": {},
@@ -341,7 +342,7 @@
       },
       "thumbnailPath": "/thumbs/n27.png",
       "kind": "normal",
-      "starredId": "n31"
+      "starredId": "n33"
     },
     "n28": {
       "id": "n28",
@@ -367,12 +368,76 @@
       "expandedChildren": [],
       "children": []
     },
-    "n31": {
-      "id": "n31",
-      "label": "n31",
+    "n33": {
+      "id": "n33",
+      "label": "n33",
       "kind": "star",
       "sourceId": "n27",
+      "children": [],
       "expandedChildren": []
+    },
+    "n35": {
+      "id": "n35",
+      "label": "n35",
+      "title": "Week 2: Vectors",
+      "description": "",
+      "children": [
+        "n36",
+        "n37",
+        "n38"
+      ],
+      "expandedChildren": [],
+      "files": {},
+      "thumbnailPath": "",
+      "kind": "root"
+    },
+    "n36": {
+      "id": "n36",
+      "label": "n36",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n36.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n37": {
+      "id": "n37",
+      "label": "n37",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n37.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n38": {
+      "id": "n38",
+      "label": "n38",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n38.png",
+      "kind": "normal",
+      "starredId": ""
     }
   }
 }
