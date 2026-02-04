@@ -25,7 +25,7 @@
  * }
  */
 
-const STAR_ROOT_ID = "__STARRED__";
+import { isStarRootNode, STAR_ROOT_PREFIX, LEGACY_STAR_ROOT_ID } from "./starRoots.js";
 
 export function layoutForest(state, opts = {}) {
   const {
@@ -59,7 +59,7 @@ export function layoutForest(state, opts = {}) {
     const n = getNode(nodeId);
 
     // Star column: no plus button; rows are 2× height (for 2× tiles)
-    if (nodeId === STAR_ROOT_ID) {
+    if (isStarRootNode(n, nodeId)) {
       const rowsH = (n?.children?.length ?? 0) * STAR_ROW_H;
       return rowsH; // no plusHeight in star column
     }
@@ -200,23 +200,65 @@ export function layoutForest(state, opts = {}) {
 
   let topY = 0;
 
-  // IMPORTANT: Star column is NOT a stacked root in the forest.
-  const roots = (state.roots || []).filter((rid) => rid !== STAR_ROOT_ID);
+  // IMPORTANT: Star columns are NOT stacked roots in the forest.
+  const roots = (state.roots || []).filter((rid) => {
+    const n = state.nodes[rid];
+    return n && !isStarRootNode(n, rid);
+  });
+
+  const starRootsByRoot = new Map();
+  let legacyStarRootId = null;
+  for (const [id, node] of Object.entries(state.nodes || {})) {
+    if (!isStarRootNode(node, id)) continue;
+    if (id === LEGACY_STAR_ROOT_ID) {
+      legacyStarRootId = id;
+      continue;
+    }
+
+    const rootId = node.starForRoot || (id.startsWith(STAR_ROOT_PREFIX)
+      ? id.slice(STAR_ROOT_PREFIX.length)
+      : "");
+    if (rootId) starRootsByRoot.set(rootId, id);
+  }
 
   for (const rootId of roots) {
     if (!state.nodes[rootId]) continue;
 
-    const { pos, span, edges } = layoutOneRoot(rootId, topY);
+    const rootTopY = topY;
+    const { pos, span, edges } = layoutOneRoot(rootId, rootTopY);
 
     Object.assign(allPos, pos);
     allEdges.push(...edges);
 
+    const starRootId = starRootsByRoot.get(rootId);
+    const starNode = starRootId ? state.nodes[starRootId] : null;
+    const starHasChildren = (starNode?.children || []).length > 0;
+    if (starRootId && starHasChildren) {
+      let maxDepth = 0;
+      for (const p of Object.values(pos)) {
+        if (!p) continue;
+        if (typeof p.depth === "number") maxDepth = Math.max(maxDepth, p.depth);
+      }
+
+      const starDepth = maxDepth + 1;
+      const starX = starDepth * COL_X_STEP;
+      const starH = columnHeight(starRootId);
+      const starYTop = rootTopY + Math.max(0, (span - starH) / 2);
+      const starCenterY = starYTop + starH / 2;
+
+      allPos[starRootId] = {
+        x: starX,
+        yTop: starYTop,
+        centerY: starCenterY,
+        depth: starDepth
+      };
+    }
+
     topY += span + rootGap;
   }
 
-  // Place STAR column at far right (if present)
-  if (state.nodes[STAR_ROOT_ID]) {
-    // Compute max depth across already-laid-out columns.
+  // Legacy STAR column (fallback)
+  if (legacyStarRootId && state.nodes[legacyStarRootId]) {
     let maxDepth = 0;
     for (const p of Object.values(allPos)) {
       if (!p) continue;
@@ -225,14 +267,11 @@ export function layoutForest(state, opts = {}) {
 
     const starDepth = maxDepth + 1;
     const starX = starDepth * COL_X_STEP;
-
-    const starH = columnHeight(STAR_ROOT_ID);
-
-    // Anchor the star column to the top of world space.
+    const starH = columnHeight(legacyStarRootId);
     const starYTop = 0;
     const starCenterY = starYTop + starH / 2;
 
-    allPos[STAR_ROOT_ID] = {
+    allPos[legacyStarRootId] = {
       x: starX,
       yTop: starYTop,
       centerY: starCenterY,

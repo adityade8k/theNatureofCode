@@ -43,6 +43,12 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
     } catch (_) {}
   }
 
+  function setScale(scale = 1) {
+    try {
+      iframeEl.contentWindow?.postMessage({ type: "P5_SET_SCALE", scale }, "*");
+    } catch (_) {}
+  }
+
   function onThumb(fn) {
     thumbHandlers.add(fn);
     return () => thumbHandlers.delete(fn);
@@ -81,7 +87,9 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
     }
 
     if (msg.type === "P5_CANVAS_DIM") {
-      for (const fn of canvasDimHandlers) fn(msg.nodeId, msg.width, msg.height);
+      for (const fn of canvasDimHandlers) {
+        fn(msg.nodeId, msg.width, msg.height, msg.cssWidth, msg.cssHeight);
+      }
     }
   }
 
@@ -101,6 +109,7 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
     requestThumbnail,
     pause,
     resume,
+    setScale,
     onThumb,
     onError,
     onConsole,
@@ -324,11 +333,14 @@ function buildThumbBridgeScript({ nodeId }) {
   function sendCanvasDimensions() {
     const c = findCanvas();
     if (c) {
+      const rect = c.getBoundingClientRect();
       parent.postMessage({
         type: "P5_CANVAS_DIM",
         nodeId: "${nodeId}",
         width: c.width,
-        height: c.height
+        height: c.height,
+        cssWidth: rect?.width || c.clientWidth || c.width,
+        cssHeight: rect?.height || c.clientHeight || c.height
       }, "*");
     }
   }
@@ -396,6 +408,15 @@ function buildThumbBridgeScript({ nodeId }) {
 
     if (d.type === "REQ_THUMB") {
       sendThumbWhenReady(d.nonce ?? null);
+    }
+
+    if (d.type === "P5_SET_SCALE") {
+      const c = findCanvas();
+      if (c) {
+        const s = typeof d.scale === "number" && isFinite(d.scale) ? d.scale : 1;
+        c.style.transformOrigin = "0 0";
+        c.style.transform = "scale(" + s + ")";
+      }
     }
 
     if (d.type === "P5_PAUSE" && window.noLoop) window.noLoop();

@@ -1,7 +1,6 @@
 // src/tree/render.js
 import { createP5Runner } from "../modal/runner.js";
-
-const STAR_ROOT_ID = "__STARRED__";
+import { isStarRootNode } from "./starRoots.js";
 
 export function renderForest({
   state,
@@ -48,7 +47,10 @@ export function renderForest({
   worldEl.innerHTML = "";
 
   // Header anchored above first non-star root
-  const firstRoot = (state.roots || []).find((id) => id !== STAR_ROOT_ID) || (state.roots || [])[0];
+  const firstRoot = (state.roots || []).find((id) => {
+    const node = state.nodes[id];
+    return node && !isStarRootNode(node, id);
+  }) || (state.roots || [])[0];
   const rp = firstRoot ? pos[firstRoot] : null;
   
 
@@ -105,12 +107,7 @@ function renderColumn({
   col.style.top = `${yTop}px`;
 
   if (depth === 0) {
-    if (colId === STAR_ROOT_ID) {
-      const header = document.createElement("div");
-      header.className = "root-title";
-      header.textContent = "⭐ Starred";
-      col.appendChild(header);
-    } else {
+    if (!isStarRootNode(node, colId)) {
       const title = (node?.title || "").trim();
       if (title) {
         const header = document.createElement("div");
@@ -204,7 +201,7 @@ function renderColumn({
     col.appendChild(row);
   });
 
-  if (mode === "editor" && colId !== STAR_ROOT_ID) {
+  if (mode === "editor" && !isStarRootNode(node, colId)) {
     const plus = document.createElement("button");
     plus.className = "btn-plus";
     plus.type = "button";
@@ -260,52 +257,69 @@ function renderStarTile({
   let hovering = false;
   let capturing = false;
   let offCanvasDim = null;
+  let lastCanvasDim = null;
 
-  function expandToCanvasSize(canvasWidth, canvasHeight) {
-    if (!canvasWidth || !canvasHeight) {
-      // Fallback: use a reasonable default size while waiting for canvas
-      const targetPx = Math.round(window.innerHeight * 0.25);
-      wrap.style.width = `${targetPx}px`;
-      wrap.style.height = `${targetPx}px`;
-      wrap.style.transform = "";
+  function getZoom() {
+    return typeof state?.zoom === "number" && state.zoom > 0 ? state.zoom : 1;
+  }
+
+  function getMinScreenPx() {
+    return Math.round(window.innerHeight * 0.25);
+  }
+
+  function shouldExpandAtZoom() {
+    const zoom = getZoom();
+    const minScreen = getMinScreenPx();
+    const baseScreen = baseSize * zoom;
+    return baseScreen < minScreen;
+  }
+
+  function normalizeCanvasDim(dim) {
+    if (!dim) return null;
+    const cssWidth = Number(dim.cssWidth) || Number(dim.width) || 0;
+    const cssHeight = Number(dim.cssHeight) || Number(dim.height) || 0;
+    if (!cssWidth || !cssHeight) return null;
+    return { cssWidth, cssHeight };
+  }
+
+  function applyCanvasScale(targetWidth, targetHeight, dim) {
+    if (!runner || !dim) return;
+    const scaleW = targetWidth / dim.cssWidth;
+    const scaleH = targetHeight / dim.cssHeight;
+    const scale = Math.min(scaleW, scaleH);
+    runner.setScale?.(scale);
+  }
+
+  function applyHoverSize(canvasDim, expand) {
+    const zoom = getZoom();
+    const minScreen = getMinScreenPx();
+    const minWorld = minScreen / zoom;
+    const dim = normalizeCanvasDim(canvasDim);
+    const aspectRatio = dim ? dim.cssWidth / dim.cssHeight : 1;
+
+    let targetWidth;
+    let targetHeight;
+
+    if (expand) {
+      if (aspectRatio >= 1) {
+        targetHeight = minWorld;
+        targetWidth = minWorld * aspectRatio;
+      } else {
+        targetWidth = minWorld;
+        targetHeight = minWorld / aspectRatio;
+      }
+      wrap.classList.add("star-expanded");
     } else {
-      // Calculate size to fit canvas while maintaining aspect ratio
-      const maxWidth = Math.min(window.innerWidth * 0.8, 800);
-      const maxHeight = Math.min(window.innerHeight * 0.6, 600);
-      
-      const aspectRatio = canvasWidth / canvasHeight;
-      let targetWidth = canvasWidth;
-      let targetHeight = canvasHeight;
-      
-      // Scale down if too large
-      if (targetWidth > maxWidth) {
-        targetWidth = maxWidth;
-        targetHeight = targetWidth / aspectRatio;
-      }
-      if (targetHeight > maxHeight) {
-        targetHeight = maxHeight;
-        targetWidth = targetHeight * aspectRatio;
-      }
-      
-      // Scale up if too small (minimum size)
-      const minSize = 200;
-      if (targetWidth < minSize && targetHeight < minSize) {
-        if (aspectRatio > 1) {
-          targetWidth = minSize;
-          targetHeight = minSize / aspectRatio;
-        } else {
-          targetHeight = minSize;
-          targetWidth = minSize * aspectRatio;
-        }
-      }
-      
-      wrap.style.width = `${targetWidth}px`;
-      wrap.style.height = `${targetHeight}px`;
-      wrap.style.transform = "";
+      targetWidth = baseSize;
+      targetHeight = baseSize;
+      wrap.classList.remove("star-expanded");
     }
-    
-    wrap.style.zIndex = "999999";
-    wrap.style.boxShadow = "0 18px 50px rgba(0,0,0,0.35)";
+
+    wrap.style.width = `${targetWidth}px`;
+    wrap.style.height = `${targetHeight}px`;
+    wrap.style.transform = "";
+
+    applyCanvasScale(targetWidth, targetHeight, dim);
   }
 
   function collapseToTile() {
@@ -313,8 +327,7 @@ function renderStarTile({
     wrap.style.width = `${baseSize}px`;
     wrap.style.height = `${baseSize}px`;
     wrap.style.transform = "";
-    wrap.style.zIndex = "";
-    wrap.style.boxShadow = "";
+    wrap.classList.remove("star-expanded");
   }
 
   async function mountSketchFresh() {
@@ -326,10 +339,14 @@ function renderStarTile({
     iframe.setAttribute("sandbox", "allow-scripts allow-same-origin");
     iframe.setAttribute("referrerpolicy", "no-referrer");
     iframe.tabIndex = 0;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.transform = "";
+    iframe.style.transformOrigin = "";
 
     wrap.appendChild(iframe);
 
-    // Don't use fitToFrame - we want canvas at natural size, tile fits to canvas
+    // Use natural canvas size, then scale the iframe to match the tile.
     runner = createP5Runner({ iframeEl: iframe, fitToFrame: false });
 
     const files =
@@ -338,10 +355,11 @@ function renderStarTile({
     runner.run({ nodeId: starNode.id, files });
 
     // Listen for canvas dimensions to expand tile to match
-    offCanvasDim = runner.onCanvasDim((_nodeId, width, height) => {
+    offCanvasDim = runner.onCanvasDim((_nodeId, width, height, cssWidth, cssHeight) => {
+      lastCanvasDim = { width, height, cssWidth, cssHeight };
       // Only expand if still hovering (user might have moved away)
       if (hovering && !capturing) {
-        expandToCanvasSize(width, height);
+        applyHoverSize(lastCanvasDim, shouldExpandAtZoom());
       }
     });
 
@@ -402,13 +420,31 @@ function renderStarTile({
     });
   }
 
+  function setStarWireFocus(activeStarId) {
+    const wiresEl = document.getElementById("wires");
+    if (!wiresEl) return;
+    const starWires = wiresEl.querySelectorAll("path.star-wire");
+    if (!starWires.length) return;
+
+    starWires.forEach((path) => {
+      if (!activeStarId) {
+        path.style.display = "";
+        return;
+      }
+
+      const pathStarId = path.getAttribute("data-star-id");
+      path.style.display = pathStarId === activeStarId ? "" : "none";
+    });
+  }
+
   // Hover handlers
   wrap.addEventListener("mouseenter", async () => {
     if (hovering || capturing) return; // Prevent duplicate events
     hovering = true;
+    setStarWireFocus(starNode.id);
     
     // Initial expansion (will be adjusted when canvas dimensions are received)
-    expandToCanvasSize(null, null);
+    applyHoverSize(lastCanvasDim, shouldExpandAtZoom());
 
     // Only mount if not already mounted
     if (!iframe && !capturing) {
@@ -419,6 +455,7 @@ function renderStarTile({
   wrap.addEventListener("mouseleave", async () => {
     if (!hovering) return; // Prevent duplicate events
     hovering = false;
+    setStarWireFocus(null);
 
     // Collapse immediately for smooth animation
     collapseToTile();

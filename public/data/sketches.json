@@ -2,6 +2,7 @@
   "version": 1,
   "roots": [
     "n1",
+    "n51",
     "__STARRED__"
   ],
   "nodes": {
@@ -14,7 +15,8 @@
         "n47",
         "n48",
         "n49",
-        "n50"
+        "n50",
+        "n53"
       ],
       "expandedChildren": [],
       "files": {},
@@ -493,6 +495,43 @@
       "sourceId": "n42",
       "expandedChildren": [],
       "children": []
+    },
+    "n51": {
+      "id": "n51",
+      "label": "n51",
+      "title": "Week 2: Vectors",
+      "description": "",
+      "children": [
+        "n52"
+      ],
+      "expandedChildren": [],
+      "files": {},
+      "thumbnailPath": "",
+      "kind": "root",
+      "starredId": ""
+    },
+    "n52": {
+      "id": "n52",
+      "label": "n52",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n52.png",
+      "kind": "normal",
+      "starredId": "n53"
+    },
+    "n53": {
+      "id": "n53",
+      "label": "n53",
+      "kind": "star",
+      "sourceId": "n52",
+      "expandedChildren": []
     }
   }
 }

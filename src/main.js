@@ -3,6 +3,7 @@ import { layoutForest } from "./tree/layout.js";
 import { renderForest } from "./tree/render.js";
 import { renderWires } from "./tree/wires.js";
 import { attachPanZoom } from "./tree/interactions.js";
+import { normalizeStarRoots } from "./tree/starRoots.js";
 
 import { createModalManager } from "./modal/modal.js";
 import { createViewerPanel } from "./modal/viewerPanel.js";
@@ -169,6 +170,8 @@ async function loadStateFromJson() {
     node.sourceId = node.sourceId || "";
     node.starredId = node.starredId || "";
   }
+
+  normalizeStarRoots(state);
 }
 
 // -----------------------------

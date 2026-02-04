@@ -7,7 +7,7 @@
  * - Star wires only draw when source.starredId exists and is valid
  */
 
-const STAR_ROOT_ID = "__STARRED__";
+import { isStarRootNode } from "./starRoots.js";
 
 export function renderWires({ state, layout, wiresEl }) {
   const { pos, edges, metrics } = layout;
@@ -54,14 +54,18 @@ export function renderWires({ state, layout, wiresEl }) {
   }
 
   // ------------------------------------------------------------
-  // 2) Star wires: source tile → star tile in STAR column
+  // 2) Star wires: source tile → star tile in STAR columns
   // ------------------------------------------------------------
-  const starRoot = state.nodes[STAR_ROOT_ID];
-  const starPos = pos[STAR_ROOT_ID];
+  const starRootIndex = new Map();
+  for (const [starRootId, starRoot] of Object.entries(state.nodes || {})) {
+    if (!isStarRootNode(starRoot, starRootId)) continue;
+    const kids = Array.isArray(starRoot.children) ? starRoot.children : [];
+    for (let i = 0; i < kids.length; i++) {
+      starRootIndex.set(kids[i], { starRootId, rowIndex: i });
+    }
+  }
 
-  if (!starRoot || !starPos) return;
-
-  const starChildren = Array.isArray(starRoot.children) ? starRoot.children : [];
+  if (starRootIndex.size === 0) return;
 
   for (const [sourceId, sourceNode] of Object.entries(state.nodes)) {
     if (!sourceNode) continue;
@@ -78,9 +82,12 @@ export function renderWires({ state, layout, wiresEl }) {
     // Validate linkage
     if (starNode.sourceId !== sourceId) continue;
 
-    // Must be present under the star root
-    const starRowIndex = starChildren.indexOf(starId);
-    if (starRowIndex < 0) continue;
+    const starRootRef = starRootIndex.get(starId);
+    if (!starRootRef) continue;
+
+    const { starRootId, rowIndex: starRowIndex } = starRootRef;
+    const starPos = pos[starRootId];
+    if (!starPos) continue;
 
     // Find the parent column that actually displays this source tile
     const parentId = findParentColumnId(state, sourceId);
@@ -109,7 +116,13 @@ export function renderWires({ state, layout, wiresEl }) {
       x2,
       y2,
       stroke: "rgba(255,255,255,0.35)",
-      width: 2.25
+      width: 2.25,
+      dash: "6 6",
+      className: "star-wire",
+      data: {
+        "star-id": starId,
+        "source-id": sourceId
+      }
     });
   }
 }
@@ -125,7 +138,10 @@ function drawCubicWire({
   x2,
   y2,
   stroke = "rgba(255,255,255,0.25)",
-  width = 2
+  width = 2,
+  dash = null,
+  className = "",
+  data = null
 }) {
   const mid = (x1 + x2) / 2;
 
@@ -134,6 +150,14 @@ function drawCubicWire({
   path.setAttribute("fill", "none");
   path.setAttribute("stroke", stroke);
   path.setAttribute("stroke-width", String(width));
+  if (dash) path.setAttribute("stroke-dasharray", dash);
+  if (className) path.setAttribute("class", className);
+  if (data && typeof data === "object") {
+    for (const [key, value] of Object.entries(data)) {
+      if (value == null || value === "") continue;
+      path.setAttribute(`data-${key}`, String(value));
+    }
+  }
 
   wiresEl.appendChild(path);
 }
