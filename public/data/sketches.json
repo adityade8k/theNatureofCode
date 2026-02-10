@@ -489,10 +489,12 @@
       "children": [
         "n52",
         "n53",
-        "n54"
+        "n54",
+        "n84"
       ],
       "expandedChildren": [
-        "n54"
+        "n54",
+        "n84"
       ],
       "files": {},
       "thumbnailPath": "",
@@ -538,7 +540,11 @@
       "label": "__STARRED__:n51",
       "title": "Starred",
       "description": "",
-      "children": [],
+      "children": [
+        "n82",
+        "n83",
+        "n93"
+      ],
       "expandedChildren": [],
       "files": {},
       "thumbnailPath": "",
@@ -822,7 +828,7 @@
       },
       "thumbnailPath": "/thumbs/n77.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n83"
     },
     "n78": {
       "id": "n78",
@@ -856,7 +862,165 @@
       },
       "thumbnailPath": "/thumbs/n79.png",
       "kind": "normal",
+      "starredId": "n82"
+    },
+    "n82": {
+      "id": "n82",
+      "label": "n82",
+      "kind": "star",
+      "sourceId": "n79",
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
+    },
+    "n83": {
+      "id": "n83",
+      "label": "n83",
+      "kind": "star",
+      "sourceId": "n77",
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
+    },
+    "n84": {
+      "id": "n84",
+      "label": "n84",
+      "title": "Vector subtract and multiply",
+      "description": "Circle following mouse",
+      "children": [
+        "n85",
+        "n86"
+      ],
+      "expandedChildren": [
+        "n86"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let position;\nlet velocity;\n\nlet r = 24;\n\n// follow behavior\nlet maxSpeed = 12;\nlet maxForce = 0.2; // steering strength\n\nfunction setup() {\n  createCanvas(400, 400);\n  position = createVector(width / 2, height / 2);\n  velocity = createVector(0, 0);\n  background(255);\n}\n\nfunction draw() {\n  background(255);\n\n  // target = mouse\n  let target = createVector(mouseX, mouseY);\n\n  // desired velocity points from ball -> target\n  let desired = p5.Vector.sub(target, position);\n\n  // slow down when close\n  let d = desired.mag();\n  if (d < 120) {\n    let m = map(d, 0, 120, 0, maxSpeed);\n    desired.setMag(m);\n  } else {\n    desired.setMag(maxSpeed);\n  }\n\n  // steering = desired - current velocity\n  let steer = p5.Vector.sub(desired, velocity);\n  steer.limit(maxForce);\n\n  // apply steering (acceleration)\n  velocity.add(steer);\n\n  // update position\n  position.add(velocity);\n\n  // draw ball\n  noStroke();\n  fill(0);\n  circle(position.x, position.y, r * 2);\n\n  // draw a dot at cursor\n  fill(200, 0, 0);\n  circle(mouseX, mouseY, 6);\n}\n\n"
+      },
+      "thumbnailPath": "/thumbs/n84.png",
+      "kind": "normal",
       "starredId": ""
+    },
+    "n85": {
+      "id": "n85",
+      "label": "n85",
+      "title": "Damping",
+      "description": "smoother motion",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let position;\nlet velocity;\n\nlet r = 24;\nlet damping = 0.9\n\n// follow behavior\nlet maxSpeed = 24;\nlet maxForce = 0.2; // steering strength\n\nfunction setup() {\n  createCanvas(400, 400);\n  position = createVector(width / 2, height / 2);\n  velocity = createVector(0, 0);\n  background(255);\n}\n\nfunction draw() {\n  background(255);\n\n  // target = mouse\n  let target = createVector(mouseX, mouseY);\n\n  // desired velocity points from ball -> target\n  let desired = p5.Vector.sub(target, position);\n\n  // slow down when close\n  let d = desired.mag();\n  if (d < 120) {\n    let m = map(d, 0, 120, 0, maxSpeed);\n    desired.setMag(m);\n  } else {\n    desired.setMag(maxSpeed);\n  }\n\n  // steering = desired - current velocity\n  let steer = p5.Vector.sub(desired, velocity);\n  steer.limit(maxForce);\n\n  // apply steering (acceleration)\n  velocity.add(steer);\n  \n  velocity.mult(damping)\n\n  // update position\n  position.add(velocity);\n\n  // draw ball\n  noStroke();\n  fill(0);\n  circle(position.x, position.y, r * 2);\n\n  // draw a dot at cursor\n  fill(200, 0, 0);\n  circle(mouseX, mouseY, 6);\n}\n\n"
+      },
+      "thumbnailPath": "/thumbs/n85.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n86": {
+      "id": "n86",
+      "label": "n86",
+      "title": "Ball Class",
+      "description": "converted following object into class",
+      "children": [
+        "n87",
+        "n88"
+      ],
+      "expandedChildren": [
+        "n88"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, \"green\");\n}\n\nfunction draw() {\n  background(255);\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n\n  // cursor dot\n  fill(200, 0, 0);\n  noStroke();\n  circle(mouseX, mouseY, 6);\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, color) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.color = color;\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n  }\n\n  update(target) {\n    // desired = target - position\n    let desired = p5.Vector.sub(target, this.position);\n\n    // slow down when close\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    // steering force\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    // apply motion\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    noStroke();\n    fill(this.color);\n    circle(this.position.x, this.position.y, this.size);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n86.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n87": {
+      "id": "n87",
+      "label": "n87",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, \"green\", 2, 2);\n}\n\nfunction draw() {\n  background('rgba(255, 255, 123, 0.02)');\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, color, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.color = color;\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    this.angle = 0;\n    this.rotationSpeed = rotationSpeed; // base rotation speed\n    this.count = count\n  }\n\n  update(target) {\n    // desired = target - position\n    let desired = p5.Vector.sub(target, this.position);\n\n    // slow down when close\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    // steering force\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    // apply motion\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    // rotate based on motion (faster when moving)\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n    fill(this.color);\n\n    let ringRadius = this.size * 0.8;\n    let dotSize = this.size * 0.25;\n\n    for (let i = 0; i < this.count; i++) {\n      let a = map(i, 0, this.count, 0, TWO_PI);\n      let x = cos(a) * ringRadius;\n      let y = sin(a) * ringRadius;\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n87.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n88": {
+      "id": "n88",
+      "label": "n88",
+      "title": "",
+      "description": "",
+      "children": [
+        "n89"
+      ],
+      "expandedChildren": [
+        "n89"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\nlet colors = [\"#f1e8b8\", \"#f9e784\", \"#e58f65\", \"#d05353\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, colors, 4, 2);\n  fill(\"rgb(25, 25, 25\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  fill(\"rgba(25, 25, 25, 0.02)\");\n  rect(0, 0, width, height);\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors; // <-- ARRAY of colors\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    this.angle = 0;\n    this.rotationSpeed = rotationSpeed;\n    this.count = count;\n  }\n\n  update(target) {\n    let desired = p5.Vector.sub(target, this.position);\n\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    let ringRadius = this.size * 0.8;\n    let dotSize = this.size * 0.25;\n\n    for (let i = 0; i < this.count; i++) {\n      // cycle colors\n      let c = this.colors[i % this.colors.length];\n      fill(c);\n\n      let a = map(i, 0, this.count, 0, TWO_PI);\n      let x = cos(a) * ringRadius;\n      let y = sin(a) * ringRadius;\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n88.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n89": {
+      "id": "n89",
+      "label": "n89",
+      "title": "updated follower",
+      "description": "follower renders spiral pattrn",
+      "children": [
+        "n91"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\nlet colors = [\"#1e3231\",\"#485665\",\"#8e7c93\",\"#d0a5c0\"]\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, colors, 10, 0.02);\n  fill(\"#F6C0D0\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  background(\"rgba(246, 192, 208, 0.05)\");\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n  \n  \n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors;          // array of colors\n    this.count = count;            // number of dots\n    this.rotationSpeed = rotationSpeed;\n\n    // motion tuning\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    // render state\n    this.angle = 0;\n\n    // spiral/ring tuning (feel free to tweak)\n    this.turns = 2;              // how many spiral rotations from center->edge\n    this.peakAt = 0.65;            // where dots stop growing and start shrinking\n    this.fadeStart = 0.8;          // start fading near the edge\n  }\n\n  update(target) {\n    // desired velocity toward target\n    let desired = p5.Vector.sub(target, this.position);\n\n    // slow down when close (arrival)\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed, true);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    // steering force = desired - current velocity\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    // apply motion\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    // rotate a bit faster when moving\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    // outer boundary (\"end of the ring\")\n    let ringRadius = this.size * 1.2;\n\n    // dot size baseline (overall thickness feel)\n    let baseDot = this.size * 0.1;\n\n    // safety: if colors missing, fallback\n    let hasColors = this.colors && this.colors.length > 0;\n\n    for (let i = 0; i < this.count; i++) {\n      // progress outward 0..1\n      let t = (this.count <= 1) ? 1 : i / (this.count - 1);\n\n      // spiral position\n      let a = t * TWO_PI * this.turns;   // multiple turns\n      let rad = t * ringRadius;          // radius grows outward\n      let x = cos(a) * rad;\n      let y = sin(a) * rad;\n\n      // size profile: grow -> shrink -> vanish at edge\n      let peakAt = this.peakAt;\n      let grow = map(t, 0, peakAt, 0.1, 1.0, true);\n      let shrink = map(t, peakAt, 1.0, 1.0, 0.0, true);\n      let sizeFactor = (t < peakAt) ? grow : shrink;\n\n      let dotSize = baseDot + baseDot * 2.5 * sizeFactor;\n\n      // fade out near the ring edge\n      let alpha = map(t, this.fadeStart, 1.0, 255, 0, true);\n\n      // color cycle\n      if (hasColors) {\n        let c = this.colors[i % this.colors.length];\n        fill(red(c), green(c), blue(c), alpha);\n      } else {\n        fill(0, alpha);\n      }\n\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n89.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n91": {
+      "id": "n91",
+      "label": "n91",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\nlet colors = [\"#04e762\",\"#f5b700\",\"#00a1e4\",\"#dc0073\",\"#89fc00\"]\n\n// --- Perlin walker state ---\nlet walkerPos;\nlet tx = 0;\nlet ty = 10000;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  f = new Follower(width / 2, height / 2, 48, colors, 10, 0.02);\n\n  // start walker in center\n  walkerPos = createVector(width / 2, height / 2);\n\n  fill(\"#001409\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  background(\"rgba(0, 20, 9, 0.05)\");\n\n  // --- Perlin-walker target (vector) ---\n  // raw noise positions\n  let x = map(noise(tx), 0, 1, 0, width);\n  let y = map(noise(ty), 0, 1, 0, height);\n\n  // constrain (extra safety)\n  x = constrain(x, 0, width);\n  y = constrain(y, 0, height);\n\n  walkerPos.set(x, y);\n\n  // advance noise inputs (smaller = smoother)\n  tx += 0.01;\n  ty += 0.01;\n\n  // follower follows the walker\n  f.update(walkerPos);\n  f.render();\n\n  // (optional) show the walker as a small dot\n  noStroke();\n  fill(\"red\");\n  circle(walkerPos.x, walkerPos.y, 6);\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors;          // array of colors\n    this.count = count;            // number of dots\n    this.rotationSpeed = rotationSpeed;\n\n    // motion tuning\n    this.maxSpeed = 12;\n    this.maxForce = 0.05;\n    this.damping = 0.9;\n\n    // render state\n    this.angle = 0;\n\n    // spiral/ring tuning (feel free to tweak)\n    this.turns = 2;              // how many spiral rotations from center->edge\n    this.peakAt = 0.65;            // where dots stop growing and start shrinking\n    this.fadeStart = 0.8;          // start fading near the edge\n  }\n\n  update(target) {\n    // desired velocity toward target\n    let desired = p5.Vector.sub(target, this.position);\n\n    // slow down when close (arrival)\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed, true);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    // steering force = desired - current velocity\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    // apply motion\n    this.velocity.add(steer);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    // rotate a bit faster when moving\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    // outer boundary (\"end of the ring\")\n    let ringRadius = this.size * 1.2;\n\n    // dot size baseline (overall thickness feel)\n    let baseDot = this.size * 0.1;\n\n    // safety: if colors missing, fallback\n    let hasColors = this.colors && this.colors.length > 0;\n\n    for (let i = 0; i < this.count; i++) {\n      // progress outward 0..1\n      let t = (this.count <= 1) ? 1 : i / (this.count - 1);\n\n      // spiral position\n      let a = t * TWO_PI * this.turns;   // multiple turns\n      let rad = t * ringRadius;          // radius grows outward\n      let x = cos(a) * rad;\n      let y = sin(a) * rad;\n\n      // size profile: grow -> shrink -> vanish at edge\n      let peakAt = this.peakAt;\n      let grow = map(t, 0, peakAt, 0.1, 1.0, true);\n      let shrink = map(t, peakAt, 1.0, 1.0, 0.0, true);\n      let sizeFactor = (t < peakAt) ? grow : shrink;\n\n      let dotSize = baseDot + baseDot * 2.5 * sizeFactor;\n\n      // fade out near the ring edge\n      let alpha = map(t, this.fadeStart, 1.0, 255, 0, true);\n\n      // color cycle\n      if (hasColors) {\n        let c = this.colors[i % this.colors.length];\n        fill(red(c), green(c), blue(c), alpha);\n      } else {\n        fill(0, alpha);\n      }\n\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n91.png",
+      "kind": "normal",
+      "starredId": "n93"
+    },
+    "n93": {
+      "id": "n93",
+      "label": "n93",
+      "kind": "star",
+      "sourceId": "n91",
+      "expandedChildren": []
     }
   }
 }
