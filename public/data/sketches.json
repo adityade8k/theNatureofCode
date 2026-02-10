@@ -538,10 +538,7 @@
       "label": "__STARRED__:n51",
       "title": "Starred",
       "description": "",
-      "children": [
-        "n70",
-        "n72"
-      ],
+      "children": [],
       "expandedChildren": [],
       "files": {},
       "thumbnailPath": "",
@@ -597,7 +594,9 @@
         "n67",
         "n68"
       ],
-      "expandedChildren": [],
+      "expandedChildren": [
+        "n68"
+      ],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
@@ -636,7 +635,9 @@
         "n71",
         "n73"
       ],
-      "expandedChildren": [],
+      "expandedChildren": [
+        "n73"
+      ],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
@@ -719,7 +720,11 @@
       "label": "n68",
       "title": "Grid colors?",
       "description": "Added colors to grid bouncing balls",
-      "children": [],
+      "children": [
+        "n76",
+        "n77",
+        "n78"
+      ],
       "expandedChildren": [],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
@@ -729,16 +734,7 @@
       },
       "thumbnailPath": "/thumbs/n68.png",
       "kind": "normal",
-      "starredId": "n70"
-    },
-    "n70": {
-      "id": "n70",
-      "label": "n70",
-      "kind": "star",
-      "sourceId": "n68",
-      "expandedChildren": [],
-      "children": [],
-      "files": {}
+      "starredId": ""
     },
     "n71": {
       "id": "n71",
@@ -755,23 +751,17 @@
       },
       "thumbnailPath": "/thumbs/n71.png",
       "kind": "normal",
-      "starredId": "n72"
-    },
-    "n72": {
-      "id": "n72",
-      "label": "n72",
-      "kind": "star",
-      "sourceId": "n71",
-      "expandedChildren": [],
-      "children": [],
-      "files": {}
+      "starredId": ""
     },
     "n73": {
       "id": "n73",
       "label": "n73",
       "title": "Flocking?",
       "description": "",
-      "children": [],
+      "children": [
+        "n75",
+        "n79"
+      ],
       "expandedChildren": [],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
@@ -780,6 +770,91 @@
         "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    colorList = []\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          random([-1, 1]) * envWidth * 0.01 * speedMultiplier,\n          random([-1, 1]) * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]\n          : color(0)\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // motion only\n      ball.position.add(ball.velocity);\n\n      // vertical bounds\n      if (ball.position.y > bottom || ball.position.y < top) {\n        ball.velocity.y *= -1;\n        ball.position.y = constrain(ball.position.y, top, bottom);\n      }\n\n      // horizontal bounds\n      if (ball.position.x > right || ball.position.x < left) {\n        ball.velocity.x *= -1;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke()\n    for (let ball of this.balls) {\n      fill(ball.color);\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n73.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n75": {
+      "id": "n75",
+      "label": "n75",
+      "title": "Perlin Dog",
+      "description": "walker that follows the cursor",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let ball;\n\nlet tx = 0;\nlet ty = 10000;\nlet colors = [\"#3f88c5\",\"#f49d37\",\"#140f2d\",\"#f22b29\"]\nfunction setup() {\n  createCanvas(400, 400);\n  ball = new BouncingBall(0, 0, 100, 100, 150, 0.2, 0.2, colors);\n\n  (\"#69140E\");\n}\n\nfunction draw() {\n  background(\"rgba(105, 20, 14, 0.05)\");\n\n  // target = mouse, but clamp so the 100x100 container stays on-canvas\n  const targetX = constrain(mouseX - ball.envWidth / 2, 0, width - ball.envWidth);\n  const targetY = constrain(mouseY - ball.envHeight / 2, 0, height - ball.envHeight);\n\n  // smooth follow (lower = floaty, higher = snappier)\n  const follow = 0.008;\n  const newX = lerp(ball.x, targetX, follow);\n  const newY = lerp(ball.y, targetY, follow);\n\n  const dx = newX - ball.x;\n  const dy = newY - ball.y;\n\n  // move the container\n  ball.x = newX;\n  ball.y = newY;\n\n  // move the internal particles by the same delta\n  for (let b of ball.balls) {\n    b.position.x += dx;\n    b.position.y += dy;\n  }\n\n  ball.update();\n  ball.draw();\n}\n\n",
+        "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    colorList = []\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          random([-1, 1]) * envWidth * 0.01 * speedMultiplier,\n          random([-1, 1]) * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]\n          : color(0)\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // motion only\n      ball.position.add(ball.velocity);\n\n      // vertical bounds\n      if (ball.position.y > bottom || ball.position.y < top) {\n        ball.velocity.y *= -1;\n        ball.position.y = constrain(ball.position.y, top, bottom);\n      }\n\n      // horizontal bounds\n      if (ball.position.x > right || ball.position.x < left) {\n        ball.velocity.x *= -1;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke()\n    for (let ball of this.balls) {\n      fill(ball.color);\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n75.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n76": {
+      "id": "n76",
+      "label": "n76",
+      "title": "Position offset",
+      "description": "cell position offset",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let balls = [];\nlet rows, cols;\nlet colors = [\"#69747c\", \"#6baa75\", \"#84dd63\", \"#cbff4d\"];\nfunction setup() {\n  createCanvas(400, 400);\n\n  rows = 10;\n  cols = 10;\n\n  balls = [];\n\n  const cellW = width / cols;\n  const cellH = height / rows;\n\n for (let r = 0; r < rows; r++) {\n  for (let c = 0; c < cols; c++) {\n    const cellW = width / cols;\n    const cellH = height / rows;\n\n    const ox = random(-cellW * 0.25, cellW * 0.25);\n    const oy = random(-cellH * 0.25, cellH * 0.25);\n\n    const x = c * cellW + ox;\n    const y = r * cellH + oy;\n\n    const ball = new BouncingBall(\n      x,\n      y,\n      cellW,\n      cellH,\n      20,\n      1,\n      2,\n      0,\n      1,\n      colors\n    );\n\n    balls.push(ball);\n  }\n}\n}\n\nfunction draw() {\n  background(\"rgba(84, 84, 84, 0.2)\");\n\n  for (let ball of balls) {\n    ball.update();\n    ball.draw();\n  }\n}\n",
+        "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    gravityMultiplier = 1,\n    damping,\n    colorList = []          // NEW ARG\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n    this.gravity = envHeight * 0.002 * gravityMultiplier;\n    this.damping = damping;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          1 * envWidth * 0.01 * speedMultiplier,\n          1 * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]   // 🔁 cycle colors\n          : color(0)                           // fallback\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // gravity\n      ball.velocity.y += this.gravity;\n\n      // motion\n      ball.position.add(ball.velocity);\n\n      // floor\n      if (ball.position.y > bottom) {\n        ball.position.y = bottom;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // ceiling\n      if (ball.position.y < top) {\n        ball.position.y = top;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // walls\n      if (ball.position.x < left || ball.position.x > right) {\n        ball.velocity.x *= -this.damping;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke();\n\n    for (let ball of this.balls) {\n      fill(ball.color);    // 🎨 per-ball color\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n76.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n77": {
+      "id": "n77",
+      "label": "n77",
+      "title": "Initial Position",
+      "description": "Initial Position was randomized",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let balls = [];\nlet rows, cols;\nlet colors = [\"#69747c\", \"#6baa75\", \"#84dd63\", \"#cbff4d\"];\nfunction setup() {\n  createCanvas(400, 400);\n\n  rows = 10;\n  cols = 10;\n\n  balls = [];\n\n  const cellW = width / cols;\n  const cellH = height / rows;\n\n  for (let r = 0; r < rows; r++) {\n    for (let c = 0; c < cols; c++) {\n      const cellW = width / cols;\n      const cellH = height / rows;\n\n      const ox = random(-cellW * 0.25, cellW * 0.25);\n      const oy = random(-cellH * 0.25, cellH * 0.25);\n\n      const x = c * cellW + ox;\n      const y = r * cellH + oy;\n\n      const ball = new BouncingBall(x, y, cellW, cellH, 20, 1, 2, 0, 1, colors);\n      ball.tx = r * 0.2 + c * 0.2;\n      ball.ty = r * 0.2 - c * 0.2;\n      balls.push(ball);\n    }\n  }\n}\n\nfunction draw() {\n  background(\"rgba(84, 84, 84, 0.2)\");\n\n  for (let ball of balls) {\n    ball.update();\n    ball.draw();\n  }\n}\n",
+        "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    gravityMultiplier = 1,\n    damping,\n    colorList = []          // NEW ARG\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n    this.gravity = envHeight * 0.002 * gravityMultiplier;\n    this.damping = damping;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          1 * envWidth * 0.01 * speedMultiplier,\n          1 * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]   // 🔁 cycle colors\n          : color(0)                           // fallback\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // gravity\n      ball.velocity.y += this.gravity;\n\n      // motion\n      ball.position.add(ball.velocity);\n\n      // floor\n      if (ball.position.y > bottom) {\n        ball.position.y = bottom;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // ceiling\n      if (ball.position.y < top) {\n        ball.position.y = top;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // walls\n      if (ball.position.x < left || ball.position.x > right) {\n        ball.velocity.x *= -this.damping;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke();\n\n    for (let ball of this.balls) {\n      fill(ball.color);    // 🎨 per-ball color\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n77.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n78": {
+      "id": "n78",
+      "label": "n78",
+      "title": "Trigonometric",
+      "description": "Trigonometric wave offset",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let balls = [];\nlet rows, cols;\nlet colors = [\"#69747c\", \"#6baa75\", \"#84dd63\", \"#cbff4d\"];\n\nlet t = 0;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  rows = 5;\n  cols = 30;\n\n  const cellW = width / cols;\n  const cellH = height / rows;\n\n  for (let r = 0; r < rows; r++) {\n    for (let c = 0; c < cols; c++) {\n      // jitter each cell a bit (static offset)\n      const ox = random(-cellW * 0.25, cellW * 0.25);\n      const oy = random(-cellH * 0.25, cellH * 0.25);\n\n      const x = c * cellW + ox;\n      const y = r * cellH + oy;\n\n      const ball = new BouncingBall(\n        x,\n        y,\n        cellW,\n        cellH,\n        200,\n        0.2,\n        2,\n        0,\n        1,\n        colors\n      );\n\n      // phase offsets per instance (based on grid index)\n      ball.tx = r * 0.25 + c * 0.25;\n      ball.ty = r * 0.25 - c * 0.25;\n\n      // store anchor position for trig drifting\n      ball.baseX = x;\n      ball.baseY = y;\n\n      balls.push(ball);\n    }\n  }\n}\n\nfunction draw() {\n  background(\"rgba(84, 84, 84, 0.2)\");\n  t += 0.03;\n\n  for (let ball of balls) {\n    // trig drift amount (relative to each cell size)\n    const ampX = ball.envWidth * 0.45;\n    const ampY = ball.envHeight * 0.45;\n\n    // wave offsets (phase differs per instance)\n    const offsetX = sin(t + ball.tx) * ampX;\n    const offsetY = cos(t + ball.ty) * ampY;\n\n    // new container position\n    const newX = ball.baseX + offsetX;\n    const newY = ball.baseY + offsetY;\n\n    // move everything by the same delta so the system stays intact\n    const dx = newX - ball.x;\n    const dy = newY - ball.y;\n\n    ball.x = newX;\n    ball.y = newY;\n\n    for (let b of ball.balls) {\n      b.position.x += dx;\n      b.position.y += dy;\n    }\n\n    ball.update();\n    ball.draw();\n  }\n}\n",
+        "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    gravityMultiplier = 1,\n    damping,\n    colorList = []          // NEW ARG\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n    this.gravity = envHeight * 0.002 * gravityMultiplier;\n    this.damping = damping;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          1 * envWidth * 0.01 * speedMultiplier,\n          1 * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]   // 🔁 cycle colors\n          : color(0)                           // fallback\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // gravity\n      ball.velocity.y += this.gravity;\n\n      // motion\n      ball.position.add(ball.velocity);\n\n      // floor\n      if (ball.position.y > bottom) {\n        ball.position.y = bottom;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // ceiling\n      if (ball.position.y < top) {\n        ball.position.y = top;\n        ball.velocity.y *= -this.damping;\n      }\n\n      // walls\n      if (ball.position.x < left || ball.position.x > right) {\n        ball.velocity.x *= -this.damping;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke();\n\n    for (let ball of this.balls) {\n      fill(ball.color);    // 🎨 per-ball color\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n78.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n79": {
+      "id": "n79",
+      "label": "n79",
+      "title": "Perlin dog",
+      "description": "more randomized following",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let ball;\n\nlet tx = 0;\nlet ty = 10000;\nlet colors = [\"#3f88c5\", \"#f49d37\", \"#140f2d\", \"#f22b29\"];\nfunction setup() {\n  createCanvas(400, 400);\n  ball = new BouncingBall(0, 0, 100, 100, 150, 0.2, 0.2, colors);\n\n  (\"#69140E\");\n}\n\nfunction draw() {\n  background(\"rgba(105, 20, 14, 0.05)\");\n\n  // 1) mouse target (container stays on canvas)\n  const targetX = constrain(\n    mouseX - ball.envWidth / 2,\n    0,\n    width - ball.envWidth,\n  );\n  const targetY = constrain(\n    mouseY - ball.envHeight / 2,\n    0,\n    height - ball.envHeight,\n  );\n\n  // 2) Perlin wander direction (angle from noise)\n  const angle = noise(tx, ty) * TWO_PI * 2.0; // 0..~4π\n  const wanderStep = 3; // pixels per frame (wander strength)\n  let wx = cos(angle) * wanderStep;\n  let wy = sin(angle) * wanderStep;\n\n  // 3) Seek direction toward mouse (normalized vector)\n  const cx = ball.x + ball.envWidth / 2; // container center\n  const cy = ball.y + ball.envHeight / 2;\n\n  let sx = targetX + ball.envWidth / 2 - cx;\n  let sy = targetY + ball.envHeight / 2 - cy;\n\n  const d = sqrt(sx * sx + sy * sy) + 1e-6;\n  sx /= d;\n  sy /= d;\n\n  const seekStep = 3.0; // pixels per frame (how strongly it \"tends\" to mouse)\n  sx *= seekStep;\n  sy *= seekStep;\n\n  // 4) Blend: mostly wander, but biased toward mouse\n  const wanderWeight = 0.35; // more = wilder\n  const seekWeight = 0.25; // more = more goal-seeking\n\n  const vx = wx * wanderWeight + sx * seekWeight;\n  const vy = wy * wanderWeight + sy * seekWeight;\n\n  // 5) Apply movement (and clamp)\n  const newX = constrain(ball.x + vx, 0, width - ball.envWidth);\n  const newY = constrain(ball.y + vy, 0, height - ball.envHeight);\n\n  const dx = newX - ball.x;\n  const dy = newY - ball.y;\n\n  ball.x = newX;\n  ball.y = newY;\n\n  for (let b of ball.balls) {\n    b.position.x += dx;\n    b.position.y += dy;\n  }\n\n  // 6) Advance Perlin time\n  tx += 0.01;\n  ty += 0.01;\n\n  ball.update();\n  ball.draw();\n}\n",
+        "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    colorList = []\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          random([-1, 1]) * envWidth * 0.01 * speedMultiplier,\n          random([-1, 1]) * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]\n          : color(0)\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // motion only\n      ball.position.add(ball.velocity);\n\n      // vertical bounds\n      if (ball.position.y > bottom || ball.position.y < top) {\n        ball.velocity.y *= -1;\n        ball.position.y = constrain(ball.position.y, top, bottom);\n      }\n\n      // horizontal bounds\n      if (ball.position.x > right || ball.position.x < left) {\n        ball.velocity.x *= -1;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke()\n    for (let ball of this.balls) {\n      fill(ball.color);\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n79.png",
       "kind": "normal",
       "starredId": ""
     }
