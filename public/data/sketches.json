@@ -2,7 +2,8 @@
   "version": 1,
   "roots": [
     "n1",
-    "n51"
+    "n51",
+    "n95"
   ],
   "nodes": {
     "n1": {
@@ -857,7 +858,7 @@
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"bouncingBall.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let ball;\n\nlet tx = 0;\nlet ty = 10000;\nlet colors = [\"#3f88c5\", \"#f49d37\", \"#140f2d\", \"#f22b29\"];\nfunction setup() {\n  createCanvas(400, 400);\n  ball = new BouncingBall(0, 0, 100, 100, 150, 0.2, 0.2, colors);\n\n  (\"#69140E\");\n}\n\nfunction draw() {\n  background(\"rgba(105, 20, 14, 0.05)\");\n\n  // 1) mouse target (container stays on canvas)\n  const targetX = constrain(\n    mouseX - ball.envWidth / 2,\n    0,\n    width - ball.envWidth,\n  );\n  const targetY = constrain(\n    mouseY - ball.envHeight / 2,\n    0,\n    height - ball.envHeight,\n  );\n\n  // 2) Perlin wander direction (angle from noise)\n  const angle = noise(tx, ty) * TWO_PI * 2.0; // 0..~4π\n  const wanderStep = 3; // pixels per frame (wander strength)\n  let wx = cos(angle) * wanderStep;\n  let wy = sin(angle) * wanderStep;\n\n  // 3) Seek direction toward mouse (normalized vector)\n  const cx = ball.x + ball.envWidth / 2; // container center\n  const cy = ball.y + ball.envHeight / 2;\n\n  let sx = targetX + ball.envWidth / 2 - cx;\n  let sy = targetY + ball.envHeight / 2 - cy;\n\n  const d = sqrt(sx * sx + sy * sy) + 1e-6;\n  sx /= d;\n  sy /= d;\n\n  const seekStep = 3.0; // pixels per frame (how strongly it \"tends\" to mouse)\n  sx *= seekStep;\n  sy *= seekStep;\n\n  // 4) Blend: mostly wander, but biased toward mouse\n  const wanderWeight = 0.35; // more = wilder\n  const seekWeight = 0.25; // more = more goal-seeking\n\n  const vx = wx * wanderWeight + sx * seekWeight;\n  const vy = wy * wanderWeight + sy * seekWeight;\n\n  // 5) Apply movement (and clamp)\n  const newX = constrain(ball.x + vx, 0, width - ball.envWidth);\n  const newY = constrain(ball.y + vy, 0, height - ball.envHeight);\n\n  const dx = newX - ball.x;\n  const dy = newY - ball.y;\n\n  ball.x = newX;\n  ball.y = newY;\n\n  for (let b of ball.balls) {\n    b.position.x += dx;\n    b.position.y += dy;\n  }\n\n  // 6) Advance Perlin time\n  tx += 0.01;\n  ty += 0.01;\n\n  ball.update();\n  ball.draw();\n}\n",
+        "sketch.js": "let ball;\n\nlet tx = 0;\nlet ty = 10000;\nlet colors = [\"#3f88c5\", \"#f49d37\", \"#140f2d\", \"#f22b29\"];\nfunction setup() {\n  createCanvas(400, 400);\n  ball = new BouncingBall(width/2, height/2, 100, 100, 150, 0.2, 0.2, colors);\n\n  (\"#69140E\");\n}\n\nfunction draw() {\n  background(\"rgba(105, 20, 14, 0.05)\");\n\n  // 1) mouse target (container stays on canvas)\n  const targetX = constrain(\n    mouseX - ball.envWidth / 2,\n    0,\n    width - ball.envWidth,\n  );\n  const targetY = constrain(\n    mouseY - ball.envHeight / 2,\n    0,\n    height - ball.envHeight,\n  );\n\n  // 2) Perlin wander direction (angle from noise)\n  const angle = noise(tx, ty) * TWO_PI * 2.0; // 0..~4π\n  const wanderStep = 3; // pixels per frame (wander strength)\n  let wx = cos(angle) * wanderStep;\n  let wy = sin(angle) * wanderStep;\n\n  // 3) Seek direction toward mouse (normalized vector)\n  const cx = ball.x + ball.envWidth / 2; // container center\n  const cy = ball.y + ball.envHeight / 2;\n\n  let sx = targetX + ball.envWidth / 2 - cx;\n  let sy = targetY + ball.envHeight / 2 - cy;\n\n  const d = sqrt(sx * sx + sy * sy) + 1e-6;\n  sx /= d;\n  sy /= d;\n\n  const seekStep = 3.0; // pixels per frame (how strongly it \"tends\" to mouse)\n  sx *= seekStep;\n  sy *= seekStep;\n\n  // 4) Blend: mostly wander, but biased toward mouse\n  const wanderWeight = 0.35; // more = wilder\n  const seekWeight = 0.25; // more = more goal-seeking\n\n  const vx = wx * wanderWeight + sx * seekWeight;\n  const vy = wy * wanderWeight + sy * seekWeight;\n\n  // 5) Apply movement (and clamp)\n  const newX = constrain(ball.x + vx, 0, width - ball.envWidth);\n  const newY = constrain(ball.y + vy, 0, height - ball.envHeight);\n\n  const dx = newX - ball.x;\n  const dy = newY - ball.y;\n\n  ball.x = newX;\n  ball.y = newY;\n\n  for (let b of ball.balls) {\n    b.position.x += dx;\n    b.position.y += dy;\n  }\n\n  // 6) Advance Perlin time\n  tx += 0.01;\n  ty += 0.01;\n\n  ball.update();\n  ball.draw();\n}\n",
         "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    colorList = []\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          random([-1, 1]) * envWidth * 0.01 * speedMultiplier,\n          random([-1, 1]) * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]\n          : color(0)\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // motion only\n      ball.position.add(ball.velocity);\n\n      // vertical bounds\n      if (ball.position.y > bottom || ball.position.y < top) {\n        ball.velocity.y *= -1;\n        ball.position.y = constrain(ball.position.y, top, bottom);\n      }\n\n      // horizontal bounds\n      if (ball.position.x > right || ball.position.x < left) {\n        ball.velocity.x *= -1;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke()\n    for (let ball of this.balls) {\n      fill(ball.color);\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n79.png",
@@ -926,7 +927,8 @@
       "description": "converted following object into class",
       "children": [
         "n87",
-        "n88"
+        "n88",
+        "n94"
       ],
       "expandedChildren": [
         "n88"
@@ -1008,7 +1010,7 @@
       "files": {
         "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let f;\nlet colors = [\"#04e762\",\"#f5b700\",\"#00a1e4\",\"#dc0073\",\"#89fc00\"]\n\n// --- Perlin walker state ---\nlet walkerPos;\nlet tx = 0;\nlet ty = 10000;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  f = new Follower(width / 2, height / 2, 48, colors, 10, 0.02);\n\n  // start walker in center\n  walkerPos = createVector(width / 2, height / 2);\n\n  fill(\"#001409\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  background(\"rgba(0, 20, 9, 0.05)\");\n\n  // --- Perlin-walker target (vector) ---\n  // raw noise positions\n  let x = map(noise(tx), 0, 1, 0, width);\n  let y = map(noise(ty), 0, 1, 0, height);\n\n  // constrain (extra safety)\n  x = constrain(x, 0, width);\n  y = constrain(y, 0, height);\n\n  walkerPos.set(x, y);\n\n  // advance noise inputs (smaller = smoother)\n  tx += 0.01;\n  ty += 0.01;\n\n  // follower follows the walker\n  f.update(walkerPos);\n  f.render();\n\n  // (optional) show the walker as a small dot\n  noStroke();\n  fill(\"red\");\n  circle(walkerPos.x, walkerPos.y, 6);\n}\n",
+        "sketch.js": "let f;\nlet colors = [\"#04e762\",\"#f5b700\",\"#00a1e4\",\"#dc0073\",\"#89fc00\"]\n\n// --- Perlin walker state ---\nlet walkerPos;\nlet tx = 0;\nlet ty = 10000;\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  f = new Follower(width / 2, height / 2, 48, colors, 10, 0.02);\n\n  // start walker in center\n  walkerPos = createVector(width / 2, height / 2);\n\n  fill(\"#0000000\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  background(\"rgba(0, 0, 0, 0.05)\");\n\n  // --- Perlin-walker target (vector) ---\n  // raw noise positions\n  let x = map(noise(tx), 0, 1, 0, width);\n  let y = map(noise(ty), 0, 1, 0, height);\n\n  // constrain (extra safety)\n  x = constrain(x, 0, width);\n  y = constrain(y, 0, height);\n\n  walkerPos.set(x, y);\n\n  // advance noise inputs (smaller = smoother)\n  tx += 0.01;\n  ty += 0.01;\n\n  // follower follows the walker\n  f.update(walkerPos);\n  f.render();\n\n  // (optional) show the walker as a small dot\n  noStroke();\n  fill(\"red\");\n  circle(walkerPos.x, walkerPos.y, 6);\n}\n",
         "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors;          // array of colors\n    this.count = count;            // number of dots\n    this.rotationSpeed = rotationSpeed;\n\n    // motion tuning\n    this.maxSpeed = 12;\n    this.maxForce = 0.05;\n    this.damping = 0.9;\n\n    // render state\n    this.angle = 0;\n\n    // spiral/ring tuning (feel free to tweak)\n    this.turns = 2;              // how many spiral rotations from center->edge\n    this.peakAt = 0.65;            // where dots stop growing and start shrinking\n    this.fadeStart = 0.8;          // start fading near the edge\n  }\n\n  update(target) {\n    // desired velocity toward target\n    let desired = p5.Vector.sub(target, this.position);\n\n    // slow down when close (arrival)\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed, true);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    // steering force = desired - current velocity\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    // apply motion\n    this.velocity.add(steer);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    // rotate a bit faster when moving\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    // outer boundary (\"end of the ring\")\n    let ringRadius = this.size * 1.2;\n\n    // dot size baseline (overall thickness feel)\n    let baseDot = this.size * 0.1;\n\n    // safety: if colors missing, fallback\n    let hasColors = this.colors && this.colors.length > 0;\n\n    for (let i = 0; i < this.count; i++) {\n      // progress outward 0..1\n      let t = (this.count <= 1) ? 1 : i / (this.count - 1);\n\n      // spiral position\n      let a = t * TWO_PI * this.turns;   // multiple turns\n      let rad = t * ringRadius;          // radius grows outward\n      let x = cos(a) * rad;\n      let y = sin(a) * rad;\n\n      // size profile: grow -> shrink -> vanish at edge\n      let peakAt = this.peakAt;\n      let grow = map(t, 0, peakAt, 0.1, 1.0, true);\n      let shrink = map(t, peakAt, 1.0, 1.0, 0.0, true);\n      let sizeFactor = (t < peakAt) ? grow : shrink;\n\n      let dotSize = baseDot + baseDot * 2.5 * sizeFactor;\n\n      // fade out near the ring edge\n      let alpha = map(t, this.fadeStart, 1.0, 255, 0, true);\n\n      // color cycle\n      if (hasColors) {\n        let c = this.colors[i % this.colors.length];\n        fill(red(c), green(c), blue(c), alpha);\n      } else {\n        fill(0, alpha);\n      }\n\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n91.png",
@@ -1020,7 +1022,57 @@
       "label": "n93",
       "kind": "star",
       "sourceId": "n91",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
+    },
+    "n94": {
+      "id": "n94",
+      "label": "n94",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\nlet colors = [\"#f1e8b8\", \"#f9e784\", \"#e58f65\", \"#d05353\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, colors, 4, 2);\n  fill(\"rgb(25, 25, 25\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  fill(\"rgba(25, 25, 25, 0.02)\");\n  rect(0, 0, width, height);\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors; // <-- ARRAY of colors\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    this.angle = 0;\n    this.rotationSpeed = rotationSpeed;\n    this.count = count;\n  }\n\n  update(target) {\n    let desired = p5.Vector.sub(target, this.position);\n\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    let ringRadius = this.size * 0.8;\n    let dotSize = this.size * 0.25;\n\n    for (let i = 0; i < this.count; i++) {\n      // cycle colors\n      let c = this.colors[i % this.colors.length];\n      fill(c);\n\n      let a = map(i, 0, this.count, 0, TWO_PI);\n      let x = cos(a) * ringRadius;\n      let y = sin(a) * ringRadius;\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n94.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n95": {
+      "id": "n95",
+      "label": "n95",
+      "title": "Week 3: Forces",
+      "description": "",
+      "children": [
+        "n96"
+      ],
+      "expandedChildren": [],
+      "files": {},
+      "thumbnailPath": "",
+      "kind": "root",
+      "starredId": ""
+    },
+    "n96": {
+      "id": "n96",
+      "label": "n96",
+      "title": "Vector visualizations",
+      "description": "vector visualization class",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"vectorDrawer.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let vec;\n\nfunction setup() {\n  createCanvas(400, 400);\n  vec = new VectorDrawer();\n}\n\nfunction draw() {\n  background(\"#ffffff\");\n  for (let i = 0; i < 5; i++){\n  vec.drawFromPoints(random(0, width), random(0, height),random(0, width),random(0, height),);\n  }\n}\n",
+        "vectorDrawer.js": "class VectorDrawer {\n  constructor(opts = {}) {\n    this.strokeCol = opts.strokeCol ?? 0;\n    this.fillCol = opts.fillCol ?? 0;\n    this.headScale = opts.headScale ?? 0.02;\n    this.weightScale = opts.weightScale ?? 0.015;\n    this.minHead = opts.minHead ?? 2;\n    this.maxHead = opts.maxHead ?? 40;\n    this.minWeight = opts.minWeight ?? 0.5;\n    this.maxWeight = opts.maxWeight ?? 8;\n  }\n\n  drawFromPoints(x1, y1, x2, y2) {\n    const dx = x2 - x1;\n    const dy = y2 - y1;\n\n    const angle = atan2(dy, dx);\n    const magnitude = sqrt(dx * dx + dy * dy);\n\n    const scaledMag = (magnitude * height) / width;\n\n    const w = constrain(\n      scaledMag * this.weightScale,\n      this.minWeight,\n      this.maxWeight\n    );\n\n    const head = constrain(\n      scaledMag * this.headScale,\n      this.minHead,\n      this.maxHead\n    );\n\n    push();\n    stroke(this.strokeCol);\n    fill(this.fillCol);\n    strokeWeight(w);\n\n    line(x1, y1, x2, y2);\n\n    translate(x2, y2);\n    rotate(angle);\n    triangle(0, 0, -head, head / 2, -head, -head / 2);\n    pop();\n  }\n\n  drawFromAngleAndMag(angle, magnitude, startX = 0, startY = 0) {\n    const x2 = startX + cos(angle) * magnitude;\n    const y2 = startY + sin(angle) * magnitude;\n    this.drawFromPoints(startX, startY, x2, y2);\n  }\n\n  drawFromVector(v, startX = 0, startY = 0) {\n    this.drawFromPoints(startX, startY, startX + v.x, startY + v.y);\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n96.png",
+      "kind": "normal",
+      "starredId": ""
     }
   }
 }
