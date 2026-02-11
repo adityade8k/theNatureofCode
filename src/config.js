@@ -4,7 +4,7 @@ export const CAMERA_CONFIG = {
   // Treat these as "pan offsets" (translate values) in your current system:
   // transform = translate(pan.x, pan.y) scale(zoom)
   pointA: { x: 500, y: 800 },
-  pointB: { x: 400, y: 20},
+  pointB: { x: 400, y: -1800},
 
   // Zoom settings
   viewer: {
