@@ -294,8 +294,10 @@ textarea::placeholder {
    ========================================================= */
 .root-title {
   position: absolute;
-  left: -100px;
-  top: -156px; /* sits above first node */
+  text-align: right;
+  width: 700px;
+  left: -615px;
+  top: -50px; /* sits above first node */
   font-size: 26px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.92);

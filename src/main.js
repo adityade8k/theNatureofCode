@@ -87,7 +87,7 @@ animateCamera({
 // Rendering
 // -----------------------------
 function render() {
-  const layout = layoutForest(state);
+  const layout = layoutForest(state, { rootGap: 340 });
 
   renderForest({
     state,
