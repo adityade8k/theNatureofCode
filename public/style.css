@@ -304,7 +304,7 @@ textarea::placeholder {
   letter-spacing: 0.2px;
   white-space: nowrap;
   pointer-events: none;
-  z-index: 5;
+  z-index: 5; 
 }
 
 .canvasTitleInTree {
