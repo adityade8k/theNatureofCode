@@ -14,7 +14,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { json } from "@codemirror/lang-json";
-import { oneDark } from "@codemirror/theme-one-dark";
+import { dracula } from "thememirror";
 import * as lint from "@codemirror/lint";
 
 const codemirrorCache = {
@@ -26,7 +26,7 @@ const codemirrorCache = {
   html: { html },
   css: { css },
   json: { json },
-  theme: { oneDark },
+  theme: { dracula },
   lint,
 };
 
@@ -237,19 +237,12 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
       EditorView.theme({
         "&": { height: "100%", fontSize: "13px" },
         ".cm-content": { padding: "12px", minHeight: "100%" },
-        ".cm-editor": { height: "100%", backgroundColor: "#0d0d11", color: "#eaeaf0" },
+        ".cm-editor": { height: "100%" },
         ".cm-scroller": {
           overflow: "auto",
           fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
         },
-        ".cm-gutters": {
-          backgroundColor: "#0b0b10",
-          borderRight: "1px solid #2a2a32",
-          color: "rgba(234, 234, 240, 0.55)",
-        },
         ".cm-lineNumbers .cm-gutterElement": { padding: "0 10px 0 8px" },
-        ".cm-activeLine": { backgroundColor: "rgba(255, 255, 255, 0.04)" },
-        ".cm-activeLineGutter": { backgroundColor: "rgba(255, 255, 255, 0.04)" },
 
         // Underline on the text range
         ".cm-lintRange": {
@@ -277,7 +270,7 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
         ".cm-lintPoint": { cursor: "pointer" },
       }),
 
-      cache.theme?.oneDark || [],
+      cache.theme?.dracula || [],
 
       lintExt,
 
