@@ -120,22 +120,7 @@ function onNodeClick(nodeId) {
     onRequestClose: () => modal.closeModal()
   });
 
-  const header = document.createElement("div");
-  header.className = "modal-header-content";
-
-  const title = document.createElement("div");
-  title.className = "modal-header-title";
-  title.textContent = n.title?.trim() ? n.title : `Node: ${nodeId}`;
-
-  const hint = document.createElement("div");
-  hint.className = "modal-header-hint";
-  hint.textContent = "Esc to close";
-
-  header.appendChild(title);
-  header.appendChild(hint);
-
   modal.openModal({
-    headerContent: header,
     panel,
     footerContent: panel.footerEl
   });

@@ -20,11 +20,6 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
     iframeEl.srcdoc = buildSrcdoc({ nodeId, files: files || {}, fitToFrame });
   }
 
-  function stop() {
-    iframeEl.srcdoc =
-      `<!doctype html><html><body style="margin:0;background:#000;"></body></html>`;
-  }
-
   function requestThumbnail(nonce = null) {
     try {
       iframeEl.contentWindow?.postMessage({ type: "REQ_THUMB", nonce }, "*");
@@ -107,7 +102,6 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
 
   return {
     run,
-    stop,
     requestThumbnail,
     pause,
     resume,

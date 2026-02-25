@@ -14,7 +14,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { json } from "@codemirror/lang-json";
-import { dracula } from "thememirror";
+import { barf } from "thememirror";
 import * as lint from "@codemirror/lint";
 
 const codemirrorCache = {
@@ -26,7 +26,7 @@ const codemirrorCache = {
   html: { html },
   css: { css },
   json: { json },
-  theme: { dracula },
+  theme: { barf },
   lint,
 };
 
@@ -49,8 +49,6 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
       foldGutter,
       indentOnInput,
       bracketMatching,
-      syntaxHighlighting,
-      defaultHighlightStyle,
     } = cache.language;
 
     // Get language support
@@ -223,7 +221,6 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
       foldGutter(),
       indentOnInput(),
       bracketMatching(),
-      syntaxHighlighting(defaultHighlightStyle),
       languageCompartment.of(languageSupport),
 
       EditorView.updateListener.of((update) => {
@@ -270,7 +267,7 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
         ".cm-lintPoint": { cursor: "pointer" },
       }),
 
-      cache.theme?.dracula || [],
+      cache.theme?.barf || [],
 
       lintExt,
 

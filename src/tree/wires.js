@@ -7,7 +7,7 @@
  * - Star wires only draw when source.starredId exists and is valid
  */
 
-import { isStarRootNode } from "./starRoots.js";
+import { isStarRootNode, findParentColumnId } from "./starRoots.js";
 
 export function renderWires({ state, layout, wiresEl }) {
   const { pos, edges, metrics } = layout;
@@ -160,14 +160,4 @@ function drawCubicWire({
   }
 
   wiresEl.appendChild(path);
-}
-
-function findParentColumnId(state, childId) {
-  // Returns the first node whose children includes childId.
-  // In your data model, a node should have a single parent column.
-  for (const [id, n] of Object.entries(state.nodes)) {
-    if (!n || !Array.isArray(n.children)) continue;
-    if (n.children.includes(childId)) return id;
-  }
-  return null;
 }

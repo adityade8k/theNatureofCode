@@ -22,13 +22,12 @@ export function createModalManager({ modalRootEl }) {
 
   modalRootEl.appendChild(modalEl);
 
-  
   const bodyEl = modalEl.querySelector("#modal-body");
   const footerEl = modalEl.querySelector("#modal-footer");
 
   let currentPanel = null;
 
-  function openModal({ headerContent, panel, footerContent }) {
+  function openModal({ panel, footerContent }) {
     // cleanup old
     if (currentPanel?.onClose) currentPanel.onClose();
     currentPanel = null;
