@@ -62,7 +62,15 @@ export function createConsoleDrawer() {
     root.classList.remove("has-new");
   });
 
-  function append(level, args) {
+  function formatLocation(loc) {
+    if (!loc || !loc.file) return "";
+    const file = String(loc.file).split("/").pop() || String(loc.file);
+    const line = loc.line != null ? String(loc.line) : "";
+    const col = loc.column != null ? String(loc.column) : "";
+    return [file, line, col].filter(Boolean).join(":");
+  }
+
+  function append(level, args, location = null) {
     const line = document.createElement("div");
     line.className = `console-line console-${level}`;
 
@@ -72,6 +80,14 @@ export function createConsoleDrawer() {
 
     const msgContainer = document.createElement("div");
     msgContainer.className = "console-msg-container";
+
+    const locationText = formatLocation(location);
+    if (locationText) {
+      const locEl = document.createElement("span");
+      locEl.className = "console-location";
+      locEl.textContent = locationText;
+      msgContainer.appendChild(locEl);
+    }
 
     const msg = document.createElement("span");
     msg.className = "console-msg";

@@ -83,7 +83,9 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
 
     if (msg.type === "CONSOLE_LOG" || msg.type === "CONSOLE_WARN" || msg.type === "CONSOLE_ERROR") {
       const level = msg.type.replace("CONSOLE_", "").toLowerCase();
-      for (const fn of consoleHandlers) fn({ level, args: msg.args || [] });
+      for (const fn of consoleHandlers) {
+        fn({ level, args: msg.args || [], location: msg.location || null });
+      }
     }
 
     if (msg.type === "P5_CANVAS_DIM") {
@@ -124,14 +126,13 @@ export function createP5Runner({ iframeEl, fitToFrame = false }) {
 
 function buildSrcdoc({ nodeId, files, fitToFrame = false }) {
   const cssText = buildCss(files, fitToFrame);
-  const jsText = buildJs(files);
   const userHtml = files["index.html"];
 
   if (typeof userHtml === "string" && userHtml.trim()) {
-    return buildFromUserIndexHtml({ nodeId, indexHtml: userHtml, cssText, jsText, files, fitToFrame });
+    return buildFromUserIndexHtml({ nodeId, indexHtml: userHtml, cssText, files, fitToFrame });
   }
 
-  return buildFallbackShell({ nodeId, cssText, jsText });
+  return buildFallbackShell({ nodeId, cssText, files });
 }
 
 function buildCss(files, fitToFrame) {
@@ -215,13 +216,29 @@ html:not(.__p5fit) body:not(.__p5fit) canvas {
   return parts.join("\n");
 }
 
-function buildJs(files) {
+function countLines(s) {
+  if (!s || typeof s !== "string") return 0;
+  return (s.match(/\n/g) || []).length + 1;
+}
+
+function buildJsBlocksWithMap(files) {
   const paths = Object.keys(files).filter(p => p.endsWith(".js"));
   const ordered = paths.includes("sketch.js")
     ? [...paths.filter(p => p !== "sketch.js"), "sketch.js"]
     : paths;
 
-  return ordered.map(p => `// ${p}\n${files[p] || ""}`).join("\n");
+  const blocks = ordered.map((p) => {
+    const raw = files[p] || "";
+    const escaped = raw.replace(/<\/script>/gi, '<\\/script>');
+    return { html: `<script>${escaped}\n//# sourceURL=${p}\n</script>`, file: p };
+  });
+
+  return { blocks };
+}
+
+function buildJsBlocks(files) {
+  const { blocks } = buildJsBlocksWithMap(files);
+  return blocks.map((b) => b.html).join("\n");
 }
 
 function buildConsoleInterceptionScript() {
@@ -235,10 +252,30 @@ function buildConsoleInterceptionScript() {
   const originalWarn = console.warn;
   const originalError = console.error;
 
-  function sendConsole(level, args) {
+  function extractLocation(stack) {
+    if (!stack || typeof stack !== "string") return null;
+    const lines = stack.split("\\n").slice(1);
+    for (const line of lines) {
+      if (line.includes("sendConsole") || line.includes("console.") || line.includes("buildConsoleInterceptionScript")) {
+        continue;
+      }
+      const match = line.match(/\\(?([^()]+):(\\d+):(\\d+)\\)?$/);
+      if (match) {
+        return {
+          file: match[1],
+          line: Number(match[2]),
+          column: Number(match[3])
+        };
+      }
+    }
+    return null;
+  }
+
+  function sendConsole(level, args, location) {
     try {
       parent.postMessage({
         type: "CONSOLE_" + level.toUpperCase(),
+        location: location || null,
         args: Array.from(args).map(arg => {
           if (typeof arg === "object" && arg !== null) {
             try {
@@ -257,33 +294,52 @@ function buildConsoleInterceptionScript() {
 
   console.log = function(...args) {
     originalLog.apply(console, args);
-    sendConsole("log", args);
+    sendConsole("log", args, extractLocation(new Error().stack));
   };
 
   console.warn = function(...args) {
     originalWarn.apply(console, args);
-    sendConsole("warn", args);
+    sendConsole("warn", args, extractLocation(new Error().stack));
   };
 
   console.error = function(...args) {
     originalError.apply(console, args);
-    sendConsole("error", args);
+    sendConsole("error", args, extractLocation(new Error().stack));
   };
 
-  // Catch uncaught errors
+  function resolveLocation(filename, lineno, colno) {
+    const map = window.__SRCDOC_LINE_MAP;
+    if (map && lineno != null && (!filename || filename === "about:srcdoc" || String(filename).includes("srcdoc"))) {
+      let best = null;
+      for (const entry of map) {
+        if (entry.startLine <= lineno) best = entry;
+        else break;
+      }
+      if (best) {
+        return { file: best.file, line: lineno - best.startLine + 1, column: colno };
+      }
+    }
+    return { file: filename || "", line: lineno, column: colno };
+  }
+
   window.addEventListener("error", (e) => {
-    // Handle image loading errors specifically
     if (e.target && e.target.tagName === 'IMG') {
       const imgSrc = e.target.src || e.target.getAttribute('src') || 'unknown';
-      sendConsole("error", ["Failed to load image: " + imgSrc, e.filename + ":" + e.lineno]);
+      sendConsole("error", ["Failed to load image: " + imgSrc], {
+        file: imgSrc,
+        line: e.lineno || null,
+        column: e.colno || null
+      });
     } else {
-      sendConsole("error", [e.message || String(e), e.filename + ":" + e.lineno]);
+      const loc = resolveLocation(e.filename, e.lineno, e.colno);
+      sendConsole("error", [e.message || String(e)], loc);
     }
   });
 
   // Catch unhandled promise rejections
   window.addEventListener("unhandledrejection", (e) => {
-    sendConsole("error", ["Unhandled promise rejection:", e.reason]);
+    const loc = extractLocation(e?.reason?.stack);
+    sendConsole("error", ["Unhandled promise rejection:", e.reason], loc);
   });
 })();
 </script>`;
@@ -427,7 +483,7 @@ function buildThumbBridgeScript({ nodeId }) {
 `;
 }
 
-function buildFromUserIndexHtml({ nodeId, indexHtml, cssText, jsText, files, fitToFrame = false }) {
+function buildFromUserIndexHtml({ nodeId, indexHtml, cssText, files, fitToFrame = false }) {
   let html = indexHtml;
 
   // Ensure head/body exist
@@ -492,7 +548,8 @@ function buildFromUserIndexHtml({ nodeId, indexHtml, cssText, jsText, files, fit
     if (jsContent && typeof jsContent === 'string' && !jsContent.startsWith('#UPLOADED_FILE#')) {
       // Escape </script> tags to prevent breaking HTML
       const escaped = jsContent.replace(/<\/script>/gi, '<\\/script>');
-      return `<script>${escaped}</script>`;
+      const sourceUrl = normalizedSrc || fileName || "inline-script.js";
+      return `<script>${escaped}\n//# sourceURL=${sourceUrl}\n</script>`;
     }
     
     // File not found - keep original (might be a runtime error, but don't break HTML)
@@ -769,6 +826,11 @@ ${buildThumbBridgeScript({ nodeId })}
   // Only files explicitly linked in HTML (via <link> or <script src>) are used
   // This matches the behavior of p5 web editor
 
+  const lineMap = computeLineMapFromHtml(html);
+  if (lineMap.length > 0) {
+    html = html.replace(/<head([^>]*)>/i, "<head$1>" + buildLineMapScript(lineMap));
+  }
+
   return html;
 }
 
@@ -794,11 +856,32 @@ function addClassToTag(html, tagName, className) {
   return html.replace(reTag, `<${tagName}${attrs} class="${className}">`);
 }
 
-function buildFallbackShell({ nodeId, cssText, jsText }) {
-  // Escape </script> tags to prevent breaking HTML
-  const escapedJsText = jsText ? jsText.replace(/<\/script>/gi, '<\\/script>') : '';
-  return `
-<!doctype html>
+function buildLineMapScript(lineMap) {
+  if (!lineMap || lineMap.length === 0) return "";
+  return `<script>window.__SRCDOC_LINE_MAP=${JSON.stringify(lineMap)};</script>`;
+}
+
+function computeLineMapFromHtml(html) {
+  const lines = html.split("\n");
+  const map = [];
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const match = line.match(/\/\/#\s*sourceURL=(.+)/);
+    if (match) {
+      const file = match[1].trim();
+      let j = i;
+      while (j >= 0 && !/<\s*script[\s>]/i.test(lines[j])) j--;
+      if (j >= 0) {
+        map.push({ startLine: j + 2, file });
+      }
+    }
+  }
+  return map.sort((a, b) => a.startLine - b.startLine);
+}
+
+function buildFallbackShell({ nodeId, cssText, files }) {
+  const { blocks } = buildJsBlocksWithMap(files);
+  const prefix = `<!doctype html>
 <html class="__p5runner">
 <head>
 <meta charset="utf-8" />
@@ -808,7 +891,18 @@ function buildFallbackShell({ nodeId, cssText, jsText }) {
 <body class="__p5runner">
 ${buildThumbBridgeScript({ nodeId })}
 <script src="https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js"></script>
-<script>${escapedJsText}</script>
-</body>
-</html>`;
+`;
+  let lineMap = [];
+  let currentLine = countLines(prefix);
+  let html = prefix;
+  for (const block of blocks) {
+    lineMap.push({ startLine: currentLine, file: block.file });
+    html += block.html;
+    currentLine += countLines(block.html);
+  }
+  html += "\n</body>\n</html>";
+  const lineMapScript = buildLineMapScript(lineMap);
+  const consoleScript = buildConsoleInterceptionScript();
+  html = html.replace("<head>", "<head>" + lineMapScript + consoleScript);
+  return html;
 }

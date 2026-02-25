@@ -120,6 +120,9 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
   treePane.appendChild(treeHeader);
   treePane.appendChild(treeList);
 
+  const treeResizer = document.createElement("div");
+  treeResizer.className = "panel-resizer panel-resizer-inner";
+
   // Hidden upload input
   const uploadInput = document.createElement("input");
   uploadInput.type = "file";
@@ -163,6 +166,7 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
   editorPane.appendChild(codeMount);
 
   workspace.appendChild(treePane);
+  workspace.appendChild(treeResizer);
   workspace.appendChild(editorPane);
 
   left.appendChild(metaBar);
@@ -186,8 +190,22 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
 
   const bodyRoot = document.createElement("div");
   bodyRoot.className = "body-root";
+  const resizer = document.createElement("div");
+  resizer.className = "panel-resizer";
+
   bodyRoot.appendChild(left);
+  bodyRoot.appendChild(resizer);
   bodyRoot.appendChild(right);
+
+  setupSplitResize({ bodyRoot, left, right, resizer });
+  setupSplitResize({
+    bodyRoot: workspace,
+    left: treePane,
+    right: editorPane,
+    resizer: treeResizer,
+    minLeft: 180,
+    minRight: 320
+  });
 
   el.appendChild(bodyRoot);
 
@@ -207,8 +225,8 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
     lastThumbDataUrl = dataUrl;
   });
 
-  runner.onConsole(({ level, args }) => {
-    consoleDrawer.append(level, args);
+  runner.onConsole(({ level, args, location }) => {
+    consoleDrawer.append(level, args, location);
   });
 
   if (typeof runner.onError === "function") {
@@ -432,6 +450,43 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
     // allow modal.js to call cleanup if it has hooks:
     cleanup: closeAndCleanup,
   };
+}
+
+function setupSplitResize({ bodyRoot, left, right, resizer, minLeft = 320, minRight = 320 }) {
+  let isDragging = false;
+  let startX = 0;
+  let startWidth = 0;
+
+  function onMove(e) {
+    if (!isDragging) return;
+    const dx = e.clientX - startX;
+    const totalWidth = bodyRoot.getBoundingClientRect().width;
+    const nextWidth = Math.min(
+      Math.max(startWidth + dx, minLeft),
+      totalWidth - minRight
+    );
+    left.style.width = `${nextWidth}px`;
+    left.style.flex = "0 0 auto";
+    right.style.flex = "1 1 auto";
+  }
+
+  function onUp() {
+    if (!isDragging) return;
+    isDragging = false;
+    bodyRoot.classList.remove("is-resizing");
+    window.removeEventListener("mousemove", onMove);
+    window.removeEventListener("mouseup", onUp);
+  }
+
+  resizer.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    isDragging = true;
+    startX = e.clientX;
+    startWidth = left.getBoundingClientRect().width;
+    bodyRoot.classList.add("is-resizing");
+    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mouseup", onUp);
+  });
 }
 
 // --------- prettier tidy ----------

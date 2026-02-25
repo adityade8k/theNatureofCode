@@ -1,101 +1,43 @@
 /**
  * CodeMirror 6 editor with auto-indent, line numbers, and linting
  * Uses a simpler, more reliable approach with fallback
+ *
+ * Updated: safer diagnostics ranges so error highlighting always shows,
+ * improved lint tooltip styling, and lint keybindings. Lints .js/.mjs/.cjs.
  */
 
-// Global cache to prevent multiple instances - use window to ensure it's truly global
-if (typeof window !== 'undefined' && !window.__codemirrorCache) {
-  window.__codemirrorCache = null;
-  window.__codemirrorLoading = null;
-}
+import * as view from "@codemirror/view";
+import * as state from "@codemirror/state";
+import * as commands from "@codemirror/commands";
+import * as language from "@codemirror/language";
+import { javascript } from "@codemirror/lang-javascript";
+import { html } from "@codemirror/lang-html";
+import { css } from "@codemirror/lang-css";
+import { json } from "@codemirror/lang-json";
+import { oneDark } from "@codemirror/theme-one-dark";
+import * as lint from "@codemirror/lint";
 
-async function loadCodeMirrorOnce() {
-  // If already cached, return it
-  if (window.__codemirrorCache) {
-    return window.__codemirrorCache;
-  }
-  
-  // If already loading, wait for it
-  if (window.__codemirrorLoading) {
-    return await window.__codemirrorLoading;
-  }
-  
-  // Start loading
-  window.__codemirrorLoading = (async () => {
-    const base = "https://esm.sh";
-    
-    try {
-      const modules = await Promise.all([
-        import(`${base}/@codemirror/view@6.21.3`),
-        import(`${base}/@codemirror/state@6.2.1`),
-        import(`${base}/@codemirror/commands@6.2.4`),
-        import(`${base}/@codemirror/language@6.9.0`),
-        import(`${base}/@codemirror/lang-javascript@6.1.7`).catch(() => null),
-        import(`${base}/@codemirror/lang-html@6.4.6`).catch(() => null),
-        import(`${base}/@codemirror/lang-css@6.2.1`).catch(() => null),
-        import(`${base}/@codemirror/lang-json@6.0.1`).catch(() => null),
-        import(`${base}/@codemirror/theme-one-dark@6.1.2`).catch(() => null),
-        import(`${base}/@codemirror/lint@6.4.0`).catch(() => null)
-      ]);
-      
-      window.__codemirrorCache = {
-        view: modules[0],
-        state: modules[1],
-        commands: modules[2],
-        language: modules[3],
-        js: modules[4],
-        html: modules[5],
-        css: modules[6],
-        json: modules[7],
-        theme: modules[8],
-        lint: modules[9]
-      };
-      
-      window.__codemirrorLoading = null;
-      return window.__codemirrorCache;
-    } catch (error) {
-      window.__codemirrorLoading = null;
-      console.warn("CodeMirror failed to load:", error);
-      return null;
-    }
-  })();
-  
-  return await window.__codemirrorLoading;
-}
+const codemirrorCache = {
+  view,
+  state,
+  commands,
+  language,
+  js: { javascript },
+  html: { html },
+  css: { css },
+  json: { json },
+  theme: { oneDark },
+  lint,
+};
 
 export async function createCodeEditor({ mountEl, path, value, onChange }) {
-  // For now, always use textarea fallback to avoid CodeMirror multiple instance issues
-  // CodeMirror has issues with dynamic imports from CDN causing multiple instances
-  return createTextareaEditor({ mountEl, value, onChange, path });
-  
-  /* CodeMirror disabled due to multiple instance issues
   // Try to use CodeMirror, but fall back to textarea if it fails
-  // Check if cache exists and is valid before loading
-  if (window.__codemirrorCache && window.__codemirrorCache.view && window.__codemirrorCache.state) {
-    // Use existing cache
-    const cache = window.__codemirrorCache;
-    try {
-      return createEditorWithCache({ mountEl, path, value, onChange, cache });
-    } catch (error) {
-      console.warn("CodeMirror initialization failed with cached modules, using textarea fallback:", error);
-      return createTextareaEditor({ mountEl, value, onChange, path });
-    }
-  }
-  
-  const cache = await loadCodeMirrorOnce();
-  
-  // If CodeMirror didn't load, use textarea fallback
-  if (!cache || !cache.view || !cache.state) {
-    return createTextareaEditor({ mountEl, value, onChange, path });
-  }
-
   try {
-    return createEditorWithCache({ mountEl, path, value, onChange, cache });
+    return createEditorWithCache({ mountEl, path, value, onChange, cache: codemirrorCache });
   } catch (error) {
     console.warn("CodeMirror initialization failed, using textarea fallback:", error);
     return createTextareaEditor({ mountEl, value, onChange, path });
   }
-  */
 }
 
 function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
@@ -103,7 +45,13 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
     const { EditorView, lineNumbers, keymap } = cache.view;
     const { EditorState, Compartment } = cache.state;
     const { history, defaultKeymap, historyKeymap, indentWithTab } = cache.commands;
-    const { foldGutter, indentOnInput, bracketMatching, syntaxHighlighting, defaultHighlightStyle } = cache.language;
+    const {
+      foldGutter,
+      indentOnInput,
+      bracketMatching,
+      syntaxHighlighting,
+      defaultHighlightStyle,
+    } = cache.language;
 
     // Get language support
     function getLanguage(ext) {
@@ -123,67 +71,126 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
       }
     }
 
-    // Enhanced JS linter
-    const jsLinter = cache.lint?.linter ? cache.lint.linter(async (view) => {
-      const code = view.state.doc.toString();
-      const diagnostics = [];
-      if (!code.trim()) return diagnostics;
-      
-      try {
-        new Function(code);
-      } catch (e) {
-        if (e instanceof SyntaxError) {
-          const match = e.message.match(/\((\d+):(\d+)\)/);
-          if (match) {
-            const lineNum = parseInt(match[1]) - 1;
-            const colNum = parseInt(match[2]) - 1;
-            try {
-              const line = view.state.doc.line(lineNum + 1);
-              const from = line.from + Math.max(0, Math.min(colNum, line.length));
-              const to = Math.min(from + 1, line.to);
-              diagnostics.push({
-                from,
-                to,
-                severity: "error",
-                message: e.message.split("(")[0].trim() || "Syntax error"
-              });
-            } catch {
-              diagnostics.push({
-                from: 0,
-                to: Math.min(10, code.length),
-                severity: "error",
-                message: e.message.split("(")[0].trim() || "Syntax error"
-              });
-            }
-          } else {
-            diagnostics.push({
-              from: 0,
-              to: Math.min(10, code.length),
-              severity: "error",
-              message: e.message || "Syntax error"
-            });
-          }
+    // ---------- Safer diagnostic range helpers ----------
+    function clamp(n, lo, hi) {
+      return Math.max(lo, Math.min(hi, n));
+    }
+
+    function rangeFromLineCol(doc, lineNum, colNum) {
+      // lineNum is 1-based; colNum is typically 1-based in many error formats
+      const safeLineNum = clamp(lineNum || 1, 1, doc.lines);
+      const line = doc.line(safeLineNum);
+
+      const c = colNum == null ? 1 : colNum;
+      const col0 = clamp(c - 1, 0, line.length); // 0..line.length
+
+      let from = line.from + col0;
+
+      // If error is at EOL, move one char left so underline is visible
+      if (from >= line.to && line.length > 0) from = line.to - 1;
+
+      // underline 1 char (or 1 char at doc start if empty line)
+      let to = Math.min(from + 1, doc.length);
+
+      // Ensure non-empty range
+      if (to <= from) {
+        if (from > 0) {
+          from = from - 1;
+          to = from + 1;
+        } else {
+          to = Math.min(1, doc.length);
         }
       }
-      return diagnostics;
-    }) : null;
+      return { from, to };
+    }
+
+    // Enhanced JS linter (syntax-only via new Function)
+    const jsLinter =
+      cache.lint?.linter
+        ? cache.lint.linter((cmView) => {
+            const code = cmView.state.doc.toString();
+            const diagnostics = [];
+            if (!code.trim()) return diagnostics;
+
+            function parsePosition(e) {
+              // Some engines provide these directly (often 1-based)
+              if (e.lineNumber != null && e.columnNumber != null) {
+                return { line: e.lineNumber, col: e.columnNumber };
+              }
+
+              // Try common patterns in message / stack
+              const msgMatch =
+                e.message?.match(/\((\d+)[:,]\s*(\d+)\)/) ||
+                e.message?.match(/:(\d+):(\d+)\)/);
+
+              if (msgMatch) {
+                return { line: parseInt(msgMatch[1], 10), col: parseInt(msgMatch[2], 10) };
+              }
+
+              const stackMatch = e.stack?.match(/:(\d+):(\d+)\)/);
+              if (stackMatch) {
+                return { line: parseInt(stackMatch[1], 10), col: parseInt(stackMatch[2], 10) };
+              }
+
+              return null;
+            }
+
+            try {
+              // Syntax check only
+              new Function(code);
+            } catch (e) {
+              if (e instanceof SyntaxError) {
+                const pos = parsePosition(e);
+                const msg =
+                  (e.message || "Syntax error").split(/[(\[]/)[0].trim() || "Syntax error";
+
+                if (pos?.line >= 1) {
+                  const { from, to } = rangeFromLineCol(cmView.state.doc, pos.line, pos.col ?? 1);
+                  diagnostics.push({
+                    from,
+                    to,
+                    severity: "error",
+                    message: msg,
+                  });
+                } else {
+                  // fallback: underline first char
+                  const doc = cmView.state.doc;
+                  const from = 0;
+                  const to = Math.max(1, Math.min(1, doc.length));
+                  diagnostics.push({
+                    from,
+                    to,
+                    severity: "error",
+                    message: msg,
+                  });
+                }
+              }
+            }
+
+            return diagnostics;
+          })
+        : null;
 
     const ext = path.split(".").pop()?.toLowerCase() || "";
-    const language = getLanguage(ext);
+    const languageSupport = getLanguage(ext);
     const languageCompartment = new Compartment();
 
     // Auto-indent on Enter
     const autoIndent = EditorState.transactionFilter.of((tr) => {
       if (!tr.isUserEvent("input.type")) return tr;
+
       const changes = tr.changes;
       let insertText = null;
       let insertPos = null;
-      
+
       changes.iterChangedRanges((fromA, toA, fromB, toB) => {
+        // Detect a pure insertion point (no selection)
         if (fromB === toB) {
           const line = tr.newDoc.lineAt(fromB);
+
+          // If we just created a new blank line (common after Enter)
           if (line.length === 0 && line.number > 1) {
-            const prevLine = tr.newDoc.lineAt(line.from - 1);
+            const prevLine = tr.newDoc.line(line.number - 1);
             const indent = /^(\s*)/.exec(prevLine.text)?.[1] || "";
             if (indent) {
               insertText = indent;
@@ -192,12 +199,23 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
           }
         }
       });
-      
-      if (insertText && insertPos !== null) {
-        return [tr, { changes: { from: insertPos, insert: insertText }, sequential: true }];
+
+      if (insertText && insertPos != null) {
+        return [
+          tr,
+          {
+            changes: { from: insertPos, insert: insertText },
+            sequential: true,
+          },
+        ];
       }
       return tr;
     });
+
+    const lintExt =
+      jsLinter && (ext === "js" || ext === "mjs" || ext === "cjs") && cache.lint
+        ? [cache.lint.lintGutter(), jsLinter]
+        : [];
 
     const extensions = [
       lineNumbers(),
@@ -206,56 +224,99 @@ function createEditorWithCache({ mountEl, path, value, onChange, cache }) {
       indentOnInput(),
       bracketMatching(),
       syntaxHighlighting(defaultHighlightStyle),
-      languageCompartment.of(language),
+      languageCompartment.of(languageSupport),
+
       EditorView.updateListener.of((update) => {
         if (update.docChanged) {
           onChange?.(update.state.doc.toString());
         }
       }),
+
       autoIndent,
+
       EditorView.theme({
         "&": { height: "100%", fontSize: "13px" },
         ".cm-content": { padding: "12px", minHeight: "100%" },
         ".cm-editor": { height: "100%", backgroundColor: "#0d0d11", color: "#eaeaf0" },
-        ".cm-scroller": { overflow: "auto", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace" },
-        ".cm-gutters": { backgroundColor: "#0b0b10", borderRight: "1px solid #2a2a32", color: "rgba(234, 234, 240, 0.55)" },
+        ".cm-scroller": {
+          overflow: "auto",
+          fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
+        },
+        ".cm-gutters": {
+          backgroundColor: "#0b0b10",
+          borderRight: "1px solid #2a2a32",
+          color: "rgba(234, 234, 240, 0.55)",
+        },
         ".cm-lineNumbers .cm-gutterElement": { padding: "0 10px 0 8px" },
         ".cm-activeLine": { backgroundColor: "rgba(255, 255, 255, 0.04)" },
         ".cm-activeLineGutter": { backgroundColor: "rgba(255, 255, 255, 0.04)" },
-        ".cm-lintRange": { textDecoration: "underline wavy rgba(255, 70, 70, 0.95)", textDecorationThickness: "1.5px", textUnderlineOffset: "2px" },
-        ".cm-diagnostic": { borderLeft: "3px solid rgba(255, 70, 70, 0.9)", backgroundColor: "rgba(255, 70, 70, 0.12)" }
-      }),
-      cache.theme?.oneDark || [],
-      jsLinter && ext === "js" && cache.lint ? [cache.lint.lintGutter(), jsLinter] : [],
-      keymap.of([...defaultKeymap, ...historyKeymap, indentWithTab])
-    ].flat().filter(Boolean);
 
-    const state = EditorState.create({
+        // Underline on the text range
+        ".cm-lintRange": {
+          textDecoration: "underline wavy rgba(255, 70, 70, 0.95)",
+          textDecorationThickness: "1.5px",
+          textUnderlineOffset: "2px",
+        },
+
+        // Tooltip styling (often the missing piece)
+        ".cm-tooltip.cm-tooltip-lint": {
+          backgroundColor: "#12121a",
+          color: "#eaeaf0",
+          border: "1px solid #2a2a32",
+          borderRadius: "10px",
+          padding: "6px 8px",
+        },
+        ".cm-tooltip.cm-tooltip-lint .cm-diagnostic": {
+          padding: "6px 8px",
+          margin: "0",
+          borderRadius: "8px",
+          borderLeft: "3px solid rgba(255, 70, 70, 0.9)",
+          backgroundColor: "rgba(255, 70, 70, 0.12)",
+        },
+        ".cm-diagnosticText": { color: "#eaeaf0" },
+        ".cm-lintPoint": { cursor: "pointer" },
+      }),
+
+      cache.theme?.oneDark || [],
+
+      lintExt,
+
+      keymap.of([
+        ...defaultKeymap,
+        ...historyKeymap,
+        ...(cache.lint?.lintKeymap ?? []),
+        indentWithTab,
+      ]),
+    ]
+      .flat()
+      .filter(Boolean);
+
+    const editorState = EditorState.create({
       doc: value || "",
-      extensions
+      extensions,
     });
 
-    const view = new EditorView({
-      state,
-      parent: mountEl
+    const editorView = new EditorView({
+      state: editorState,
+      parent: mountEl,
     });
 
     return {
-      getValue: () => view.state.doc.toString(),
+      getValue: () => editorView.state.doc.toString(),
       setValue: (text) => {
-        view.dispatch({
-          changes: { from: 0, to: view.state.doc.length, insert: text }
+        editorView.dispatch({
+          changes: { from: 0, to: editorView.state.doc.length, insert: text },
         });
       },
       setPath: (newPath) => {
         const newExt = newPath.split(".").pop()?.toLowerCase() || "";
         const newLanguage = getLanguage(newExt);
-        view.dispatch({
-          effects: languageCompartment.reconfigure(newLanguage)
+        editorView.dispatch({
+          effects: languageCompartment.reconfigure(newLanguage),
         });
       },
-      focus: () => view.focus(),
-      destroy: () => view.destroy()
+      focus: () => editorView.focus(),
+      destroy: () => editorView.destroy(),
     };
   } catch (error) {
     console.warn("CodeMirror initialization failed, using textarea fallback:", error);
@@ -280,7 +341,7 @@ function createTextareaEditor({ mountEl, value, onChange, path }) {
   textarea.value = value || "";
   textarea.className = "code-area code-area-fallback";
   textarea.spellcheck = false;
-  
+
   function updateLineNumbers() {
     const lines = textarea.value.split("\n");
     const lineCount = Math.max(lines.length, 1);
@@ -289,7 +350,7 @@ function createTextareaEditor({ mountEl, value, onChange, path }) {
       return num.padStart(3, " ");
     }).join("\n");
     lineNumbers.textContent = numbers;
-    
+
     // Match line numbers height to textarea content height
     const textareaScrollHeight = textarea.scrollHeight;
     lineNumbers.style.height = Math.max(textareaScrollHeight, textarea.offsetHeight) + "px";
@@ -315,7 +376,8 @@ function createTextareaEditor({ mountEl, value, onChange, path }) {
       if (indent) {
         e.preventDefault();
         const end = textarea.selectionEnd;
-        textarea.value = textarea.value.substring(0, start) + "\n" + indent + textarea.value.substring(end);
+        textarea.value =
+          textarea.value.substring(0, start) + "\n" + indent + textarea.value.substring(end);
         textarea.selectionStart = textarea.selectionEnd = start + 1 + indent.length;
         onChange?.(textarea.value);
         updateLineNumbers();
@@ -327,10 +389,10 @@ function createTextareaEditor({ mountEl, value, onChange, path }) {
   wrapper.appendChild(lineNumbersContainer);
   wrapper.appendChild(textarea);
   mountEl.appendChild(wrapper);
-  
+
   // Initial update
   updateLineNumbers();
-  
+
   // Update on resize
   if (window.ResizeObserver) {
     const resizeObserver = new ResizeObserver(() => {
@@ -348,6 +410,6 @@ function createTextareaEditor({ mountEl, value, onChange, path }) {
     },
     setPath: () => {},
     focus: () => textarea.focus(),
-    destroy: () => wrapper.remove()
+    destroy: () => wrapper.remove(),
   };
 }

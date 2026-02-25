@@ -489,6 +489,12 @@ textarea::placeholder {
   line-height: 18px;
 }
 
+.console-location {
+  flex: 0 0 auto;
+  color: rgba(234, 234, 240, 0.55);
+  font-size: 11px;
+}
+
 .console-msg {
   flex: 1;
   color: rgba(234, 234, 240, 0.92);
@@ -707,7 +713,7 @@ textarea::placeholder {
    ========================================================= */
 .tree-pane {
   width: 240px;
-  border-right: 1px solid #2a2a32;
+  border-right: 0;
   display: flex;
   flex-direction: column;
   min-height: 0;
@@ -782,6 +788,48 @@ textarea::placeholder {
   width: 100%;
   height: 100%;
   min-height: 0;
+}
+
+.body-root.is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.body-root.is-resizing .preview-iframe {
+  pointer-events: none;
+}
+
+.workspace.is-resizing {
+  cursor: col-resize;
+  user-select: none;
+}
+
+.workspace.is-resizing .code-mount {
+  pointer-events: none;
+}
+
+.panel-resizer {
+  width: 6px;
+  cursor: col-resize;
+  background: #101018;
+  border-left: 1px solid #2a2a32;
+  border-right: 1px solid #2a2a32;
+  flex: 0 0 auto;
+}
+
+.panel-resizer:hover {
+  background: #171724;
+}
+
+.panel-resizer-inner {
+  width: 4px;
+  background: #0d0d12;
+  border-left: 0;
+  border-right: 0;
+}
+
+.panel-resizer-inner:hover {
+  background: #1a1a26;
 }
 
 /* =========================================================
