@@ -1239,7 +1239,8 @@
         "vectorGrid.js": "// vectorGrid.js\nclass VectorGrid {\n  constructor(opts = {}) {\n    this.cell = opts.cell ?? 12;\n    this.noiseScale = opts.noiseScale ?? 0.06;\n    this.zSpeed = opts.zSpeed ?? 0.01;\n    this.arrowScale = opts.arrowScale ?? 0.42;\n    this.bg = opts.bg ?? 245;\n\n    this.zoff = 0;\n  }\n\n  // white (n=1) => 0 degrees, black (n=0) => 360 degrees\n  noiseToAngle(n) {\n    return (1 - n) * TWO_PI;\n  }\n\n  // draw the arrows grid\n  draw(vectorDrawer) {\n    // background(this.bg);\n\n    const cell = this.cell;\n    const ns = this.noiseScale;\n\n    for (let y = 0; y < height; y += cell) {\n      for (let x = 0; x < width; x += cell) {\n        const cx = x + cell * 0.5;\n        const cy = y + cell * 0.5;\n\n        const n = noise(cx * ns, cy * ns, this.zoff); // 0..1\n        const angle = this.noiseToAngle(n);\n\n        const len = cell * this.arrowScale;\n        const x2 = cx + cos(angle) * len;\n        const y2 = cy + sin(angle) * len;\n\n      //  vectorDrawer.drawFromPoints(cx, cy, x2, y2);\n      }\n    }\n\n    this.zoff += this.zSpeed;\n  }\n\n  // sample the flow field at any x,y (returns a UNIT vector)\n  getVectorAt(x, y) {\n    const n = noise(x * this.noiseScale, y * this.noiseScale, this.zoff);\n    const angle = this.noiseToAngle(n);\n    return p5.Vector.fromAngle(angle);\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n104.png",
-      "kind": "normal"
+      "kind": "normal",
+      "starredId": ""
     },
     "n106": {
       "id": "n106",
@@ -1432,7 +1433,8 @@
       "title": "Week 4: Oscillation",
       "description": "",
       "children": [
-        "n136"
+        "n136",
+        "n149"
       ],
       "expandedChildren": [],
       "files": {},
@@ -1443,8 +1445,8 @@
     "n136": {
       "id": "n136",
       "label": "n136",
-      "title": "",
-      "description": "",
+      "title": "Basic Tile Class",
+      "description": "Tile class that will contain my individual animations",
       "children": [],
       "expandedChildren": [],
       "files": {
@@ -1454,25 +1456,14 @@
       },
       "thumbnailPath": "/thumbs/n136.png",
       "kind": "normal",
-      "starredId": "n137"
-    },
-    "n137": {
-      "id": "n137",
-      "label": "n137",
-      "kind": "star",
-      "sourceId": "n136",
-      "children": [],
-      "expandedChildren": [],
-      "files": {}
+      "starredId": ""
     },
     "__STARRED__:n135": {
       "id": "__STARRED__:n135",
       "label": "__STARRED__:n135",
       "title": "Starred",
       "description": "",
-      "children": [
-        "n137"
-      ],
+      "children": [],
       "expandedChildren": [],
       "files": {},
       "thumbnailPath": "",
@@ -1546,21 +1537,43 @@
       "label": "n146",
       "kind": "star",
       "sourceId": "n130",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n147": {
       "id": "n147",
       "label": "n147",
       "kind": "star",
       "sourceId": "n116",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n148": {
       "id": "n148",
       "label": "n148",
       "kind": "star",
       "sourceId": "n140",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
+    },
+    "n149": {
+      "id": "n149",
+      "label": "n149",
+      "title": "",
+      "description": "",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
+      },
+      "thumbnailPath": "",
+      "kind": "normal",
+      "starredId": ""
     }
   }
 }

@@ -190,6 +190,7 @@ body {
 
 /* ✅ critical flex sizing fixes */
 .modal-body {
+  position: relative;
   flex: 1;
   min-height: 0; /* IMPORTANT */
   display: flex;
@@ -845,6 +846,59 @@ textarea::placeholder {
 
 .panel-footer-editor {
   justify-content: space-between;
+}
+
+/* =========================================================
+   Save dialog (editor mode)
+   ========================================================= */
+.save-dialog-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 30;
+}
+
+.save-dialog {
+  background: #121218;
+  border: 1px solid #2a2a32;
+  border-radius: 12px;
+  padding: 24px;
+  min-width: 320px;
+  max-width: 90%;
+}
+
+.save-dialog-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(234, 234, 240, 0.9);
+  margin-bottom: 6px;
+  margin-top: 12px;
+}
+
+.save-dialog-label:first-child {
+  margin-top: 0;
+}
+
+.save-dialog-input {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 4px;
+}
+
+.save-dialog-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.save-dialog-buttons .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 /* =========================================================
