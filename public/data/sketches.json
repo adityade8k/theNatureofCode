@@ -795,7 +795,8 @@
         "bouncingBall.js": "class BouncingBall {\n  constructor(\n    x,\n    y,\n    envWidth,\n    envHeight,\n    numBalls = 1,\n    sizeMultiplier = 1,\n    speedMultiplier = 1,\n    colorList = []\n  ) {\n    // top-left of bounding box\n    this.x = x;\n    this.y = y;\n\n    this.envWidth = envWidth;\n    this.envHeight = envHeight;\n\n    this.radius = envHeight * 0.02 * sizeMultiplier;\n\n    this.balls = [];\n\n    for (let i = 0; i < numBalls; i++) {\n      this.balls.push({\n        position: createVector(\n          x + random(this.radius, envWidth - this.radius),\n          y + random(this.radius, envHeight - this.radius)\n        ),\n        velocity: createVector(\n          random([-1, 1]) * envWidth * 0.01 * speedMultiplier,\n          random([-1, 1]) * envHeight * 0.01 * speedMultiplier\n        ),\n        color: colorList.length > 0\n          ? colorList[i % colorList.length]\n          : color(0)\n      });\n    }\n  }\n\n  update() {\n    const left   = this.x + this.radius;\n    const right  = this.x + this.envWidth - this.radius;\n    const top    = this.y + this.radius;\n    const bottom = this.y + this.envHeight - this.radius;\n\n    for (let ball of this.balls) {\n      // motion only\n      ball.position.add(ball.velocity);\n\n      // vertical bounds\n      if (ball.position.y > bottom || ball.position.y < top) {\n        ball.velocity.y *= -1;\n        ball.position.y = constrain(ball.position.y, top, bottom);\n      }\n\n      // horizontal bounds\n      if (ball.position.x > right || ball.position.x < left) {\n        ball.velocity.x *= -1;\n        ball.position.x = constrain(ball.position.x, left, right);\n      }\n    }\n  }\n\n  draw() {\n    noStroke()\n    for (let ball of this.balls) {\n      fill(ball.color);\n      circle(ball.position.x, ball.position.y, this.radius * 2);\n    }\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n75.png",
-      "kind": "normal"
+      "kind": "normal",
+      "starredId": ""
     },
     "n76": {
       "id": "n76",
@@ -1169,8 +1170,7 @@
         "n147",
         "n148",
         "n166",
-        "n167",
-        "n174"
+        "n167"
       ],
       "expandedChildren": [],
       "files": {},
@@ -1544,8 +1544,8 @@
     "n149": {
       "id": "n149",
       "label": "n149",
-      "title": "",
-      "description": "",
+      "title": "test",
+      "description": "test",
       "children": [],
       "expandedChildren": [],
       "files": {
@@ -1553,9 +1553,8 @@
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
         "sketch.js": "function setup() {\n  createCanvas(400, 400);\n}\n\nfunction draw() {\n  background(20);\n  fill(240);\n  circle(width/2, height/2, 140);\n}\n"
       },
-      "thumbnailPath": "",
-      "kind": "normal",
-      "starredId": ""
+      "thumbnailPath": "/thumbs/n149.png",
+      "kind": "normal"
     },
     "n150": {
       "id": "n150",
@@ -1770,21 +1769,27 @@
       "label": "n170",
       "kind": "star",
       "sourceId": "n79",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n171": {
       "id": "n171",
       "label": "n171",
       "kind": "star",
       "sourceId": "n77",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n172": {
       "id": "n172",
       "label": "n172",
       "kind": "star",
       "sourceId": "n91",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n173": {
       "id": "n173",
@@ -1804,15 +1809,7 @@
         "spatialHash.js": "// spatialHash.js\n// spatialHash.js\nclass SpatialHash {\n  constructor(cellSize = 20) {\n    this.cellSize = cellSize;\n    this.map = new Map();\n  }\n\n  _key(cx, cy) {\n    return `${cx},${cy}`;\n  }\n\n  _cell(x, y) {\n    return {\n      cx: floor(x / this.cellSize),\n      cy: floor(y / this.cellSize),\n    };\n  }\n\n  build(items) {\n    this.map.clear();\n    for (const it of items) {\n      // skip atoms that can't be hit\n      if (it.dead || it.fissioned || it.exploding) continue;\n\n      const { cx, cy } = this._cell(it.position.x, it.position.y);\n      const k = this._key(cx, cy);\n\n      if (!this.map.has(k)) this.map.set(k, []);\n      this.map.get(k).push(it);\n    }\n  }\n\n  queryNeighbors(x, y) {\n    const { cx, cy } = this._cell(x, y);\n    const out = [];\n\n    // check this cell + 8 neighbors\n    for (let oy = -1; oy <= 1; oy++) {\n      for (let ox = -1; ox <= 1; ox++) {\n        const k = this._key(cx + ox, cy + oy);\n        const bucket = this.map.get(k);\n        if (bucket) out.push(...bucket);\n      }\n    }\n\n    return out;\n  }\n}"
       },
       "thumbnailPath": "/thumbs/n173.png",
-      "kind": "normal",
-      "starredId": "n174"
-    },
-    "n174": {
-      "id": "n174",
-      "label": "n174",
-      "kind": "star",
-      "sourceId": "n173",
-      "expandedChildren": []
+      "kind": "normal"
     }
   }
 }
