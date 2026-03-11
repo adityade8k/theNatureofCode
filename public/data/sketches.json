@@ -2440,7 +2440,8 @@
         "n214",
         "n216",
         "n217",
-        "n219"
+        "n219",
+        "n221"
       ],
       "expandedChildren": [],
       "files": {
@@ -2489,7 +2490,8 @@
       "children": [
         "n215",
         "n218",
-        "n220"
+        "n220",
+        "n222"
       ],
       "expandedChildren": [],
       "files": {},
@@ -2539,7 +2541,9 @@
       "label": "n218",
       "kind": "star",
       "sourceId": "n217",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
     },
     "n219": {
       "id": "n219",
@@ -2564,6 +2568,33 @@
       "label": "n220",
       "kind": "star",
       "sourceId": "n219",
+      "expandedChildren": [],
+      "children": [],
+      "files": {}
+    },
+    "n221": {
+      "id": "n221",
+      "label": "n221",
+      "title": "Blood cell",
+      "description": "blood cell variant",
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js\"></script>\n    <script src=\"https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/addons/p5.sound.min.js\"></script>\n\n    <script src=\"cell.js\"></script>\n    <script src=\"grid.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let grid;\nlet cellSize = 8;\nlet cols, rows;\nlet isRunning = true;\n\nlet palette = [\n  \"#05060a\",\n  \"#1a1f3a\",\n  \"#ff0000\"\n];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  cols = floor(width / cellSize);\n  rows = floor(height / cellSize);\n\n  grid = new Grid(cols, rows, cellSize);\n\n  frameRate(60);\n  background(palette[0]);\n}\n\nfunction draw() {\n\n  // fade trails\n  noStroke();\n  fill(5, 6, 10, 28);\n  rect(0, 0, width, height);\n\n  if (isRunning && frameCount % 6 === 0) {\n    grid.step();\n  }\n\n  grid.render();\n}\n\nfunction keyPressed() {\n\n  if (key === ' ') {\n    isRunning = !isRunning;\n  }\n\n  if (key === 'r' || key === 'R') {\n    grid.randomize();\n  }\n\n}",
+        "cell.js": "class Cell {\n  constructor(x, y, size, active = false) {\n    this.x = x;\n    this.y = y;\n    this.size = size;\n\n    this.active = active;\n    this.nextActive = active;\n\n    this.energy = active ? 1 : 0;\n\n    this.phase = random(TWO_PI);\n    this.angleOffset = random(TWO_PI);\n    this.speed = random(0.5, 1.4);\n    this.orbit = random(0.08, 0.22);\n    this.drift = random(0.4, 1.2);\n    this.particleSize = random(0.18, 0.3);\n\n    this.trail = [];\n    this.maxTrailLength = 8;\n  }\n\n  setActive(state) {\n    this.active = state;\n    this.nextActive = state;\n  }\n\n  computeNextState(neighborCount) {\n    if (this.active) {\n      this.nextActive = neighborCount === 2 || neighborCount === 3;\n    } else {\n      this.nextActive = neighborCount === 3;\n    }\n  }\n\n  applyNextState() {\n    this.active = this.nextActive;\n  }\n\n  updateVisual() {\n    const target = this.nextActive ? 1 : 0;\n    this.energy = lerp(this.energy, target, 0.18);\n  }\n\n  updateTrail(px, py) {\n    if (this.energy > 0.05) {\n      this.trail.push({ x: px, y: py, a: this.energy });\n      if (this.trail.length > this.maxTrailLength) {\n        this.trail.shift();\n      }\n    } else {\n      if (this.trail.length > 0) {\n        this.trail.shift();\n      }\n    }\n  }\n\n  render() {\n    this.updateVisual();\n\n    const cx = this.x + this.size * 0.5;\n    const cy = this.y + this.size * 0.5;\n    const t = frameCount * 0.04 + this.phase;\n\n    const inactiveCol = color(palette[1]);\n    const activeCol = color(palette[2]);\n    const glowCol = lerpColor(inactiveCol, activeCol, this.energy);\n\n    const orbitR =\n      this.size * (this.orbit * (0.3 + 1.2 * this.energy)) +\n      sin(t * this.drift) * this.size * 0.04;\n\n    const a = t * this.speed + this.angleOffset;\n\n    const px = cx + cos(a) * orbitR;\n    const py = cy + sin(a) * orbitR;\n\n    this.updateTrail(px, py);\n    this.renderTrail(glowCol);\n    this.renderParticle(px, py, glowCol);\n  }\n\n  renderTrail(glowCol) {\n    if (this.trail.length < 2) return;\n\n    noFill();\n\n    for (let i = 1; i < this.trail.length; i++) {\n      const p0 = this.trail[i - 1];\n      const p1 = this.trail[i];\n\n      const amt = i / (this.trail.length - 1);\n      const alpha = 10 + 120 * amt * this.energy;\n\n      stroke(red(glowCol), green(glowCol), blue(glowCol), alpha);\n      strokeWeight(this.size * (0.04 + 0.08 * amt));\n      line(p0.x, p0.y, p1.x, p1.y);\n    }\n\n    noStroke();\n  }\n\n  renderParticle(px, py, glowCol) {\n    const s = this.size * this.particleSize * (0.55 + 1.2 * this.energy);\n\n    noStroke();\n\n    fill(red(glowCol), green(glowCol), blue(glowCol), 24);\n    circle(px, py, s * 5);\n\n    fill(red(glowCol), green(glowCol), blue(glowCol), 80);\n    circle(px, py, s * 2.3);\n\n    fill(red(glowCol), green(glowCol), blue(glowCol), 255);\n    circle(px, py, s);\n  }\n}",
+        "grid.js": "class Grid {\n  constructor(cols, rows, cellSize) {\n    this.cols = cols;\n    this.rows = rows;\n    this.cellSize = cellSize;\n    this.cells = [];\n\n    this.createGrid();\n  }\n\n  createGrid() {\n    this.cells = [];\n\n    for (let row = 0; row < this.rows; row++) {\n      const rowArray = [];\n\n      for (let col = 0; col < this.cols; col++) {\n        const x = col * this.cellSize;\n        const y = row * this.cellSize;\n        const active = random() < 0.4;\n\n        rowArray.push(new Cell(x, y, this.cellSize, active));\n      }\n\n      this.cells.push(rowArray);\n    }\n  }\n\n  getCellAt(col, row) {\n    if (col < 0 || col >= this.cols || row < 0 || row >= this.rows) {\n      return null;\n    }\n    return this.cells[row][col];\n  }\n\n  countActiveNeighbors(col, row) {\n    let count = 0;\n\n    for (let yOffset = -1; yOffset <= 1; yOffset++) {\n      for (let xOffset = -1; xOffset <= 1; xOffset++) {\n        if (xOffset === 0 && yOffset === 0) continue;\n\n        const neighbor = this.getCellAt(col + xOffset, row + yOffset);\n        if (neighbor && neighbor.active) count++;\n      }\n    }\n\n    return count;\n  }\n\n  step() {\n    for (let row = 0; row < this.rows; row++) {\n      for (let col = 0; col < this.cols; col++) {\n        const neighbors = this.countActiveNeighbors(col, row);\n        this.cells[row][col].computeNextState(neighbors);\n      }\n    }\n\n    for (let row = 0; row < this.rows; row++) {\n      for (let col = 0; col < this.cols; col++) {\n        this.cells[row][col].applyNextState();\n      }\n    }\n  }\n\n  randomize(prob = 0.4) {\n    for (let row = 0; row < this.rows; row++) {\n      for (let col = 0; col < this.cols; col++) {\n        const cell = this.cells[row][col];\n        const state = random() < prob;\n\n        cell.active = state;\n        cell.nextActive = state;\n        cell.energy = state ? 1 : 0;\n        cell.trail = [];\n      }\n    }\n  }\n\n  render() {\n    for (let row = 0; row < this.rows; row++) {\n      for (let col = 0; col < this.cols; col++) {\n        this.cells[row][col].render();\n      }\n    }\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n221.png",
+      "kind": "normal",
+      "starredId": "n222"
+    },
+    "n222": {
+      "id": "n222",
+      "label": "n222",
+      "kind": "star",
+      "sourceId": "n221",
       "expandedChildren": []
     }
   }
