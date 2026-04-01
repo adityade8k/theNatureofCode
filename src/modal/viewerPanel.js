@@ -148,10 +148,12 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
   controls.className = "file-controls";
 
   const tidyBtn = squareBtn("Tidy", "Tidy code (Prettier)");
+  const downloadBtn = squareBtn("Download", "Download all files as ZIP");
   const runBtn = squareBtn("Run", "Run with current code");
   const stopBtn = squareBtn("Stop", "Pause (noLoop) and keep last frame");
 
   controls.appendChild(tidyBtn);
+  controls.appendChild(downloadBtn);
   controls.appendChild(runBtn);
   controls.appendChild(stopBtn);
 
@@ -294,6 +296,29 @@ export function createViewerPanel({ nodeId, getNode, onRequestClose }) {
       if (consoleDrawer) {
         consoleDrawer.append("error", [errorMsg]);
       }
+    }
+  });
+
+  downloadBtn.addEventListener("click", async () => {
+    // Capture current editor buffer before packaging files.
+    if (codeEditor) draft.files[activePath] = codeEditor.getValue();
+
+    downloadBtn.disabled = true;
+    const prevLabel = downloadBtn.textContent;
+    downloadBtn.textContent = "Zipping...";
+
+    try {
+      const zipBlob = await createSketchZipBlob(draft.files, consoleDrawer);
+      const safeName = toSafeFilename(draft.title || node.title || "sketch");
+      triggerBlobDownload(zipBlob, `${safeName}.zip`);
+    } catch (e) {
+      console.error(e);
+      const errorMsg = e?.message || "Download failed. Check console.";
+      alert(errorMsg);
+      if (consoleDrawer) consoleDrawer.append("error", [errorMsg]);
+    } finally {
+      downloadBtn.disabled = false;
+      downloadBtn.textContent = prevLabel;
     }
   });
 
@@ -616,6 +641,68 @@ function chooseInitialActivePath(files) {
 function extensionOf(p) {
   const m = /\.([^.]+)$/.exec(p || "");
   return m ? m[1].toLowerCase() : "";
+}
+
+async function createSketchZipBlob(files, consoleDrawer) {
+  const jszipMod = await import("https://cdn.jsdelivr.net/npm/jszip@3.10.1/+esm");
+  const JSZipCtor = jszipMod.default || jszipMod.JSZip || jszipMod;
+  const zip = new JSZipCtor();
+
+  const entries = Object.entries(files || {});
+  for (const [path, content] of entries) {
+    if (!path) continue;
+
+    const uploadedPath = uploadedMarkerPath(content);
+    if (uploadedPath) {
+      try {
+        const res = await fetch(uploadedPath);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const blob = await res.blob();
+        zip.file(path, blob);
+      } catch (err) {
+        // Keep export resilient even if temporary upload was cleaned up/unreachable.
+        const fallback = `/* Could not fetch uploaded file from: ${uploadedPath}\nReason: ${err?.message || "Unknown error"} */\n`;
+        zip.file(path, fallback);
+        if (consoleDrawer) {
+          consoleDrawer.append("warn", [`Download fallback used for ${path}: ${uploadedPath}`]);
+        }
+      }
+      continue;
+    }
+
+    zip.file(path, content ?? "");
+  }
+
+  return zip.generateAsync({ type: "blob" });
+}
+
+function uploadedMarkerPath(content) {
+  if (typeof content !== "string") return null;
+  const marker = /^#UPLOADED_FILE#([\s\S]+)#$/.exec(content.trim());
+  return marker ? marker[1] : null;
+}
+
+function triggerBlobDownload(blob, fileName) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = fileName;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function toSafeFilename(name) {
+  const safe = String(name || "sketch")
+    .trim()
+    .replace(/[\\/:*?"<>|]+/g, "-")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^[-.]+|[-.]+$/g, "");
+  return safe || "sketch";
 }
 
 function squareBtn(text, title) {
