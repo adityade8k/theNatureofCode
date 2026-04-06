@@ -4,6 +4,10 @@ import { renderForest } from "./tree/render.js";
 import { renderWires } from "./tree/wires.js";
 import { attachPanZoom } from "./tree/interactions.js";
 import { normalizeStarRoots } from "./tree/starRoots.js";
+import {
+  enforceSingleParentInvariant,
+  getNodeChildren
+} from "./tree/childrenModel.js";
 
 import { createModalManager } from "./modal/modal.js";
 import { createViewerPanel } from "./modal/viewerPanel.js";
@@ -140,7 +144,6 @@ async function loadStateFromJson() {
 
   // normalize expandedChildren arrays -> Sets for layout
   for (const node of Object.values(state.nodes)) {
-    node.children = Array.isArray(node.children) ? node.children : [];
     node.expandedChildren = new Set(
       Array.isArray(node.expandedChildren) ? node.expandedChildren : []
     );
@@ -154,6 +157,17 @@ async function loadStateFromJson() {
     node.files = node.files || {};
     node.sourceId = node.sourceId || "";
     node.starredId = node.starredId || "";
+  }
+
+  // Supports new childSets while enforcing one-parent-per-child globally.
+  enforceSingleParentInvariant(state);
+
+  // Keep expanded children valid after dedupe/normalization.
+  for (const node of Object.values(state.nodes)) {
+    const visibleChildren = new Set(getNodeChildren(node));
+    node.expandedChildren = new Set(
+      [...node.expandedChildren].filter((childId) => visibleChildren.has(childId))
+    );
   }
 
   normalizeStarRoots(state);

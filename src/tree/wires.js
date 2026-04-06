@@ -7,7 +7,14 @@
  * - Star wires only draw when source.starredId exists and is valid
  */
 
-import { isStarRootNode, findParentColumnId } from "./starRoots.js";
+import { isStarRootNode, findParentColumnRef } from "./starRoots.js";
+import {
+  getChildrenForSet,
+  getNodeChildren,
+  getNodeChildSets,
+  makeColumnId,
+  parseColumnId
+} from "./childrenModel.js";
 
 export function renderWires({ state, layout, wiresEl }) {
   const { pos, edges, metrics } = layout;
@@ -24,7 +31,13 @@ export function renderWires({ state, layout, wiresEl }) {
   // ------------------------------------------------------------
   // 1) Normal expanded-branch wires (existing behavior)
   // ------------------------------------------------------------
-  for (const [parentId, childId] of edges) {
+  for (const edge of edges) {
+    const parentColId = edge?.parentColId;
+    const childColId = edge?.childColId;
+    const childId = edge?.childId;
+    if (!parentColId || !childColId || !childId) continue;
+
+    const { nodeId: parentId, setId: parentSetId } = parseColumnId(parentColId);
     const parentNode = state.nodes[parentId];
     const childNode = state.nodes[childId];
 
@@ -33,13 +46,14 @@ export function renderWires({ state, layout, wiresEl }) {
     if (!childNode) continue;
 
     // Child must still be an actual child of parent
-    if (!parentNode.children?.includes(childId)) continue;
+    const parentChildren = getChildrenForSet(parentNode, parentSetId);
+    if (!parentChildren.includes(childId)) continue;
 
-    const p = pos[parentId];
-    const c = pos[childId];
+    const p = pos[parentColId];
+    const c = pos[childColId];
     if (!p || !c) continue;
 
-    const rowIndex = parentNode.children.indexOf(childId);
+    const rowIndex = parentChildren.indexOf(childId);
     if (rowIndex < 0) continue;
 
     // Parent square → right edge
@@ -59,9 +73,11 @@ export function renderWires({ state, layout, wiresEl }) {
   const starRootIndex = new Map();
   for (const [starRootId, starRoot] of Object.entries(state.nodes || {})) {
     if (!isStarRootNode(starRoot, starRootId)) continue;
-    const kids = Array.isArray(starRoot.children) ? starRoot.children : [];
+    const starSetId = getNodeChildSets(starRoot)[0]?.id || "default";
+    const starColId = makeColumnId(starRootId, starSetId);
+    const kids = getNodeChildren(starRoot);
     for (let i = 0; i < kids.length; i++) {
-      starRootIndex.set(kids[i], { starRootId, rowIndex: i });
+      starRootIndex.set(kids[i], { starColId, rowIndex: i });
     }
   }
 
@@ -85,19 +101,19 @@ export function renderWires({ state, layout, wiresEl }) {
     const starRootRef = starRootIndex.get(starId);
     if (!starRootRef) continue;
 
-    const { starRootId, rowIndex: starRowIndex } = starRootRef;
-    const starPos = pos[starRootId];
+    const { starColId, rowIndex: starRowIndex } = starRootRef;
+    const starPos = pos[starColId];
     if (!starPos) continue;
 
     // Find the parent column that actually displays this source tile
-    const parentId = findParentColumnId(state, sourceId);
-    if (!parentId) continue;
+    const parentRef = findParentColumnRef(state, sourceId);
+    if (!parentRef) continue;
 
-    const parentNode = state.nodes[parentId];
-    const p = pos[parentId];
+    const parentNode = state.nodes[parentRef.parentId];
+    const p = pos[parentRef.columnId];
     if (!parentNode || !p) continue;
 
-    const rowIndex = parentNode.children.indexOf(sourceId);
+    const rowIndex = getChildrenForSet(parentNode, parentRef.setId).indexOf(sourceId);
     if (rowIndex < 0) continue;
 
     // Source tile → right edge

@@ -17,7 +17,7 @@
  *   nodes: {
  *     [id]: {
  *       id,
- *       children: [childId, ...],
+ *       childSets: [{ id, label, children: [childId, ...] }],
  *       expandedChildren: Set OR Array   // children whose branch (child column) is visible
  *       kind?: "star" | ...
  *     }
@@ -26,6 +26,14 @@
  */
 
 import { isStarRootNode, STAR_ROOT_PREFIX, LEGACY_STAR_ROOT_ID } from "./starRoots.js";
+import {
+  DEFAULT_CHILD_SET_ID,
+  getChildrenForSet,
+  getDefaultSetId,
+  getNodeChildSets,
+  makeColumnId,
+  parseColumnId
+} from "./childrenModel.js";
 
 export function layoutForest(state, opts = {}) {
   const {
@@ -33,7 +41,8 @@ export function layoutForest(state, opts = {}) {
     gapY = 14,
     gapX = 140,
     plusHeight = 44,
-    siblingGap = 26,
+    siblingGap = 38,
+    sameParentSetGap = 28,
     rootGap = 80
   } = opts;
 
@@ -46,6 +55,7 @@ export function layoutForest(state, opts = {}) {
   // --- helpers ------------------------------------------------
 
   const getNode = (id) => state.nodes[id];
+  const getColumnNode = (columnId) => getNode(parseColumnId(columnId).nodeId);
 
   const expandedSet = (node) => {
     // allow Set in-memory, or Array from JSON
@@ -55,50 +65,86 @@ export function layoutForest(state, opts = {}) {
     return new Set(Array.isArray(v) ? v : []);
   };
 
-  const columnHeight = (nodeId) => {
+  const getColumnChildren = (columnId) => {
+    const { nodeId, setId } = parseColumnId(columnId);
+    const n = getNode(nodeId);
+    return getChildrenForSet(n, setId);
+  };
+
+  const getColumnIdsForNode = (nodeId) => {
+    const n = getNode(nodeId);
+    const sets = getNodeChildSets(n);
+    if (sets.length === 0) {
+      if (Array.isArray(n?.childSets) && n?.kind !== "root") return [];
+      return [makeColumnId(nodeId, getDefaultSetId(n) || DEFAULT_CHILD_SET_ID)];
+    }
+    return sets.map((set) => makeColumnId(nodeId, set.id));
+  };
+
+  const gapBetweenRefs = (a, b) => {
+    if (!a || !b) return siblingGap;
+    if (a.ownerKey && b.ownerKey && a.ownerKey === b.ownerKey) return sameParentSetGap;
+    return siblingGap;
+  };
+
+  const columnHeight = (columnId) => {
+    const { nodeId } = parseColumnId(columnId);
     const n = getNode(nodeId);
 
     // Star column: no plus button; rows are 2× height (for 2× tiles)
     if (isStarRootNode(n, nodeId)) {
-      const rowsH = (n?.children?.length ?? 0) * STAR_ROW_H;
+      const rowsH = getColumnChildren(columnId).length * STAR_ROW_H;
       return rowsH; // no plusHeight in star column
     }
 
-    const rowsH = (n?.children?.length ?? 0) * ROW_H;
+    const rowsH = getColumnChildren(columnId).length * ROW_H;
     return rowsH + plusHeight;
   };
 
   const collectVisibleColumnsFromRoot = (rootId) => {
-    const cols = new Set([rootId]);
+    const cols = new Set();
+    for (const rootColId of getColumnIdsForNode(rootId)) cols.add(rootColId);
 
-    const walk = (id) => {
-      const n = getNode(id);
+    const walk = (colId) => {
+      const n = getColumnNode(colId);
       if (!n) return;
 
-      for (const cid of expandedSet(n)) {
-        cols.add(cid);
-        walk(cid);
+      const expanded = expandedSet(n);
+      for (const childId of getColumnChildren(colId)) {
+        if (!expanded.has(childId)) continue;
+        for (const childColId of getColumnIdsForNode(childId)) {
+          cols.add(childColId);
+          walk(childColId);
+        }
       }
     };
 
-    walk(rootId);
+    for (const rootColId of getColumnIdsForNode(rootId)) {
+      walk(rootColId);
+    }
     return cols;
   };
 
   const collectVisibleEdgesFromRoot = (rootId) => {
     const edges = [];
 
-    const walk = (id) => {
-      const n = getNode(id);
+    const walk = (parentColId) => {
+      const n = getColumnNode(parentColId);
       if (!n) return;
 
-      for (const cid of expandedSet(n)) {
-        edges.push([id, cid]);
-        walk(cid);
+      const expanded = expandedSet(n);
+      for (const childId of getColumnChildren(parentColId)) {
+        if (!expanded.has(childId)) continue;
+        for (const childColId of getColumnIdsForNode(childId)) {
+          edges.push({ parentColId, childColId, childId });
+          walk(childColId);
+        }
       }
     };
 
-    walk(rootId);
+    for (const rootColId of getColumnIdsForNode(rootId)) {
+      walk(rootColId);
+    }
     return edges;
   };
 
@@ -107,43 +153,54 @@ export function layoutForest(state, opts = {}) {
   function layoutOneRoot(rootId, topY0) {
     const visibleCols = collectVisibleColumnsFromRoot(rootId);
 
-    const expandedKidsInView = (id) => {
-      const n = getNode(id);
+    const expandedKidsInView = (colId) => {
+      const n = getColumnNode(colId);
       if (!n) return [];
-      return [...expandedSet(n)].filter((cid) => visibleCols.has(cid));
+
+      const expanded = expandedSet(n);
+      const out = [];
+      for (const childId of getColumnChildren(colId)) {
+        if (!expanded.has(childId)) continue;
+        for (const childColId of getColumnIdsForNode(childId)) {
+          if (visibleCols.has(childColId)) {
+            out.push({ colId: childColId, ownerKey: childId });
+          }
+        }
+      }
+      return out;
     };
 
     // subtree vertical “territory” required for this column and its expanded descendants
     const spanMemo = new Map();
 
-    const subtreeSpan = (id) => {
-      if (spanMemo.has(id)) return spanMemo.get(id);
+    const subtreeSpan = (colId) => {
+      if (spanMemo.has(colId)) return spanMemo.get(colId);
 
-      const kids = expandedKidsInView(id);
-      const selfH = columnHeight(id);
+      const kids = expandedKidsInView(colId);
+      const selfH = columnHeight(colId);
 
       if (kids.length === 0) {
-        spanMemo.set(id, selfH);
+        spanMemo.set(colId, selfH);
         return selfH;
       }
 
       let total = 0;
       for (let i = 0; i < kids.length; i++) {
-        total += subtreeSpan(kids[i]);
-        if (i < kids.length - 1) total += siblingGap;
+        total += subtreeSpan(kids[i].colId);
+        if (i < kids.length - 1) total += gapBetweenRefs(kids[i], kids[i + 1]);
       }
 
       const span = Math.max(selfH, total);
-      spanMemo.set(id, span);
+      spanMemo.set(colId, span);
       return span;
     };
 
-    // positions: column root nodeId -> { x, yTop, centerY, depth }
+    // positions: columnId -> { x, yTop, centerY, depth, nodeId, setId }
     const pos = {};
 
-    const assign = (id, depth, topY) => {
-      const span = subtreeSpan(id);
-      const kids = expandedKidsInView(id);
+    const assign = (colId, depth, topY) => {
+      const span = subtreeSpan(colId);
+      const kids = expandedKidsInView(colId);
 
       let centerY;
 
@@ -153,33 +210,52 @@ export function layoutForest(state, opts = {}) {
         // total children stack span
         let childTotal = 0;
         for (let i = 0; i < kids.length; i++) {
-          childTotal += subtreeSpan(kids[i]);
-          if (i < kids.length - 1) childTotal += siblingGap;
+          childTotal += subtreeSpan(kids[i].colId);
+          if (i < kids.length - 1) childTotal += gapBetweenRefs(kids[i], kids[i + 1]);
         }
 
         // center children within this span
         let childTop = topY + (span - childTotal) / 2;
 
         const childCenters = [];
-        for (const cid of kids) {
-          assign(cid, depth + 1, childTop);
-          childCenters.push(pos[cid].centerY);
-          childTop += subtreeSpan(cid) + siblingGap;
+        for (let i = 0; i < kids.length; i++) {
+          const childRef = kids[i];
+          assign(childRef.colId, depth + 1, childTop);
+          childCenters.push(pos[childRef.colId].centerY);
+          childTop += subtreeSpan(childRef.colId);
+          if (i < kids.length - 1) childTop += gapBetweenRefs(childRef, kids[i + 1]);
         }
 
         centerY = (Math.min(...childCenters) + Math.max(...childCenters)) / 2;
       }
 
-      const selfH = columnHeight(id);
-      pos[id] = {
+      const selfH = columnHeight(colId);
+      const { nodeId, setId } = parseColumnId(colId);
+      pos[colId] = {
         x: depth * COL_X_STEP,
         centerY,
         yTop: centerY - selfH / 2,
-        depth
+        depth,
+        nodeId,
+        setId
       };
     };
 
-    assign(rootId, 0, topY0);
+    const rootColIds = getColumnIdsForNode(rootId).filter((cid) => visibleCols.has(cid));
+    const rootRefs = rootColIds.map((colId) => ({ colId, ownerKey: rootId }));
+    let rootTotal = 0;
+    for (let i = 0; i < rootRefs.length; i++) {
+      rootTotal += subtreeSpan(rootRefs[i].colId);
+      if (i < rootRefs.length - 1) rootTotal += gapBetweenRefs(rootRefs[i], rootRefs[i + 1]);
+    }
+
+    let rootTop = topY0;
+    for (let i = 0; i < rootRefs.length; i++) {
+      const rootRef = rootRefs[i];
+      assign(rootRef.colId, 0, rootTop);
+      rootTop += subtreeSpan(rootRef.colId);
+      if (i < rootRefs.length - 1) rootTop += gapBetweenRefs(rootRef, rootRefs[i + 1]);
+    }
 
     // prune (safety)
     for (const k of Object.keys(pos)) {
@@ -188,7 +264,7 @@ export function layoutForest(state, opts = {}) {
 
     return {
       pos,
-      span: subtreeSpan(rootId),
+      span: rootTotal || columnHeight(makeColumnId(rootId, getDefaultSetId(getNode(rootId)))),
       edges: collectVisibleEdgesFromRoot(rootId)
     };
   }
@@ -232,7 +308,8 @@ export function layoutForest(state, opts = {}) {
 
     const starRootId = starRootsByRoot.get(rootId);
     const starNode = starRootId ? state.nodes[starRootId] : null;
-    const starHasChildren = (starNode?.children || []).length > 0;
+    const starColId = starRootId ? makeColumnId(starRootId, getDefaultSetId(starNode)) : "";
+    const starHasChildren = !!starColId && getColumnChildren(starColId).length > 0;
     if (starRootId && starHasChildren) {
       let maxDepth = 0;
       for (const p of Object.values(pos)) {
@@ -242,15 +319,17 @@ export function layoutForest(state, opts = {}) {
 
       const starDepth = maxDepth + 1;
       const starX = starDepth * COL_X_STEP;
-      const starH = columnHeight(starRootId);
+      const starH = columnHeight(starColId);
       const starYTop = rootTopY + Math.max(0, (span - starH) / 2);
       const starCenterY = starYTop + starH / 2;
 
-      allPos[starRootId] = {
+      allPos[starColId] = {
         x: starX,
         yTop: starYTop,
         centerY: starCenterY,
-        depth: starDepth
+        depth: starDepth,
+        nodeId: starRootId,
+        setId: getDefaultSetId(starNode)
       };
     }
 
@@ -259,6 +338,10 @@ export function layoutForest(state, opts = {}) {
 
   // Legacy STAR column (fallback)
   if (legacyStarRootId && state.nodes[legacyStarRootId]) {
+    const legacyStarColId = makeColumnId(
+      legacyStarRootId,
+      getDefaultSetId(state.nodes[legacyStarRootId])
+    );
     let maxDepth = 0;
     for (const p of Object.values(allPos)) {
       if (!p) continue;
@@ -267,15 +350,17 @@ export function layoutForest(state, opts = {}) {
 
     const starDepth = maxDepth + 1;
     const starX = starDepth * COL_X_STEP;
-    const starH = columnHeight(legacyStarRootId);
+    const starH = columnHeight(legacyStarColId);
     const starYTop = 0;
     const starCenterY = starYTop + starH / 2;
 
-    allPos[legacyStarRootId] = {
+    allPos[legacyStarColId] = {
       x: starX,
       yTop: starYTop,
       centerY: starCenterY,
-      depth: starDepth
+      depth: starDepth,
+      nodeId: legacyStarRootId,
+      setId: getDefaultSetId(state.nodes[legacyStarRootId])
     };
   }
 
@@ -291,6 +376,7 @@ export function layoutForest(state, opts = {}) {
       gapX,
       plusHeight,
       siblingGap,
+      sameParentSetGap,
       rootGap
     }
   };

@@ -1,3 +1,10 @@
+import {
+  getNodeChildren,
+  getNodeChildSets,
+  makeColumnId,
+  normalizeNodeChildSets
+} from "./childrenModel.js";
+
 export const LEGACY_STAR_ROOT_ID = "__STARRED__";
 export const STAR_ROOT_PREFIX = "__STARRED__:";
 
@@ -24,6 +31,7 @@ export function ensureStarRootForRoot(state, rootId) {
       label: id,
       title: "Starred",
       description: "",
+      childSets: [{ id: "default", label: "Children", children: [] }],
       children: [],
       expandedChildren: new Set(),
       files: {},
@@ -34,7 +42,7 @@ export function ensureStarRootForRoot(state, rootId) {
   }
 
   const node = state.nodes[id];
-  node.children = Array.isArray(node.children) ? node.children : [];
+  normalizeNodeChildSets(node);
   node.expandedChildren = node.expandedChildren instanceof Set
     ? node.expandedChildren
     : new Set(Array.isArray(node.expandedChildren) ? node.expandedChildren : []);
@@ -52,8 +60,23 @@ export function getStarRootIds(state) {
 
 export function findParentColumnId(state, childId) {
   for (const [id, node] of Object.entries(state.nodes || {})) {
-    if (!node?.children) continue;
-    if (node.children.includes(childId)) return id;
+    if (getNodeChildren(node).includes(childId)) return id;
+  }
+  return null;
+}
+
+export function findParentColumnRef(state, childId) {
+  for (const [parentId, node] of Object.entries(state.nodes || {})) {
+    const sets = getNodeChildSets(node);
+    for (const set of sets) {
+      if (Array.isArray(set.children) && set.children.includes(childId)) {
+        return {
+          parentId,
+          setId: set.id,
+          columnId: makeColumnId(parentId, set.id)
+        };
+      }
+    }
   }
   return null;
 }
@@ -84,7 +107,7 @@ export function normalizeStarRoots(state) {
   state.nodes = state.nodes || {};
 
   const legacy = state.nodes[LEGACY_STAR_ROOT_ID];
-  const legacyChildren = Array.isArray(legacy?.children) ? legacy.children : [];
+  const legacyChildren = getNodeChildren(legacy);
 
   for (const starId of legacyChildren) {
     const starNode = state.nodes[starId];
@@ -95,7 +118,14 @@ export function normalizeStarRoots(state) {
 
     const starRootId = ensureStarRootForRoot(state, rootId);
     const starRoot = state.nodes[starRootId];
-    if (!starRoot.children.includes(starId)) starRoot.children.push(starId);
+    const kids = getNodeChildren(starRoot);
+    if (!kids.includes(starId)) {
+      const defaultSet = starRoot.childSets?.[0];
+      if (defaultSet && Array.isArray(defaultSet.children)) {
+        defaultSet.children.push(starId);
+      }
+      normalizeNodeChildSets(starRoot);
+    }
   }
 
   if (legacy) delete state.nodes[LEGACY_STAR_ROOT_ID];
@@ -107,7 +137,7 @@ export function normalizeStarRoots(state) {
 
   for (const [id, node] of Object.entries(state.nodes)) {
     if (!isStarRootNode(node, id)) continue;
-    node.children = Array.isArray(node.children) ? node.children : [];
+    normalizeNodeChildSets(node);
     node.expandedChildren = node.expandedChildren instanceof Set
       ? node.expandedChildren
       : new Set(Array.isArray(node.expandedChildren) ? node.expandedChildren : []);

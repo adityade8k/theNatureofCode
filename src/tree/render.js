@@ -1,6 +1,11 @@
 // src/tree/render.js
 import { createP5Runner } from "../modal/runner.js";
 import { isStarRootNode } from "./starRoots.js";
+import {
+  getChildrenForSet,
+  getNodeChildSets,
+  parseColumnId
+} from "./childrenModel.js";
 
 export function renderForest({
   state,
@@ -51,7 +56,9 @@ export function renderForest({
     const node = state.nodes[id];
     return node && !isStarRootNode(node, id);
   }) || (state.roots || [])[0];
-  const rp = firstRoot ? pos[firstRoot] : null;
+  const firstRootSetId = firstRoot ? (getNodeChildSets(state.nodes[firstRoot])[0]?.id || "default") : "";
+  const firstRootColId = firstRoot ? `${firstRoot}::${firstRootSetId}` : "";
+  const rp = firstRootColId ? pos[firstRootColId] : null;
   
 
   headerEl.textContent = "the Nature of Code";
@@ -99,7 +106,8 @@ function renderColumn({
   getFilesForNode,
   onSaveThumbnailForNode
 }) {
-  const node = state.nodes[colId];
+  const { nodeId, setId } = parseColumnId(colId);
+  const node = state.nodes[nodeId];
 
   const col = document.createElement("div");
   col.className = "column-wrap";
@@ -107,7 +115,8 @@ function renderColumn({
   col.style.top = `${yTop}px`;
 
   if (depth === 0) {
-    if (!isStarRootNode(node, colId)) {
+    const firstSetId = getNodeChildSets(node)[0]?.id || "default";
+    if (!isStarRootNode(node, nodeId) && setId === firstSetId) {
       const title = (node?.title || "").trim();
       if (title) {
         const header = document.createElement("div");
@@ -118,9 +127,7 @@ function renderColumn({
     }
   }
 
-  const expanded = toSet(node?.expandedChildren);
-
-  (node?.children || []).forEach((childId) => {
+  getChildrenForSet(node, setId).forEach((childId) => {
     const child = state.nodes[childId];
     if (!child) return;
 
@@ -169,19 +176,16 @@ function renderColumn({
     row.appendChild(tile);
 
     if (mode === "editor" && !isStar) {
-      const alreadyBranched = expanded.has(childId);
-      if (!alreadyBranched) {
-        const arrow = document.createElement("button");
-        arrow.className = "btn";
-        arrow.type = "button";
-        arrow.textContent = "→";
-        arrow.title = "Spawn branch";
-        arrow.addEventListener("click", (e) => {
-          e.stopPropagation();
-          if (typeof onSpawnBranch === "function") onSpawnBranch(colId, childId);
-        });
-        row.appendChild(arrow);
-      }
+      const arrow = document.createElement("button");
+      arrow.className = "btn";
+      arrow.type = "button";
+      arrow.textContent = "→";
+      arrow.title = "Spawn new child set";
+      arrow.addEventListener("click", (e) => {
+        e.stopPropagation();
+          if (typeof onSpawnBranch === "function") onSpawnBranch(nodeId, childId);
+      });
+      row.appendChild(arrow);
 
       const isAlreadyStarred = !!child.starredId && !!state.nodes[child.starredId];
       if (!isAlreadyStarred) {
@@ -201,7 +205,7 @@ function renderColumn({
     col.appendChild(row);
   });
 
-  if (mode === "editor" && !isStarRootNode(node, colId)) {
+  if (mode === "editor" && !isStarRootNode(node, nodeId)) {
     const plus = document.createElement("button");
     plus.className = "btn-plus";
     plus.type = "button";
@@ -209,7 +213,7 @@ function renderColumn({
     plus.title = "Add child";
     plus.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (typeof onAddChild === "function") onAddChild(colId);
+      if (typeof onAddChild === "function") onAddChild(nodeId, setId);
     });
     col.appendChild(plus);
   }
@@ -512,13 +516,6 @@ function renderStarTile({
   }
 
   return wrap;
-}
-
-function toSet(v) {
-  if (!v) return new Set();
-  if (v instanceof Set) return v;
-  if (Array.isArray(v)) return new Set(v);
-  return new Set();
 }
 
 function wait(ms) {
