@@ -13,5 +13,9 @@
   },
   "n140": {
     "bg.jpg": "/assets/bg.jpg"
+  },
+  "n362": {
+    "Serene_Japanese_garden_with_moon_gate.png": "/assets/Serene_Japanese_garden_with_moon_gate.png",
+    "bg.jpg": "/assets/Serene_Japanese_garden_with_moon_gate.png"
   }
 }

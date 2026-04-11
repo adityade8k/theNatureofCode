@@ -798,8 +798,8 @@
       "description": "",
       "children": [
         "n170",
-        "n172",
-        "n240"
+        "n341",
+        "n342"
       ],
       "expandedChildren": [],
       "files": {},
@@ -813,8 +813,8 @@
           "label": "Children",
           "children": [
             "n170",
-            "n172",
-            "n240"
+            "n341",
+            "n342"
           ]
         }
       ]
@@ -1460,14 +1460,14 @@
       },
       "thumbnailPath": "/thumbs/n91.png",
       "kind": "normal",
-      "starredId": "n172",
       "childSets": [
         {
           "id": "default",
           "label": "Children",
           "children": []
         }
-      ]
+      ],
+      "starredId": "n342"
     },
     "n94": {
       "id": "n94",
@@ -2594,22 +2594,6 @@
         }
       ]
     },
-    "n172": {
-      "id": "n172",
-      "label": "n172",
-      "kind": "star",
-      "sourceId": "n91",
-      "expandedChildren": [],
-      "children": [],
-      "files": {},
-      "childSets": [
-        {
-          "id": "default",
-          "label": "Children",
-          "children": []
-        }
-      ]
-    },
     "n173": {
       "id": "n173",
       "label": "n173",
@@ -3279,7 +3263,8 @@
       "expandedChildren": [
         "n205",
         "n224",
-        "n281"
+        "n281",
+        "n301"
       ],
       "files": {},
       "thumbnailPath": "",
@@ -3357,11 +3342,15 @@
         "n225",
         "n226",
         "n228",
-        "n230"
+        "n230",
+        "n345",
+        "n346",
+        "n347"
       ],
       "expandedChildren": [
         "n228",
-        "n230"
+        "n230",
+        "n347"
       ],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
@@ -3380,6 +3369,15 @@
             "n226",
             "n228",
             "n230"
+          ]
+        },
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n345",
+            "n346",
+            "n347"
           ]
         }
       ]
@@ -4035,13 +4033,7 @@
       "thumbnailPath": "/thumbs/n237.png",
       "kind": "normal",
       "starredId": "",
-      "childSets": [
-        {
-          "id": "default",
-          "label": "Children",
-          "children": []
-        }
-      ]
+      "childSets": []
     },
     "n238": {
       "id": "n238",
@@ -4058,30 +4050,14 @@
       },
       "thumbnailPath": "/thumbs/n238.png",
       "kind": "normal",
-      "starredId": "n240",
       "childSets": [
         {
           "id": "default",
           "label": "Children",
           "children": []
         }
-      ]
-    },
-    "n240": {
-      "id": "n240",
-      "label": "n240",
-      "kind": "star",
-      "sourceId": "n238",
-      "expandedChildren": [],
-      "children": [],
-      "files": {},
-      "childSets": [
-        {
-          "id": "default",
-          "label": "Children",
-          "children": []
-        }
-      ]
+      ],
+      "starredId": "n341"
     },
     "n241": {
       "id": "n241",
@@ -4175,7 +4151,7 @@
       },
       "thumbnailPath": "/thumbs/n244.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n365"
     },
     "n245": {
       "id": "n245",
@@ -4252,10 +4228,32 @@
         {
           "id": "default",
           "label": "Children",
-          "children": []
+          "children": [
+            "n364",
+            "n365",
+            "n366",
+            "n367",
+            "n368",
+            "n369",
+            "n370",
+            "n371",
+            "n372",
+            "n373"
+          ]
         }
       ],
-      "children": [],
+      "children": [
+        "n364",
+        "n365",
+        "n366",
+        "n367",
+        "n368",
+        "n369",
+        "n370",
+        "n371",
+        "n372",
+        "n373"
+      ],
       "expandedChildren": [],
       "files": {},
       "thumbnailPath": "",
@@ -4598,7 +4596,7 @@
       },
       "thumbnailPath": "/thumbs/n265.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n366"
     },
     "n267": {
       "id": "n267",
@@ -4662,7 +4660,7 @@
       },
       "thumbnailPath": "/thumbs/n270.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n367"
     },
     "n275": {
       "id": "n275",
@@ -4681,7 +4679,7 @@
       },
       "thumbnailPath": "/thumbs/n275.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n368"
     },
     "n279": {
       "id": "n279",
@@ -4738,13 +4736,6 @@
       "description": "Basic Chaos Game",
       "childSets": [
         {
-          "id": "branch-2",
-          "label": "Branch 2",
-          "children": [
-            "n284"
-          ]
-        },
-        {
           "id": "branch-3",
           "label": "Branch 3",
           "children": [
@@ -4775,7 +4766,6 @@
         }
       ],
       "children": [
-        "n284",
         "n286",
         "n287",
         "n288",
@@ -4792,23 +4782,6 @@
         "sketch.js": "let perStep = 1000;\n\nlet currentX;\nlet currentY;\nlet anchors = [];\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(\"#2A2B2A\");\n\n  anchors.push(createVector(width / 2, 60));\n  anchors.push(createVector(60, height - 60));\n  anchors.push(createVector(width - 60, height - 60));\n\n  currentX = random(width);\n  currentY = random(height);\n}\n\nfunction draw() {\n  stroke(\"#996888\");\n  strokeWeight(0.5);\n\n  for (let i = 0; i < perStep; i++) {\n    let target = random(anchors);\n\n    currentX = (currentX + target.x) / 2;\n    currentY = (currentY + target.y) / 2;\n\n    point(currentX, currentY);\n  }\n}"
       },
       "thumbnailPath": "/thumbs/n282.png",
-      "kind": "normal",
-      "starredId": ""
-    },
-    "n284": {
-      "id": "n284",
-      "label": "n284",
-      "title": "Variation",
-      "description": "no repeat anchor",
-      "childSets": [],
-      "children": [],
-      "expandedChildren": [],
-      "files": {
-        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
-        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let perStep = 1000;\n\nlet current;\nlet anchors = [];\nlet lastIndex = -1;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(\"#2A2B2A\");\n\n  anchors.push(createVector(width / 2, 60));\n  anchors.push(createVector(60, height - 60));\n  anchors.push(createVector(width - 60, height - 60));\n\n  current = createVector(random(width), random(height));\n}\n\nfunction draw() {\n  stroke(\"#996888\");\n  strokeWeight(1);\n\n  for (let i = 0; i < perStep; i++) {\n    let index = floor(random(anchors.length));\n\n    while (index === lastIndex) {\n      index = floor(random(anchors.length));\n    }\n\n    let target = anchors[index];\n    lastIndex = index;\n\n    current.x = lerp(current.x, target.x, 0.5);\n    current.y = lerp(current.y, target.y, 0.5);\n\n    point(current.x, current.y);\n  }\n}\n\n"
-      },
-      "thumbnailPath": "/thumbs/n284.png",
       "kind": "normal",
       "starredId": ""
     },
@@ -4890,7 +4863,7 @@
       },
       "thumbnailPath": "/thumbs/n287.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n369"
     },
     "n288": {
       "id": "n288",
@@ -4957,17 +4930,18 @@
       "id": "n292",
       "label": "n292",
       "title": "Variation",
-      "description": "More Anchors",
+      "description": "More Anchors + rotation",
       "childSets": [],
       "children": [],
       "expandedChildren": [],
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let perStep = 1000;\n\nlet current;\nlet anchors = [];\nlet rotationAmount = 0.3;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(\"#E2C044\");\n\n  anchors.push(createVector(60, 60));\nanchors.push(createVector(width - 60, 60));\nanchors.push(createVector(width - 60, height - 60));\nanchors.push(createVector(60, height - 60));\n\n  current = createVector(random(width), random(height));\n}\n\nfunction draw() {\n  stroke(\"#2E5266\");\n  strokeWeight(1);\n\n  for (let i = 0; i < perStep; i++) {\n    let target = random(anchors);\n\n    let dx = current.x - target.x;\n    let dy = current.y - target.y;\n\n    dx *= 0.5;\n    dy *= 0.5;\n\n    let rx = dx * cos(rotationAmount) - dy * sin(rotationAmount);\n    let ry = dx * sin(rotationAmount) + dy * cos(rotationAmount);\n\n    current.x = target.x + rx;\n    current.y = target.y + ry;\n\n    point(current.x, current.y);\n  }\n}\n"
+        "sketch.js": "let perStep = 1000;\n\nlet current;\nlet anchors = [];\nlet rotationAmount = 0.5;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(\"#E2C044\");\n\n  anchors.push(createVector(60, 60));\nanchors.push(createVector(width - 60, 60));\nanchors.push(createVector(width - 60, height - 60));\nanchors.push(createVector(60, height - 60));\n\n  current = createVector(random(width), random(height));\n}\n\nfunction draw() {\n  stroke(\"#2E5266\");\n  strokeWeight(1);\n\n  for (let i = 0; i < perStep; i++) {\n    let target = random(anchors);\n\n    let dx = current.x - target.x;\n    let dy = current.y - target.y;\n\n    dx *= 0.5;\n    dy *= 0.5;\n\n    let rx = dx * cos(rotationAmount) - dy * sin(rotationAmount);\n    let ry = dx * sin(rotationAmount) + dy * cos(rotationAmount);\n\n    current.x = target.x + rx;\n    current.y = target.y + ry;\n\n    point(current.x, current.y);\n  }\n}\n"
       },
       "thumbnailPath": "/thumbs/n292.png",
-      "kind": "normal"
+      "kind": "normal",
+      "starredId": ""
     },
     "n294": {
       "id": "n294",
@@ -5081,7 +5055,7 @@
       },
       "thumbnailPath": "/thumbs/n299.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n370"
     },
     "n300": {
       "id": "n300",
@@ -5109,8 +5083,151 @@
     "n301": {
       "id": "n301",
       "label": "n301",
-      "title": "",
-      "description": "",
+      "title": "Mandelbrot",
+      "description": "Simple pixel mapping",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n310"
+          ]
+        }
+      ],
+      "children": [
+        "n310"
+      ],
+      "expandedChildren": [
+        "n310"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "function setup() {\n  createCanvas(600, 600);\n  pixelDensity(1); // important: makes pixel indexing predictable\n\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let index = 4 * (x + y * width);\n\n      // simple test pattern:\n      // red changes across x\n      // green changes across y\n      // blue stays fixed\n      pixels[index + 0] = map(x, 0, width - 1, 0, 255);   // R\n      pixels[index + 1] = map(y, 0, height - 1, 0, 255);  // G\n      pixels[index + 2] = 150;                            // B\n      pixels[index + 3] = 255;                            // A\n    }\n  }\n\n  updatePixels();\n  noLoop();\n}\n\nfunction draw() {\n}"
+      },
+      "thumbnailPath": "/thumbs/n301.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n310": {
+      "id": "n310",
+      "label": "n310",
+      "title": "Complex Plane",
+      "description": "Visualizing a complex plane",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n311"
+          ]
+        }
+      ],
+      "children": [
+        "n311"
+      ],
+      "expandedChildren": [
+        "n311"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let a = map(x, 0, width - 1, minRe, maxRe); // real part\n      let b = map(y, 0, height - 1, maxIm, minIm); // imaginary part\n\n      let index = 4 * (x + y * width);\n\n      // visualize the complex coordinates as color\n      let r = map(a, minRe, maxRe, 0, 255);\n      let g = map(b, minIm, maxIm, 0, 255);\n\n      pixels[index + 0] = r;\n      pixels[index + 1] = g;\n      pixels[index + 2] = 150;\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n  noLoop();\n}\n\nfunction draw() {\n}"
+      },
+      "thumbnailPath": "/thumbs/n310.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n311": {
+      "id": "n311",
+      "label": "n311",
+      "title": "Mandelbrot",
+      "description": "Basic Grayscale",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n312",
+            "n314"
+          ]
+        }
+      ],
+      "children": [
+        "n312",
+        "n314"
+      ],
+      "expandedChildren": [
+        "n312"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nlet maxIterations = 100;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      \n      // map pixel → complex number\n      let a = map(x, 0, width - 1, minRe, maxRe);\n      let b = map(y, 0, height - 1, maxIm, minIm);\n\n      // store original c\n      let ca = a;\n      let cb = b;\n\n      let n = 0;\n\n      // Mandelbrot iteration\n      while (n < maxIterations) {\n        // z = z^2 + c\n        let aa = a * a - b * b;\n        let bb = 2 * a * b;\n\n        a = aa + ca;\n        b = bb + cb;\n\n        // check escape (|z| > 2 → squared > 4)\n        if (a * a + b * b > 4) {\n          break;\n        }\n\n        n++;\n      }\n\n      let index = 4 * (x + y * width);\n\n      // grayscale mapping\n      let bright;\n\n      if (n === maxIterations) {\n        bright = 0; // inside set → black\n      } else {\n        bright = map(n, 0, maxIterations, 255, 0);\n      }\n\n      pixels[index + 0] = bright;\n      pixels[index + 1] = bright;\n      pixels[index + 2] = bright;\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n  noLoop();\n}\n\nfunction draw() {\n}"
+      },
+      "thumbnailPath": "/thumbs/n311.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n312": {
+      "id": "n312",
+      "label": "n312",
+      "title": "Mandelbrot",
+      "description": "Classic Mandelbrot with color",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n313",
+            "n315",
+            "n316",
+            "n319",
+            "n320"
+          ]
+        }
+      ],
+      "children": [
+        "n313",
+        "n315",
+        "n316",
+        "n319",
+        "n320"
+      ],
+      "expandedChildren": [
+        "n320"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nlet maxIterations = 100;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      // map pixel → complex number c\n      let ca = map(x, 0, width - 1, minRe, maxRe);\n      let cb = map(y, 0, height - 1, maxIm, minIm);\n\n      // z starts at 0\n      let a = 0;\n      let b = 0;\n\n      let n = 0;\n\n      while (n < maxIterations) {\n        let aa = a * a - b * b;\n        let bb = 2 * a * b;\n\n        a = aa + ca;\n        b = bb + cb;\n\n        if (a * a + b * b > 4) {\n          break;\n        }\n\n        n++;\n      }\n\n      let index = 4 * (x + y * width);\n\n      let col;\n\n      if (n === maxIterations) {\n        col = color(0, 0, 0); // inside set\n      } else {\n        let hueValue = map(n, 0, maxIterations, 0, 255);\n        col = color(hueValue, 200, 255);\n      }\n\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n  noLoop();\n}\n\nfunction draw() {\n}"
+      },
+      "thumbnailPath": "/thumbs/n312.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n313": {
+      "id": "n313",
+      "label": "n313",
+      "title": "Mandelbrot",
+      "description": "Refactor for zooming",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nlet maxIterations = 100;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColor(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null; // inside the set\n}\n\nfunction getColor(smooth) {\n  if (smooth === null) {\n    return color(0, 0, 0);\n  }\n\n  let hueValue = map(smooth, 0, maxIterations, 0, 255);\n  hueValue = constrain(hueValue, 0, 255);\n\n  return color(hueValue, 200, 255);\n}"
+      },
+      "thumbnailPath": "/thumbs/n313.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n314": {
+      "id": "n314",
+      "label": "n314",
+      "title": "Mandelbrot",
+      "description": "Color Smoothening",
       "childSets": [
         {
           "id": "default",
@@ -5123,11 +5240,477 @@
       "files": {
         "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let perStep = 1000;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(\"#2A2B2A\");\n}\n\nfunction draw() {\n  stroke(\"#996888\");\n  for (let i = 0; i < perStep; i++) {\n    point(random(width), random(height));\n  }\n}\n"
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nlet maxIterations = 100;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      // map pixel → complex number c\n      let ca = map(x, 0, width - 1, minRe, maxRe);\n      let cb = map(y, 0, height - 1, maxIm, minIm);\n\n      // z starts at 0\n      let a = 0;\n      let b = 0;\n\n      let n = 0;\n\n      while (n < maxIterations) {\n        let aa = a * a - b * b;\n        let bb = 2 * a * b;\n\n        a = aa + ca;\n        b = bb + cb;\n\n        if (a * a + b * b > 4) {\n          break;\n        }\n\n        n++;\n      }\n\n      let index = 4 * (x + y * width);\n\n      let col;\n\n      if (n === maxIterations) {\n        col = color(0, 0, 0); // inside set\n      } else {\n        let hueValue = map(n, 0, maxIterations, 0, 255);\n        col = color(hueValue, 200, 255);\n      }\n\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n  noLoop();\n}\n\nfunction draw() {\n}"
       },
-      "thumbnailPath": "",
+      "thumbnailPath": "/thumbs/n314.png",
       "kind": "normal",
       "starredId": ""
+    },
+    "n315": {
+      "id": "n315",
+      "label": "n315",
+      "title": "Mandelbrot",
+      "description": "Zoom enabled",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let minRe = -2.5;\nlet maxRe = 1.0;\nlet minIm = -1.5;\nlet maxIm = 1.5;\n\nlet maxIterations = 100;\nlet zoomFactor = 0.5; // each click shrinks window to 50%\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactor);\n  renderMandelbrot();\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColor(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColor(smooth) {\n  if (smooth === null) {\n    return color(0, 0, 0);\n  }\n\n  let hueValue = map(smooth, 0, maxIterations, 0, 255);\n  hueValue = constrain(hueValue, 0, 255);\n\n  return color(hueValue, 200, 255);\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}"
+      },
+      "thumbnailPath": "/thumbs/n315.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n316": {
+      "id": "n316",
+      "label": "n316",
+      "title": "Mandelbort",
+      "description": "adaptive iterations",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let startMinRe = -2.5;\nlet startMaxRe = 1.0;\nlet startMinIm = -1.5;\nlet startMaxIm = 1.5;\n\nlet minRe = startMinRe;\nlet maxRe = startMaxRe;\nlet minIm = startMinIm;\nlet maxIm = startMaxIm;\n\nlet baseIterations = 100;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n  textFont(\"monospace\");\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n  drawOverlay();\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n  redraw();\n}\n\nfunction keyPressed() {\n  if (key === 'z' || key === 'Z') {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n    redraw();\n  }\n\n  if (key === 'r' || key === 'R') {\n    resetView();\n    renderMandelbrot();\n    redraw();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColor(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColor(smooth) {\n  if (smooth === null) {\n    return color(0, 0, 0);\n  }\n\n  let hueValue = map(smooth, 0, maxIterations, 0, 255);\n  hueValue = constrain(hueValue, 0, 255);\n\n  return color(hueValue, 200, 255);\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = startMaxRe - startMinRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(50, maxIterations);\n}\n\nfunction resetView() {\n  minRe = startMinRe;\n  maxRe = startMaxRe;\n  minIm = startMinIm;\n  maxIm = startMaxIm;\n  maxIterations = baseIterations;\n}\n\nfunction drawOverlay() {\n  noStroke();\n  fill(0, 180);\n  rect(10, 10, 260, 90);\n\n  fill(255);\n  textSize(12);\n  text(\"click = zoom in\", 20, 30);\n  text(\"Z = zoom out\", 20, 46);\n  text(\"R = reset\", 20, 62);\n  text(\"iterations: \" + maxIterations, 20, 78);\n  text(\"span: \" + nf(maxRe - minRe, 1, 12), 20, 94);\n}"
+      },
+      "thumbnailPath": "/thumbs/n316.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n319": {
+      "id": "n319",
+      "label": "n319",
+      "title": "Mandelbrot",
+      "description": "Save render setting by pressing S",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  \"minRe\": -1.106784011764399,\n  \"maxRe\": -1.103366043014399,\n  \"minIm\": -0.2308852971097662,\n  \"maxIm\": -0.2279556096097662,\n  \"baseIterations\": 238\n}\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  colorMode(HSB, 255);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColor(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = red(col);\n      pixels[index + 1] = green(col);\n      pixels[index + 2] = blue(col);\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColor(smooth) {\n  if (smooth === null) {\n    return color(0, 0, 0);\n  }\n\n  let hueValue = map(smooth, 0, maxIterations, 0, 255);\n  hueValue = constrain(hueValue, 0, 255);\n\n  return color(hueValue, 200, 255);\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"Replace viewSettings with:\");\n  console.log(JSON.stringify(saved, null, 2));\n}"
+      },
+      "thumbnailPath": "/thumbs/n319.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n320": {
+      "id": "n320",
+      "label": "n320",
+      "title": "Color Pallete",
+      "description": "Color palette implementation",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n321"
+          ]
+        },
+        {
+          "id": "branch-3",
+          "label": "Branch 3",
+          "children": [
+            "n323"
+          ]
+        },
+        {
+          "id": "branch-4",
+          "label": "Branch 4",
+          "children": [
+            "n324"
+          ]
+        },
+        {
+          "id": "branch-5",
+          "label": "Branch 5",
+          "children": [
+            "n325"
+          ]
+        },
+        {
+          "id": "branch-6",
+          "label": "Branch 6",
+          "children": [
+            "n326"
+          ]
+        },
+        {
+          "id": "branch-7",
+          "label": "Branch 7",
+          "children": [
+            "n327"
+          ]
+        }
+      ],
+      "children": [
+        "n321",
+        "n323",
+        "n324",
+        "n325",
+        "n326",
+        "n327"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  minRe: -1.106784011764399,\n  maxRe: -1.103366043014399,\n  minIm: -0.2308852971097662,\n  maxIm: -0.2279556096097662,\n  baseIterations: 238\n};\n\nlet palette = [\n  \"#000000\", // inside set / nothing happens\n  \"#140A3C\",\n  \"#5028B4\",\n  \"#FF783C\",\n  \"#FFFFFF\"  // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n320.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n321": {
+      "id": "n321",
+      "label": "n321",
+      "title": "Exploration",
+      "description": "Color Variation",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  minRe: -1.106784011764399,\n  maxRe: -1.103366043014399,\n  minIm: -0.2308852971097662,\n  maxIm: -0.2279556096097662,\n  baseIterations: 238\n};\n\nlet palette = [\n  [242, 243, 174],          // inside set / nothing happens\n  [237, 211, 130],\n  [252, 158, 79],\n  [255, 82, 27],\n  [2, 1, 34]     // fastest collapse\n];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  // first palette color = inside set / no collapse\n  if (smooth === null) {\n    return palette[0];\n  }\n\n  // if only two colors exist:\n  // palette[0] = inside\n  // palette[1] = fastest collapse\n  if (palette.length === 1) {\n    return palette[0];\n  }\n\n  if (palette.length === 2) {\n    return palette[1];\n  }\n\n  // escaped points use palette[1 ... end]\n  let escapedColors = palette.slice(1);\n\n  // quick collapse should map to LAST color\n  // slow collapse should map to start of escaped palette\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n321.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n323": {
+      "id": "n323",
+      "label": "n323",
+      "title": "Variation",
+      "description": "Color exploration",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  \"minRe\": -1.106020193466161,\n  \"maxRe\": -1.1059133819427236,\n  \"minIm\": -0.2290029637204585,\n  \"maxIm\": -0.2289114109860835,\n  \"baseIterations\": 307\n};\n\nlet palette = [\n  '#423e3b', '#ff2e00', '#fea82f', '#fffecb', '#5448c8'  // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n323.png",
+      "kind": "normal",
+      "starredId": "n371"
+    },
+    "n324": {
+      "id": "n324",
+      "label": "n324",
+      "title": "Variation",
+      "description": "Color Exploration",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  minRe: -1.106784011764399,\n  maxRe: -1.103366043014399,\n  minIm: -0.2308852971097662,\n  maxIm: -0.2279556096097662,\n  baseIterations: 238\n};\n\nlet palette = [\n  '#bdede0', \n  '#bbdbd1',\n  '#b6b8d6',\n  '#7e78d2',\n  '#6f58c9',\n // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n324.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n325": {
+      "id": "n325",
+      "label": "n325",
+      "title": "Variation",
+      "description": "color exploration",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n\"minRe\": -0.7775815349190383,\n  \"maxRe\": -0.7758725505440383,\n  \"minIm\": -0.12743842581874743,\n  \"maxIm\": -0.12597358206874743,\n  \"baseIterations\": 251\n\n};\n\nlet palette = [\n  '#ceec97',\n  '#f4b393',\n  '#fc60a8',\n  '#7a28cb',\n  '#494368' // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n325.png",
+      "kind": "normal",
+      "starredId": "n372"
+    },
+    "n326": {
+      "id": "n326",
+      "label": "n326",
+      "title": "Variation",
+      "description": "Color exploration",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  minRe: -1.106784011764399,\n  maxRe: -1.103366043014399,\n  minIm: -0.2308852971097662,\n  maxIm: -0.2279556096097662,\n  baseIterations: 238\n};\n\nlet palette = [\n  '#D6F910',\n  '#8ea604',\n  '#f5bb00',\n  '#ec9f05',\n  '#d76a03',\n  '#bf3100',\n  '#250d04' // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n326.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n327": {
+      "id": "n327",
+      "label": "n327",
+      "title": "Color Variation",
+      "description": "Exploration",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let viewSettings = {\n  \"minRe\": -0.7011386268524974,\n  \"maxRe\": -0.6977206581024974,\n  \"minIm\": -0.26449160404714783,\n  \"maxIm\": -0.26156191654714783,\n  \"baseIterations\": 238\n};\n\nlet palette = [\n  '#000f08',\n  '#136f63',\n  '#47865a',\n  '#7a9d50',\n  '#e0ca3c',\n  '#ea8628',\n  \"#ef641e\",\n  '#f34213',\n  '#3e2f5b'  // fastest collapse\n];\n\nlet paletteRGB = [];\n\nlet minRe = viewSettings.minRe;\nlet maxRe = viewSettings.maxRe;\nlet minIm = viewSettings.minIm;\nlet maxIm = viewSettings.maxIm;\n\nlet baseIterations = viewSettings.baseIterations;\nlet maxIterations = baseIterations;\n\nlet zoomFactorIn = 0.5;\nlet zoomFactorOut = 2.0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  pixelDensity(1);\n\n  paletteRGB = normalizePalette(palette);\n\n  renderMandelbrot();\n  noLoop();\n}\n\nfunction draw() {\n}\n\nfunction mousePressed() {\n  if (mouseX < 0 || mouseX >= width || mouseY < 0 || mouseY >= height) return;\n\n  let c = pixelToComplex(mouseX, mouseY);\n  zoomAt(c.a, c.b, zoomFactorIn);\n  updateIterations();\n  renderMandelbrot();\n}\n\nfunction keyPressed() {\n  if (key === \"z\" || key === \"Z\") {\n    let center = getCenter();\n    zoomAt(center.a, center.b, zoomFactorOut);\n    updateIterations();\n    renderMandelbrot();\n  }\n\n  if (key === \"r\" || key === \"R\") {\n    resetView();\n    renderMandelbrot();\n  }\n\n  if (key === \"s\" || key === \"S\") {\n    saveCurrentViewToConsole();\n  }\n}\n\nfunction renderMandelbrot() {\n  loadPixels();\n\n  for (let y = 0; y < height; y++) {\n    for (let x = 0; x < width; x++) {\n      let c = pixelToComplex(x, y);\n      let smooth = mandelbrotEscape(c.a, c.b);\n      let col = getColorFromPalette(smooth);\n\n      let index = 4 * (x + y * width);\n      pixels[index + 0] = col[0];\n      pixels[index + 1] = col[1];\n      pixels[index + 2] = col[2];\n      pixels[index + 3] = 255;\n    }\n  }\n\n  updatePixels();\n}\n\nfunction pixelToComplex(x, y) {\n  let a = map(x, 0, width - 1, minRe, maxRe);\n  let b = map(y, 0, height - 1, maxIm, minIm);\n  return { a, b };\n}\n\nfunction mandelbrotEscape(ca, cb) {\n  let a = 0;\n  let b = 0;\n  let n = 0;\n\n  while (n < maxIterations) {\n    let aa = a * a - b * b;\n    let bb = 2 * a * b;\n\n    a = aa + ca;\n    b = bb + cb;\n\n    if (a * a + b * b > 4) {\n      let mag = sqrt(a * a + b * b);\n      let smooth = n + 1 - log(log(mag)) / log(2);\n      return smooth;\n    }\n\n    n++;\n  }\n\n  return null;\n}\n\nfunction getColorFromPalette(smooth) {\n  if (smooth === null) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 1) {\n    return paletteRGB[0];\n  }\n\n  if (paletteRGB.length === 2) {\n    return paletteRGB[1];\n  }\n\n  let escapedColors = paletteRGB.slice(1);\n\n  let t = map(smooth, 0, maxIterations, 1, 0);\n  t = constrain(t, 0, 1);\n\n  return samplePalette(escapedColors, t);\n}\n\nfunction samplePalette(colors, t) {\n  if (colors.length === 1) {\n    return colors[0];\n  }\n\n  let scaled = t * (colors.length - 1);\n  let indexA = floor(scaled);\n  let indexB = min(indexA + 1, colors.length - 1);\n  let amt = scaled - indexA;\n\n  let c1 = colors[indexA];\n  let c2 = colors[indexB];\n\n  return [\n    lerp(c1[0], c2[0], amt),\n    lerp(c1[1], c2[1], amt),\n    lerp(c1[2], c2[2], amt)\n  ];\n}\n\nfunction normalizePalette(inputPalette) {\n  let result = [];\n\n  for (let i = 0; i < inputPalette.length; i++) {\n    result.push(parseColor(inputPalette[i]));\n  }\n\n  return result;\n}\n\nfunction parseColor(value) {\n  if (Array.isArray(value)) {\n    return [value[0], value[1], value[2]];\n  }\n\n  if (typeof value === \"string\") {\n    return hexToRgb(value);\n  }\n\n  return [0, 0, 0];\n}\n\nfunction hexToRgb(hex) {\n  let clean = hex.replace(\"#\", \"\").trim();\n\n  if (clean.length === 3) {\n    clean = clean[0] + clean[0] + clean[1] + clean[1] + clean[2] + clean[2];\n  }\n\n  let r = parseInt(clean.substring(0, 2), 16);\n  let g = parseInt(clean.substring(2, 4), 16);\n  let b = parseInt(clean.substring(4, 6), 16);\n\n  return [r, g, b];\n}\n\nfunction zoomAt(centerRe, centerIm, factor) {\n  let reSpan = (maxRe - minRe) * factor;\n  let imSpan = (maxIm - minIm) * factor;\n\n  minRe = centerRe - reSpan / 2;\n  maxRe = centerRe + reSpan / 2;\n  minIm = centerIm - imSpan / 2;\n  maxIm = centerIm + imSpan / 2;\n}\n\nfunction getCenter() {\n  return {\n    a: (minRe + maxRe) * 0.5,\n    b: (minIm + maxIm) * 0.5\n  };\n}\n\nfunction updateIterations() {\n  let initialSpan = viewSettings.maxRe - viewSettings.minRe;\n  let currentSpan = maxRe - minRe;\n  let zoomLevel = initialSpan / currentSpan;\n\n  maxIterations = floor(baseIterations + log(zoomLevel) * 20);\n  maxIterations = max(baseIterations, maxIterations);\n}\n\nfunction resetView() {\n  minRe = viewSettings.minRe;\n  maxRe = viewSettings.maxRe;\n  minIm = viewSettings.minIm;\n  maxIm = viewSettings.maxIm;\n  baseIterations = viewSettings.baseIterations;\n  maxIterations = baseIterations;\n}\n\nfunction saveCurrentViewToConsole() {\n  let saved = {\n    minRe: minRe,\n    maxRe: maxRe,\n    minIm: minIm,\n    maxIm: maxIm,\n    baseIterations: maxIterations\n  };\n\n  console.log(\"let viewSettings = \" + JSON.stringify(saved, null, 2) + \";\");\n}"
+      },
+      "thumbnailPath": "/thumbs/n327.png",
+      "kind": "normal",
+      "starredId": "n373"
+    },
+    "n341": {
+      "id": "n341",
+      "label": "n341",
+      "kind": "star",
+      "sourceId": "n238",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {}
+    },
+    "n342": {
+      "id": "n342",
+      "label": "n342",
+      "kind": "star",
+      "sourceId": "n91",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {}
+    },
+    "n345": {
+      "id": "n345",
+      "label": "n345",
+      "title": "Bamboo",
+      "description": "Bamboo L System",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let axiom = \"F\";\nlet sentence = axiom;\n\nlet rules = [\n  {\n    a: \"F\",\n    b: \"FF+[+F-F-F[-F+F+F]]-[-F+F+F]\"\n  }\n];\n\nlet angleDeg = 25;\nlet angle;\n\nlet startLen = 120;\nlet len;\n\nlet generations = 2;\n\nfunction setup() {\n  createCanvas(600, 600);\n\n  angle = radians(angleDeg);\n  len = startLen;\n\n  for (let i = 0; i < generations; i++) {\n    generate();\n  }\n\n  noLoop();\n}\n\nfunction draw() {\n  background(245);\n  turtle();\n}\n\nfunction generate() {\n  let nextSentence = \"\";\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < rules.length; j++) {\n      if (current === rules[j].a) {\n        nextSentence += rules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) {\n      nextSentence += current;\n    }\n  }\n\n  sentence = nextSentence;\n  len *= 0.5;\n}\n\nfunction turtle() {\n  resetMatrix();\n  translate(width / 2, height);\n\n  let firstStemDrawn = false;\n  let alternateMode = 0; // 0 = thin branch, 1 = leaf\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      if (!firstStemDrawn) {\n        drawSegmentedStem(len * 8);\n        firstStemDrawn = true;\n      } else {\n        if (alternateMode === 0) {\n          drawThinBranch(len);\n          translate(0, -len);\n        } else {\n          drawLeaf(len * 1.8);\n          translate(0, -len * 0.7);\n        }\n\n        alternateMode = 1 - alternateMode;\n      }\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawSegmentedStem(totalLen) {\n  let segments = 8;\n  let segLen = totalLen / segments;\n\n  stroke(28, 84, 42);\n  noFill();\n\n  for (let i = 0; i < segments; i++) {\n    strokeWeight(map(i, 0, segments - 1, 10, 4));\n    line(0, 0, 0, -segLen);\n\n    translate(0, -segLen);\n\n    strokeWeight(2);\n    line(-6, 0, 6, 0);\n  }\n}\n\nfunction drawThinBranch(branchLen) {\n  stroke(40, 110, 55);\n  strokeWeight(1.2);\n  noFill();\n  line(0, 0, 0, -branchLen);\n}\n\nfunction drawLeaf(leafLen) {\n  let side = random() < 0.5 ? -1 : 1;\n\n  push();\n  rotate(side * radians(30));\n\n  noStroke();\n  fill(50, 130, 65);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    leafLen * 0.25,\n    -leafLen * 0.15,\n    leafLen * 0.75,\n    -leafLen * 0.08,\n    leafLen,\n    0\n  );\n  bezierVertex(\n    leafLen * 0.75,\n    leafLen * 0.08,\n    leafLen * 0.25,\n    leafLen * 0.15,\n    0,\n    0\n  );\n  endShape(CLOSE);\n\n  stroke(35, 95, 48);\n  strokeWeight(0.8);\n  line(0, 0, leafLen, 0);\n\n  pop();\n}"
+      },
+      "thumbnailPath": "/thumbs/n345.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n346": {
+      "id": "n346",
+      "label": "n346",
+      "title": "Bamboo",
+      "description": "Fixed stem + L system for leaves",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let leafSystem = \"X\";\n\nlet rules = [\n  { a: \"X\", b: \"F[+X][-X]FX\" },\n  { a: \"F\", b: \"FF\" }\n];\n\nlet sentence = \"\";\nlet angle;\nlet stepLen = 10;\nlet generations = 3;\n\n// which stem nodes should get a leaf/stem L-system\nlet attachedNodes = [1, 3, 5];\n\nlet stemNodes = [];\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  angle = radians(25);\n\n  sentence = leafSystem;\n  for (let i = 0; i < generations; i++) {\n    sentence = generate(sentence);\n  }\n\n  noLoop();\n}\n\nfunction draw() {\n  background(245);\n\n  stemNodes = drawStem(width / 2, height - 40, 7, 60);\n\n  for (let i = 0; i < attachedNodes.length; i++) {\n    let nodeIndex = attachedNodes[i];\n    if (nodeIndex >= 0 && nodeIndex < stemNodes.length) {\n      let node = stemNodes[nodeIndex];\n      drawLSystemAt(node.x, node.y, -PI / 4);\n    }\n  }\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let ch = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < rules.length; j++) {\n      if (ch === rules[j].a) {\n        next += rules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) {\n      next += ch;\n    }\n  }\n\n  return next;\n}\n\nfunction drawStem(x, y, segments, segLen) {\n  let nodes = [];\n\n  stroke(80, 110, 70);\n  strokeWeight(8);\n  noFill();\n\n  let currentX = x;\n  let currentY = y;\n\n  for (let i = 0; i < segments; i++) {\n    let nextY = currentY - segLen;\n\n    // stem segment\n    line(currentX, currentY, currentX, nextY);\n\n    // node\n    strokeWeight(3);\n    line(currentX - 10, nextY, currentX + 10, nextY);\n\n    nodes.push({ x: currentX, y: nextY });\n\n    strokeWeight(8);\n    currentY = nextY;\n  }\n\n  return nodes;\n}\n\nfunction drawLSystemAt(x, y, baseAngle) {\n  push();\n  translate(x, y);\n  rotate(baseAngle);\n\n  // tiny connector from stem\n  stroke(80, 110, 70);\n  strokeWeight(2);\n  line(0, 0, 8, 0);\n  translate(8, 0);\n\n  drawLSystem(sentence, stepLen, angle);\n  pop();\n}\n\nfunction drawLSystem(str, len, turnAngle) {\n  for (let i = 0; i < str.length; i++) {\n    let ch = str.charAt(i);\n\n    if (ch === \"F\") {\n      stroke(60, 120, 60);\n      strokeWeight(1.5);\n      line(0, 0, len, 0);\n\n      // simple leaf\n      push();\n      translate(len * 0.6, 0);\n      drawLeaf(len * 0.9);\n      pop();\n\n      translate(len, 0);\n\n    } else if (ch === \"+\") {\n      rotate(turnAngle);\n    } else if (ch === \"-\") {\n      rotate(-turnAngle);\n    } else if (ch === \"[\") {\n      push();\n    } else if (ch === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeaf(len) {\n  noStroke();\n  fill(70, 150, 80);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(len * 0.25, -len * 0.12, len * 0.75, -len * 0.08, len, 0);\n  bezierVertex(len * 0.75, len * 0.08, len * 0.25, len * 0.12, 0, 0);\n  endShape(CLOSE);\n}"
+      },
+      "thumbnailPath": "/thumbs/n346.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n347": {
+      "id": "n347",
+      "label": "n347",
+      "title": "Bamboo",
+      "description": "Better visuals",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n348",
+            "n350"
+          ]
+        }
+      ],
+      "children": [
+        "n348",
+        "n350"
+      ],
+      "expandedChildren": [
+        "n350"
+      ],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let branchSystem = \"X\";\n\nlet branchRules = [\n  { a: \"X\", b: \"F[+X][-X]FX\" },\n  { a: \"F\", b: \"FF\" }\n];\n\nlet branchAngle;\nlet branchStep = 20;\nlet branchGenerations = 3;\n\nlet culmNodes = [];\nlet attachedNodes = [1, 3, 5];\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  branchAngle = radians(22);\n\n  for (let i = 0; i < branchGenerations; i++) {\n    branchSystem = generate(branchSystem);\n  }\n\n  noLoop();\n}\n\nfunction draw() {\n  background(235, 242, 223);\n  drawPaperWash();\n\n  culmNodes = drawBambooCulm(\n    width * 0.48,\n    height,\n    8,\n    72,\n    color(120, 105, 70, 235),\n    15\n  );\n\n  for (let i = 0; i < attachedNodes.length; i++) {\n    let nodeIndex = attachedNodes[i];\n    let dir = i % 2 === 0 ? radians(-28) : radians(28);\n    renderLSystemAtSelectedNode(nodeIndex, dir, 1.0);\n  }\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let current = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < branchRules.length; j++) {\n      if (current === branchRules[j].a) {\n        next += branchRules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) next += current;\n  }\n\n  return next;\n}\n\nfunction renderLSystemAtSelectedNode(nodeIndex, baseAngle, scaleFactor = 1) {\n  if (nodeIndex < 0 || nodeIndex >= culmNodes.length) return;\n\n  let node = culmNodes[nodeIndex];\n\n  push();\n  translate(node.x, node.y);\n  rotate(baseAngle);\n\n  stroke(85, 110, 75, 140);\n  strokeWeight(1.2);\n  line(0, 0, 6, 0);\n  translate(6, 0);\n\n  drawLeafLSystem(branchSystem, branchStep * scaleFactor, branchAngle);\n  pop();\n}\n\nfunction drawLeafLSystem(sentence, stepLen, angle) {\n  let leafToggle = 0;\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      stroke(80, 110, 70, 130);\n      strokeWeight(1);\n      line(0, 0, stepLen, 0);\n\n      if (leafToggle % 2 === 0) {\n        push();\n        translate(stepLen * 0.2, 0);\n        drawLeafFan(int(random(4, 6)), stepLen * random(0.9, 1.2));\n        pop();\n      }\n\n      translate(stepLen, 0);\n      leafToggle++;\n\n    } else if (current === \"X\") {\n      if (random() < 0.12) {\n        push();\n        translate(stepLen * 0.1, 0);\n        drawLeafFan(int(random(3, 5)), stepLen * random(0.8, 1.0));\n        pop();\n      }\n\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeafFan(count, leafLen) {\n  push();\n\n  let spread = radians(70);\n  let start = -spread / 2;\n\n  for (let i = 0; i < count; i++) {\n    let a = start;\n    if (count > 1) {\n      a += map(i, 0, count - 1, 0, spread);\n    }\n\n    push();\n    rotate(a + random(-0.08, 0.08));\n    drawLeaf(leafLen * random(0.8, 1.15));\n    pop();\n  }\n\n  pop();\n}\n\nfunction drawLeaf(len) {\n  push();\n\n  rotate(random(-0.06, 0.06));\n\n  noStroke();\n  fill(70, 135, 72, 210);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.22, -len * 0.10,\n    len * 0.68, -len * 0.07,\n    len, 0\n  );\n  bezierVertex(\n    len * 0.68, len * 0.07,\n    len * 0.22, len * 0.10,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  fill(40, 90, 45, 85);\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.18, -len * 0.07,\n    len * 0.60, -len * 0.04,\n    len * 0.92, -len * 0.01\n  );\n  bezierVertex(\n    len * 0.60, 0,\n    len * 0.18, len * 0.04,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  stroke(45, 80, 40, 120);\n  strokeWeight(1);\n  line(0, 0, len, 0);\n\n  pop();\n}\n\nfunction drawBambooCulm(x, yBase, segments, segLen, col, baseThickness) {\n  let nodes = [];\n\n  for (let i = 0; i < segments; i++) {\n    let yTop = yBase - (i + 1) * segLen;\n    let yBottom = yBase - i * segLen;\n\n    let t = i / max(1, segments - 1);\n    let thick = lerp(baseThickness, baseThickness * 0.72, t);\n\n    drawCulmSegment(x, yBottom, yTop, thick, col);\n    drawNodeBand(x, yTop, thick);\n\n    nodes.push({ x: x, y: yTop });\n  }\n\n  return nodes;\n}\n\nfunction drawCulmSegment(x, yBottom, yTop, thick, col) {\n  let len = yBottom - yTop;\n\n  push();\n\n  noStroke();\n  fill(red(col), green(col), blue(col), alpha(col));\n\n  beginShape();\n  vertex(x - thick / 2, yBottom);\n  bezierVertex(\n    x - thick * 0.48, yBottom - len * 0.33,\n    x - thick * 0.42, yBottom - len * 0.66,\n    x - thick * 0.35, yTop\n  );\n  vertex(x + thick * 0.35, yTop);\n  bezierVertex(\n    x + thick * 0.42, yBottom - len * 0.66,\n    x + thick * 0.48, yBottom - len * 0.33,\n    x + thick / 2, yBottom\n  );\n  endShape(CLOSE);\n\n  stroke(255, 120);\n  strokeWeight(1);\n  line(x - thick * 0.18, yBottom - 4, x - thick * 0.1, yTop + 4);\n\n  stroke(70, 60, 40, 90);\n  strokeWeight(1);\n  line(x - thick / 2, yBottom, x - thick * 0.35, yTop);\n  line(x + thick / 2, yBottom, x + thick * 0.35, yTop);\n\n  pop();\n}\n\nfunction drawNodeBand(x, y, thick) {\n  push();\n\n  noFill();\n  stroke(90, 75, 50, 160);\n  strokeWeight(2);\n  arc(x, y, thick * 1.1, thick * 0.45, PI, TWO_PI);\n  arc(x, y, thick * 1.1, thick * 0.45, 0, PI);\n\n  stroke(255, 90);\n  strokeWeight(1);\n  arc(x, y - 1, thick * 0.9, thick * 0.22, PI * 1.05, TWO_PI * 0.98);\n\n  pop();\n}\n\nfunction drawPaperWash() {\n  noStroke();\n\n  for (let i = 0; i < 2500; i++) {\n    fill(120, 180, 90, random(8, 18));\n    ellipse(random(width), random(height), random(8, 24), random(8, 24));\n  }\n\n  for (let i = 0; i < 1200; i++) {\n    fill(255, random(8, 18));\n    ellipse(random(width), random(height), random(12, 36), random(12, 36));\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n347.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n348": {
+      "id": "n348",
+      "label": "n348",
+      "title": "Updated Rules",
+      "description": "More bamboo like",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let branchSystem = \"F\";\n\nlet branchRules = [\n  {\n    a: \"F\",\n    b: \"FF+[F-F+F]-[+F+F-F]\"\n  }\n];\n\nlet branchAngle;\nlet branchStep = 32;\nlet branchGenerations = 2;\n\nlet culmNodes = [];\nlet attachedNodes = [1, 3, 5];\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  branchAngle = radians(22);\n\n  for (let i = 0; i < branchGenerations; i++) {\n    branchSystem = generate(branchSystem);\n  }\n\n  noLoop();\n}\n\nfunction draw() {\n  background(235, 242, 223);\n  drawPaperWash();\n\n  culmNodes = drawBambooCulm(\n    width * 0.2,\n    height,\n    8,\n    72,\n    color(120, 105, 70, 235),\n    15\n  );\n\n  for (let i = 0; i < attachedNodes.length; i++) {\n    let nodeIndex = attachedNodes[i];\n    let dir = i % 2 === 0 ? radians(-28) : radians(28);\n    renderLSystemAtSelectedNode(nodeIndex, dir, 1.0);\n  }\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let current = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < branchRules.length; j++) {\n      if (current === branchRules[j].a) {\n        next += branchRules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) next += current;\n  }\n\n  return next;\n}\n\nfunction renderLSystemAtSelectedNode(nodeIndex, baseAngle, scaleFactor = 1) {\n  if (nodeIndex < 0 || nodeIndex >= culmNodes.length) return;\n\n  let node = culmNodes[nodeIndex];\n\n  push();\n  translate(node.x, node.y);\n  rotate(baseAngle);\n\n  stroke(85, 110, 75, 140);\n  strokeWeight(1.2);\n  line(0, 0, 6, 0);\n  translate(6, 0);\n\n  drawLeafLSystem(branchSystem, branchStep * scaleFactor, branchAngle);\n  pop();\n}\n\nfunction drawLeafLSystem(sentence, stepLen, angle) {\n  let leafToggle = 0;\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      stroke(80, 110, 70, 130);\n      strokeWeight(1);\n      line(0, 0, stepLen, 0);\n\n      if (leafToggle % 2 === 0) {\n        push();\n        translate(stepLen * 0.2, 0);\n        drawLeafFan(int(random(3, 5)), stepLen * random(0.7, 1.0));\n        pop();\n      }\n\n      translate(stepLen*0.5, 0);\n      leafToggle++;\n\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeafFan(count, leafLen) {\n  push();\n\n  let spread = radians(60);\n  let start = -spread / 2;\n\n  for (let i = 0; i < count; i++) {\n    let a = start;\n    if (count > 1) {\n      a += map(i, 0, count - 1, 0, spread);\n    }\n\n    push();\n    rotate(a + random(-0.08, 0.08));\n    drawLeaf(leafLen * random(0.8, 1.15));\n    pop();\n  }\n\n  pop();\n}\n\nfunction drawLeaf(len) {\n  push();\n\n  rotate(random(-0.06, 0.06));\n\n  noStroke();\n  fill(70, 135, 72, 210);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.22, -len * 0.10,\n    len * 0.68, -len * 0.07,\n    len, 0\n  );\n  bezierVertex(\n    len * 0.68, len * 0.07,\n    len * 0.22, len * 0.10,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  fill(40, 90, 45, 85);\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.18, -len * 0.07,\n    len * 0.60, -len * 0.04,\n    len * 0.92, -len * 0.01\n  );\n  bezierVertex(\n    len * 0.60, 0,\n    len * 0.18, len * 0.04,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  stroke(45, 80, 40, 120);\n  strokeWeight(1);\n  line(0, 0, len, 0);\n\n  pop();\n}\n\nfunction drawBambooCulm(x, yBase, segments, segLen, col, baseThickness) {\n  let nodes = [];\n\n  for (let i = 0; i < segments; i++) {\n    let yTop = yBase - (i + 1) * segLen;\n    let yBottom = yBase - i * segLen;\n\n    let t = i / max(1, segments - 1);\n    let thick = lerp(baseThickness, baseThickness * 0.72, t);\n\n    drawCulmSegment(x, yBottom, yTop, thick, col);\n    drawNodeBand(x, yTop, thick);\n\n    nodes.push({ x: x, y: yTop });\n  }\n\n  return nodes;\n}\n\nfunction drawCulmSegment(x, yBottom, yTop, thick, col) {\n  let len = yBottom - yTop;\n\n  push();\n\n  noStroke();\n  fill(red(col), green(col), blue(col), alpha(col));\n\n  beginShape();\n  vertex(x - thick / 2, yBottom);\n  bezierVertex(\n    x - thick * 0.48, yBottom - len * 0.33,\n    x - thick * 0.42, yBottom - len * 0.66,\n    x - thick * 0.35, yTop\n  );\n  vertex(x + thick * 0.35, yTop);\n  bezierVertex(\n    x + thick * 0.42, yBottom - len * 0.66,\n    x + thick * 0.48, yBottom - len * 0.33,\n    x + thick / 2, yBottom\n  );\n  endShape(CLOSE);\n\n  stroke(255, 120);\n  strokeWeight(1);\n  line(x - thick * 0.18, yBottom - 4, x - thick * 0.1, yTop + 4);\n\n  stroke(70, 60, 40, 90);\n  strokeWeight(1);\n  line(x - thick / 2, yBottom, x - thick * 0.35, yTop);\n  line(x + thick / 2, yBottom, x + thick * 0.35, yTop);\n\n  pop();\n}\n\nfunction drawNodeBand(x, y, thick) {\n  push();\n\n  noFill();\n  stroke(90, 75, 50, 160);\n  strokeWeight(2);\n  arc(x, y, thick * 1.1, thick * 0.45, PI, TWO_PI);\n  arc(x, y, thick * 1.1, thick * 0.45, 0, PI);\n\n  stroke(255, 90);\n  strokeWeight(1);\n  arc(x, y - 1, thick * 0.9, thick * 0.22, PI * 1.05, TWO_PI * 0.98);\n\n  pop();\n}\n\nfunction drawPaperWash() {\n  noStroke();\n\n  for (let i = 0; i < 2500; i++) {\n    fill(120, 180, 90, random(8, 18));\n    ellipse(random(width), random(height), random(8, 24), random(8, 24));\n  }\n\n  for (let i = 0; i < 1200; i++) {\n    fill(255, random(8, 18));\n    ellipse(random(width), random(height), random(12, 36), random(12, 36));\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n348.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n350": {
+      "id": "n350",
+      "label": "n350",
+      "title": "Generative composition",
+      "description": "Added generative rules",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n362"
+          ]
+        }
+      ],
+      "children": [
+        "n362"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "// ======================\n// GLOBAL CONTROLS\n// ======================\n\n// ---- composition ----\nlet SYSTEM_COUNT = 3;\n\n// ---- placement ----\nlet SYSTEM_X_MIN = 0.1;\nlet SYSTEM_X_MAX = 0.3;\nlet SYSTEM_Y_OFFSET_MIN = 0;\nlet SYSTEM_Y_OFFSET_MAX = 3;\n\nlet SYSTEM_SCALE_MIN = 0.7;\nlet SYSTEM_SCALE_MAX = 1.0;\n\n// ---- culm structure ----\nlet SEGMENT_COUNT_MIN = 7;\nlet SEGMENT_COUNT_MAX = 10;\n\nlet BASE_SEG_LEN_MIN = 62;\nlet BASE_SEG_LEN_MAX = 82;\n\nlet TOP_SEG_RATIO_MIN = 0.58;\nlet TOP_SEG_RATIO_MAX = 0.78;\n\nlet BASE_THICK_MIN = 13;\nlet BASE_THICK_MAX = 18;\n\nlet TOP_THICK_RATIO_MIN = 0.55;\nlet TOP_THICK_RATIO_MAX = 0.72;\n\n// ---- culm curvature ----\nlet CURVE_MIN = -50;\nlet CURVE_MAX = 50;\n\nlet DRIFT_START_MIN = 1;\nlet DRIFT_START_MAX = 5;\n\nlet DRIFT_END_MIN = 6;\nlet DRIFT_END_MAX = 8;\n\n// ---- culm color ----\nlet COL_R_MIN = 108;\nlet COL_R_MAX = 132;\nlet COL_G_MIN = 95;\nlet COL_G_MAX = 112;\nlet COL_B_MIN = 62;\nlet COL_B_MAX = 82;\nlet COL_ALPHA = 235;\n\n// ---- branch attachment ----\nlet BRANCH_START_T = 0.3;\n\nlet ATTACH_0_PROB = 0.35;\nlet ATTACH_1_PROB = 0.40;\n// remaining probability becomes 2 attachments\n\n// ---- branch angle placement ----\nlet BASE_ANGLE_LEFT_MIN = -0.95;\nlet BASE_ANGLE_LEFT_MAX = -0.35;\n\nlet BASE_ANGLE_RIGHT_MIN = 0.35;\nlet BASE_ANGLE_RIGHT_MAX = 0.95;\n\nlet BRANCH_ANGLE_MIN = 18;\nlet BRANCH_ANGLE_MAX = 28;\n\n// ---- L-system ----\nlet GENERATION_MIN = 1;\nlet GENERATION_MAX = 2;\n\nlet STEP_LEN_BOTTOM = 20;\nlet STEP_LEN_TOP = 20;\n\nlet CONNECTOR_SCALE_BOTTOM = 1.05;\nlet CONNECTOR_SCALE_TOP = 0.7;\n\n// ---- leaves ----\nlet LEAF_FAN_COUNT_MIN = 3;\nlet LEAF_FAN_COUNT_MAX = 5;\n\nlet LEAF_SPREAD_MIN = 50;\nlet LEAF_SPREAD_MAX = 72;\n\nlet LEAF_SIZE_MIN = 0.8;\nlet LEAF_SIZE_MAX = 1.15;\n\nlet LEAF_ROTATION_JITTER_MIN = -0.08;\nlet LEAF_ROTATION_JITTER_MAX = 0.08;\n\nlet SINGLE_LEAF_ROTATION_MIN = -0.06;\nlet SINGLE_LEAF_ROTATION_MAX = 0.06;\n\n// ---- background wash ----\nlet WASH_GREEN_COUNT = 2500;\nlet WASH_WHITE_COUNT = 1200;\n\nlet WASH_GREEN_ALPHA_MIN = 8;\nlet WASH_GREEN_ALPHA_MAX = 18;\nlet WASH_WHITE_ALPHA_MIN = 8;\nlet WASH_WHITE_ALPHA_MAX = 18;\n\nlet WASH_GREEN_SIZE_MIN = 8;\nlet WASH_GREEN_SIZE_MAX = 24;\n\nlet WASH_WHITE_SIZE_MIN = 12;\nlet WASH_WHITE_SIZE_MAX = 36;\n\n// ======================\n// L-SYSTEM RULES\n// ======================\n\nlet branchRules = [\n  {\n    a: \"F\",\n    b: \"FF+[F-F+F]-[+F+F-F]\"\n  }\n];\n\n// ======================\n// COMPOSITION DATA\n// ======================\n\nlet systems = [];\nlet bgSeed = 0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  noLoop();\n\n  generateComposition();\n}\n\nfunction draw() {\n  background(235, 242, 223);\n\n  randomSeed(bgSeed);\n  drawPaperWash();\n\n  for (let s of systems) {\n    drawBambooSystem(s);\n  }\n}\n\nfunction mousePressed() {\n  generateComposition();\n  redraw();\n}\n\nfunction generateComposition() {\n  systems = [];\n  bgSeed = floor(random(1000000));\n\n  for (let i = 0; i < SYSTEM_COUNT; i++) {\n    systems.push(makeBambooSystem());\n  }\n\n  systems.sort((a, b) => a.baseX - b.baseX);\n}\n\nfunction makeBambooSystem() {\n  let baseX = width * random(SYSTEM_X_MIN, SYSTEM_X_MAX);\n  let baseY = height + random(SYSTEM_Y_OFFSET_MIN, SYSTEM_Y_OFFSET_MAX);\n  let overallScale = random(SYSTEM_SCALE_MIN, SYSTEM_SCALE_MAX);\n\n  let segmentCount = int(random(SEGMENT_COUNT_MIN, SEGMENT_COUNT_MAX));\n  let baseSegLen = random(BASE_SEG_LEN_MIN, BASE_SEG_LEN_MAX) * overallScale;\n  let topSegLen = baseSegLen * random(TOP_SEG_RATIO_MIN, TOP_SEG_RATIO_MAX);\n\n  let baseThickness = random(BASE_THICK_MIN, BASE_THICK_MAX) * overallScale;\n  let topThickness = baseThickness * random(TOP_THICK_RATIO_MIN, TOP_THICK_RATIO_MAX);\n\n  let curveAmount = random(CURVE_MIN, CURVE_MAX);\n  let driftStart = random(DRIFT_START_MIN, DRIFT_START_MAX);\n  let driftEnd = random(DRIFT_END_MIN, DRIFT_END_MAX);\n\n  let col = color(\n    random(COL_R_MIN, COL_R_MAX),\n    random(COL_G_MIN, COL_G_MAX),\n    random(COL_B_MIN, COL_B_MAX),\n    COL_ALPHA\n  );\n\n  let nodes = [];\n  let segments = [];\n\n  let drift = 0;\n  let xBottom = baseX;\n  let yBottom = baseY;\n\n  for (let i = 0; i < segmentCount; i++) {\n    let t = i / max(1, segmentCount - 1);\n\n    let segLen = lerp(baseSegLen, topSegLen, t);\n    let thick = lerp(baseThickness, topThickness, t);\n\n    let bendStep = map(i, 0, segmentCount - 1, driftStart, driftEnd);\n    drift += curveAmount * 0.06 * bendStep;\n\n    let xTop = baseX + drift;\n    let yTop = yBottom - segLen;\n\n    segments.push({\n      xBottom,\n      yBottom,\n      xTop,\n      yTop,\n      thick\n    });\n\n    nodes.push({\n      x: xTop,\n      y: yTop,\n      t: t,\n      thickness: thick\n    });\n\n    xBottom = xTop;\n    yBottom = yTop;\n  }\n\n  let branches = generateBranches(nodes);\n\n  return {\n    baseX,\n    baseY,\n    col,\n    segments,\n    nodes,\n    branches\n  };\n}\n\nfunction generateBranches(nodes) {\n  let branches = [];\n\n  for (let i = 0; i < nodes.length; i++) {\n    let node = nodes[i];\n\n    if (node.t < BRANCH_START_T) continue;\n\n    let countChoice = random();\n    let attachCount = 0;\n\n    if (countChoice < ATTACH_0_PROB) {\n      attachCount = 0;\n    } else if (countChoice < ATTACH_0_PROB + ATTACH_1_PROB) {\n      attachCount = 1;\n    } else {\n      attachCount = 2;\n    }\n\n    for (let k = 0; k < attachCount; k++) {\n      let side;\n\n      if (attachCount === 1) {\n        side = random() < 0.5 ? -1 : 1;\n      } else {\n        side = k === 0 ? -1 : 1;\n      }\n\n      let generations = int(random(GENERATION_MIN, GENERATION_MAX + 1));\n      let systemString = buildLSystem(\"F\", generations);\n\n      let baseAngle;\n      if (side < 0) {\n        baseAngle = random(BASE_ANGLE_LEFT_MIN, BASE_ANGLE_LEFT_MAX);\n      } else {\n        baseAngle = random(BASE_ANGLE_RIGHT_MIN, BASE_ANGLE_RIGHT_MAX);\n      }\n\n      let stepLen =\n        map(node.t, BRANCH_START_T, 1, STEP_LEN_BOTTOM, STEP_LEN_TOP) *\n        random(0.9, 1.15);\n\n      let branchAngle = radians(random(BRANCH_ANGLE_MIN, BRANCH_ANGLE_MAX));\n      let connectorScale = map(\n        node.t,\n        BRANCH_START_T,\n        1,\n        CONNECTOR_SCALE_BOTTOM,\n        CONNECTOR_SCALE_TOP\n      );\n\n      branches.push({\n        x: node.x,\n        y: node.y,\n        baseAngle,\n        stepLen,\n        branchAngle,\n        connectorScale,\n        systemString\n      });\n    }\n  }\n\n  return branches;\n}\n\nfunction drawBambooSystem(system) {\n  for (let seg of system.segments) {\n    drawCulmSegment(\n      seg.xBottom,\n      seg.yBottom,\n      seg.xTop,\n      seg.yTop,\n      seg.thick,\n      system.col\n    );\n    drawNodeBand(seg.xTop, seg.yTop, seg.thick);\n  }\n\n  for (let branch of system.branches) {\n    push();\n    translate(branch.x, branch.y);\n    rotate(branch.baseAngle);\n\n    stroke(85, 110, 75, 140);\n    strokeWeight(1.2);\n    line(0, 0, 6 * branch.connectorScale, 0);\n    translate(6 * branch.connectorScale, 0);\n\n    drawLeafLSystem(branch.systemString, branch.stepLen, branch.branchAngle);\n    pop();\n  }\n}\n\nfunction buildLSystem(axiom, generations) {\n  let str = axiom;\n\n  for (let i = 0; i < generations; i++) {\n    str = generate(str);\n  }\n\n  return str;\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let current = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < branchRules.length; j++) {\n      if (current === branchRules[j].a) {\n        next += branchRules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) {\n      next += current;\n    }\n  }\n\n  return next;\n}\n\nfunction drawLeafLSystem(sentence, stepLen, angle) {\n  let leafToggle = 0;\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      stroke(80, 110, 70, 130);\n      strokeWeight(1);\n      line(0, 0, stepLen, 0);\n\n      if (leafToggle % 2 === 0) {\n        push();\n        translate(stepLen * 0.18, 0);\n        drawLeafFan(\n          int(random(LEAF_FAN_COUNT_MIN, LEAF_FAN_COUNT_MAX)),\n          stepLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX)\n        );\n        pop();\n      }\n\n      translate(stepLen * 0.5, 0);\n      leafToggle++;\n\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeafFan(count, leafLen) {\n  push();\n\n  let spread = radians(random(LEAF_SPREAD_MIN, LEAF_SPREAD_MAX));\n  let start = -spread / 2;\n\n  for (let i = 0; i < count; i++) {\n    let a = start;\n\n    if (count > 1) {\n      a += map(i, 0, count - 1, 0, spread);\n    }\n\n    push();\n    rotate(random(LEAF_ROTATION_JITTER_MIN, LEAF_ROTATION_JITTER_MAX) + a);\n    drawLeaf(leafLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX));\n    pop();\n  }\n\n  pop();\n}\n\nfunction drawLeaf(len) {\n  push();\n\n  rotate(random(SINGLE_LEAF_ROTATION_MIN, SINGLE_LEAF_ROTATION_MAX));\n\n  noStroke();\n  fill(70, 135, 72, 210);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.22, -len * 0.10,\n    len * 0.68, -len * 0.07,\n    len, 0\n  );\n  bezierVertex(\n    len * 0.68, len * 0.07,\n    len * 0.22, len * 0.10,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  fill(40, 90, 45, 85);\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.18, -len * 0.07,\n    len * 0.60, -len * 0.04,\n    len * 0.92, -len * 0.01\n  );\n  bezierVertex(\n    len * 0.60, 0,\n    len * 0.18, len * 0.04,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  stroke(45, 80, 40, 120);\n  strokeWeight(1);\n  line(0, 0, len, 0);\n\n  pop();\n}\n\nfunction drawCulmSegment(xBottom, yBottom, xTop, yTop, thick, col) {\n  let len = dist(xBottom, yBottom, xTop, yTop);\n\n  let nx = -(yTop - yBottom) / max(len, 0.0001);\n  let ny = (xTop - xBottom) / max(len, 0.0001);\n\n  let bx1x = lerp(xBottom, xTop, 0.33);\n  let bx1y = lerp(yBottom, yTop, 0.33);\n\n  let bx2x = lerp(xBottom, xTop, 0.66);\n  let bx2y = lerp(yBottom, yTop, 0.66);\n\n  noStroke();\n  fill(red(col), green(col), blue(col), alpha(col));\n\n  beginShape();\n  vertex(xBottom + nx * thick * 0.5, yBottom + ny * thick * 0.5);\n  bezierVertex(\n    bx1x + nx * thick * 0.48, bx1y + ny * thick * 0.48,\n    bx2x + nx * thick * 0.42, bx2y + ny * thick * 0.42,\n    xTop + nx * thick * 0.35, yTop + ny * thick * 0.35\n  );\n  vertex(xTop - nx * thick * 0.35, yTop - ny * thick * 0.35);\n  bezierVertex(\n    bx2x - nx * thick * 0.42, bx2y - ny * thick * 0.42,\n    bx1x - nx * thick * 0.48, bx1y - ny * thick * 0.48,\n    xBottom - nx * thick * 0.5, yBottom - ny * thick * 0.5\n  );\n  endShape(CLOSE);\n\n  stroke(255, 120);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.12,\n    yBottom + ny * thick * 0.12,\n    xTop + nx * thick * 0.05,\n    yTop + ny * thick * 0.05\n  );\n\n  stroke(70, 60, 40, 90);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.5,\n    yBottom + ny * thick * 0.5,\n    xTop + nx * thick * 0.35,\n    yTop + ny * thick * 0.35\n  );\n  line(\n    xBottom - nx * thick * 0.5,\n    yBottom - ny * thick * 0.5,\n    xTop - nx * thick * 0.35,\n    yTop - ny * thick * 0.35\n  );\n}\n\nfunction drawNodeBand(x, y, thick) {\n  push();\n  translate(x, y);\n\n  noFill();\n  stroke(90, 75, 50, 160);\n  strokeWeight(2);\n  arc(0, 0, thick * 1.1, thick * 0.45, PI, TWO_PI);\n  arc(0, 0, thick * 1.1, thick * 0.45, 0, PI);\n\n  stroke(255, 90);\n  strokeWeight(1);\n  arc(0, -1, thick * 0.9, thick * 0.22, PI * 1.05, TWO_PI * 0.98);\n\n  pop();\n}\n\nfunction drawPaperWash() {\n  noStroke();\n\n  for (let i = 0; i < WASH_GREEN_COUNT; i++) {\n    fill(120, 180, 90, random(WASH_GREEN_ALPHA_MIN, WASH_GREEN_ALPHA_MAX));\n    ellipse(\n      random(width),\n      random(height),\n      random(WASH_GREEN_SIZE_MIN, WASH_GREEN_SIZE_MAX),\n      random(WASH_GREEN_SIZE_MIN, WASH_GREEN_SIZE_MAX)\n    );\n  }\n\n  for (let i = 0; i < WASH_WHITE_COUNT; i++) {\n    fill(255, random(WASH_WHITE_ALPHA_MIN, WASH_WHITE_ALPHA_MAX));\n    ellipse(\n      random(width),\n      random(height),\n      random(WASH_WHITE_SIZE_MIN, WASH_WHITE_SIZE_MAX),\n      random(WASH_WHITE_SIZE_MIN, WASH_WHITE_SIZE_MAX)\n    );\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n350.png",
+      "kind": "normal"
+    },
+    "n362": {
+      "id": "n362",
+      "label": "n362",
+      "title": "Added BG",
+      "description": "BG as fixed image",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n<head>\n  <meta charset=\"utf-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n<body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n      <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "// ======================\n// GLOBAL CONTROLS\n// ======================\n\n// ---- composition ----\nlet SYSTEM_COUNT = 3;\n\n// ---- placement ----\nlet SYSTEM_X_MIN = 0.1;\nlet SYSTEM_X_MAX = 0.3;\nlet SYSTEM_Y_OFFSET_MIN = 0;\nlet SYSTEM_Y_OFFSET_MAX = 3;\n\nlet SYSTEM_SCALE_MIN = 0.7;\nlet SYSTEM_SCALE_MAX = 1.0;\n\n// ---- culm structure ----\nlet SEGMENT_COUNT_MIN = 7;\nlet SEGMENT_COUNT_MAX = 10;\n\nlet BASE_SEG_LEN_MIN = 62;\nlet BASE_SEG_LEN_MAX = 82;\n\nlet TOP_SEG_RATIO_MIN = 0.58;\nlet TOP_SEG_RATIO_MAX = 0.78;\n\nlet BASE_THICK_MIN = 13;\nlet BASE_THICK_MAX = 18;\n\nlet TOP_THICK_RATIO_MIN = 0.55;\nlet TOP_THICK_RATIO_MAX = 0.72;\n\n// ---- culm curvature ----\nlet CURVE_MIN = -50;\nlet CURVE_MAX = 50;\n\nlet DRIFT_START_MIN = 1;\nlet DRIFT_START_MAX = 5;\n\nlet DRIFT_END_MIN = 6;\nlet DRIFT_END_MAX = 8;\n\n// ---- culm color ----\nlet COL_R_MIN = 108;\nlet COL_R_MAX = 132;\nlet COL_G_MIN = 95;\nlet COL_G_MAX = 112;\nlet COL_B_MIN = 62;\nlet COL_B_MAX = 82;\nlet COL_ALPHA = 235;\n\n// ---- branch attachment ----\nlet BRANCH_START_T = 0.3;\n\nlet ATTACH_0_PROB = 0.35;\nlet ATTACH_1_PROB = 0.40;\n// remaining probability becomes 2 attachments\n\n// ---- branch angle placement ----\nlet BASE_ANGLE_LEFT_MIN = -0.95;\nlet BASE_ANGLE_LEFT_MAX = -0.35;\n\nlet BASE_ANGLE_RIGHT_MIN = 0.35;\nlet BASE_ANGLE_RIGHT_MAX = 0.95;\n\nlet BRANCH_ANGLE_MIN = 18;\nlet BRANCH_ANGLE_MAX = 28;\n\n// ---- L-system ----\nlet GENERATION_MIN = 1;\nlet GENERATION_MAX = 2;\n\nlet STEP_LEN_BOTTOM = 20;\nlet STEP_LEN_TOP = 20;\n\nlet CONNECTOR_SCALE_BOTTOM = 1.05;\nlet CONNECTOR_SCALE_TOP = 0.7;\n\n// ---- leaves ----\nlet LEAF_FAN_COUNT_MIN = 3;\nlet LEAF_FAN_COUNT_MAX = 5;\n\nlet LEAF_SPREAD_MIN = 50;\nlet LEAF_SPREAD_MAX = 72;\n\nlet LEAF_SIZE_MIN = 0.8;\nlet LEAF_SIZE_MAX = 1.15;\n\nlet LEAF_ROTATION_JITTER_MIN = -0.08;\nlet LEAF_ROTATION_JITTER_MAX = 0.08;\n\nlet SINGLE_LEAF_ROTATION_MIN = -0.06;\nlet SINGLE_LEAF_ROTATION_MAX = 0.06;\n\n// ======================\n// L-SYSTEM RULES\n// ======================\n\nlet branchRules = [\n  {\n    a: \"F\",\n    b: \"FF+[F-F+F]-[+F+F-F]\"\n  }\n];\n\n// ======================\n// COMPOSITION DATA\n// ======================\n\nlet systems = [];\nlet bg;\n\nfunction preload() {\n  bg = loadImage(\"bg.jpg\");\n}\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  noLoop();\n\n  generateComposition();\n}\n\nfunction draw() {\n  image(bg, 0, 0, width, height);\n\n  for (let s of systems) {\n    drawBambooSystem(s);\n  }\n}\n\nfunction mousePressed() {\n  generateComposition();\n  redraw();\n}\n\nfunction generateComposition() {\n  systems = [];\n\n  for (let i = 0; i < SYSTEM_COUNT; i++) {\n    systems.push(makeBambooSystem());\n  }\n\n  systems.sort((a, b) => a.baseX - b.baseX);\n}\n\nfunction makeBambooSystem() {\n  let baseX = width * random(SYSTEM_X_MIN, SYSTEM_X_MAX);\n  let baseY = height + random(SYSTEM_Y_OFFSET_MIN, SYSTEM_Y_OFFSET_MAX);\n  let overallScale = random(SYSTEM_SCALE_MIN, SYSTEM_SCALE_MAX);\n\n  let segmentCount = int(random(SEGMENT_COUNT_MIN, SEGMENT_COUNT_MAX));\n  let baseSegLen = random(BASE_SEG_LEN_MIN, BASE_SEG_LEN_MAX) * overallScale;\n  let topSegLen = baseSegLen * random(TOP_SEG_RATIO_MIN, TOP_SEG_RATIO_MAX);\n\n  let baseThickness = random(BASE_THICK_MIN, BASE_THICK_MAX) * overallScale;\n  let topThickness = baseThickness * random(TOP_THICK_RATIO_MIN, TOP_THICK_RATIO_MAX);\n\n  let curveAmount = random(CURVE_MIN, CURVE_MAX);\n  let driftStart = random(DRIFT_START_MIN, DRIFT_START_MAX);\n  let driftEnd = random(DRIFT_END_MIN, DRIFT_END_MAX);\n\n  let col = color(\n    random(COL_R_MIN, COL_R_MAX),\n    random(COL_G_MIN, COL_G_MAX),\n    random(COL_B_MIN, COL_B_MAX),\n    COL_ALPHA\n  );\n\n  let nodes = [];\n  let segments = [];\n\n  let drift = 0;\n  let xBottom = baseX;\n  let yBottom = baseY;\n\n  for (let i = 0; i < segmentCount; i++) {\n    let t = i / max(1, segmentCount - 1);\n\n    let segLen = lerp(baseSegLen, topSegLen, t);\n    let thick = lerp(baseThickness, topThickness, t);\n\n    let bendStep = map(i, 0, segmentCount - 1, driftStart, driftEnd);\n    drift += curveAmount * 0.06 * bendStep;\n\n    let xTop = baseX + drift;\n    let yTop = yBottom - segLen;\n\n    segments.push({\n      xBottom,\n      yBottom,\n      xTop,\n      yTop,\n      thick\n    });\n\n    nodes.push({\n      x: xTop,\n      y: yTop,\n      t: t,\n      thickness: thick\n    });\n\n    xBottom = xTop;\n    yBottom = yTop;\n  }\n\n  let branches = generateBranches(nodes);\n\n  return {\n    baseX,\n    baseY,\n    col,\n    segments,\n    nodes,\n    branches\n  };\n}\n\nfunction generateBranches(nodes) {\n  let branches = [];\n\n  for (let i = 0; i < nodes.length; i++) {\n    let node = nodes[i];\n\n    if (node.t < BRANCH_START_T) continue;\n\n    let countChoice = random();\n    let attachCount = 0;\n\n    if (countChoice < ATTACH_0_PROB) {\n      attachCount = 0;\n    } else if (countChoice < ATTACH_0_PROB + ATTACH_1_PROB) {\n      attachCount = 1;\n    } else {\n      attachCount = 2;\n    }\n\n    for (let k = 0; k < attachCount; k++) {\n      let side;\n\n      if (attachCount === 1) {\n        side = random() < 0.5 ? -1 : 1;\n      } else {\n        side = k === 0 ? -1 : 1;\n      }\n\n      let generations = int(random(GENERATION_MIN, GENERATION_MAX + 1));\n      let systemString = buildLSystem(\"F\", generations);\n\n      let baseAngle;\n      if (side < 0) {\n        baseAngle = random(BASE_ANGLE_LEFT_MIN, BASE_ANGLE_LEFT_MAX);\n      } else {\n        baseAngle = random(BASE_ANGLE_RIGHT_MIN, BASE_ANGLE_RIGHT_MAX);\n      }\n\n      let stepLen =\n        map(node.t, BRANCH_START_T, 1, STEP_LEN_BOTTOM, STEP_LEN_TOP) *\n        random(0.9, 1.15);\n\n      let branchAngle = radians(random(BRANCH_ANGLE_MIN, BRANCH_ANGLE_MAX));\n      let connectorScale = map(\n        node.t,\n        BRANCH_START_T,\n        1,\n        CONNECTOR_SCALE_BOTTOM,\n        CONNECTOR_SCALE_TOP\n      );\n\n      branches.push({\n        x: node.x,\n        y: node.y,\n        baseAngle,\n        stepLen,\n        branchAngle,\n        connectorScale,\n        systemString\n      });\n    }\n  }\n\n  return branches;\n}\n\nfunction drawBambooSystem(system) {\n  for (let seg of system.segments) {\n    drawCulmSegment(\n      seg.xBottom,\n      seg.yBottom,\n      seg.xTop,\n      seg.yTop,\n      seg.thick,\n      system.col\n    );\n    drawNodeBand(seg.xTop, seg.yTop, seg.thick);\n  }\n\n  for (let branch of system.branches) {\n    push();\n    translate(branch.x, branch.y);\n    rotate(branch.baseAngle);\n\n    stroke(85, 110, 75, 140);\n    strokeWeight(1.2);\n    line(0, 0, 6 * branch.connectorScale, 0);\n    translate(6 * branch.connectorScale, 0);\n\n    drawLeafLSystem(branch.systemString, branch.stepLen, branch.branchAngle);\n    pop();\n  }\n}\n\nfunction buildLSystem(axiom, generations) {\n  let str = axiom;\n\n  for (let i = 0; i < generations; i++) {\n    str = generate(str);\n  }\n\n  return str;\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let current = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < branchRules.length; j++) {\n      if (current === branchRules[j].a) {\n        next += branchRules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) {\n      next += current;\n    }\n  }\n\n  return next;\n}\n\nfunction drawLeafLSystem(sentence, stepLen, angle) {\n  let leafToggle = 0;\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      stroke(80, 110, 70, 130);\n      strokeWeight(1);\n      line(0, 0, stepLen, 0);\n\n      if (leafToggle % 2 === 0) {\n        push();\n        translate(stepLen * 0.18, 0);\n        drawLeafFan(\n          int(random(LEAF_FAN_COUNT_MIN, LEAF_FAN_COUNT_MAX)),\n          stepLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX)\n        );\n        pop();\n      }\n\n      translate(stepLen * 0.5, 0);\n      leafToggle++;\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeafFan(count, leafLen) {\n  push();\n\n  let spread = radians(random(LEAF_SPREAD_MIN, LEAF_SPREAD_MAX));\n  let start = -spread / 2;\n\n  for (let i = 0; i < count; i++) {\n    let a = start;\n\n    if (count > 1) {\n      a += map(i, 0, count - 1, 0, spread);\n    }\n\n    push();\n    rotate(random(LEAF_ROTATION_JITTER_MIN, LEAF_ROTATION_JITTER_MAX) + a);\n    drawLeaf(leafLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX));\n    pop();\n  }\n\n  pop();\n}\n\nfunction drawLeaf(len) {\n  push();\n\n  rotate(random(SINGLE_LEAF_ROTATION_MIN, SINGLE_LEAF_ROTATION_MAX));\n\n  noStroke();\n  fill(70, 135, 72, 210);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.22, -len * 0.10,\n    len * 0.68, -len * 0.07,\n    len, 0\n  );\n  bezierVertex(\n    len * 0.68, len * 0.07,\n    len * 0.22, len * 0.10,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  fill(40, 90, 45, 85);\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.18, -len * 0.07,\n    len * 0.60, -len * 0.04,\n    len * 0.92, -len * 0.01\n  );\n  bezierVertex(\n    len * 0.60, 0,\n    len * 0.18, len * 0.04,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  stroke(45, 80, 40, 120);\n  strokeWeight(1);\n  line(0, 0, len, 0);\n\n  pop();\n}\n\nfunction drawCulmSegment(xBottom, yBottom, xTop, yTop, thick, col) {\n  let len = dist(xBottom, yBottom, xTop, yTop);\n\n  let nx = -(yTop - yBottom) / max(len, 0.0001);\n  let ny = (xTop - xBottom) / max(len, 0.0001);\n\n  let bx1x = lerp(xBottom, xTop, 0.33);\n  let bx1y = lerp(yBottom, yTop, 0.33);\n\n  let bx2x = lerp(xBottom, xTop, 0.66);\n  let bx2y = lerp(yBottom, yTop, 0.66);\n\n  noStroke();\n  fill(red(col), green(col), blue(col), alpha(col));\n\n  beginShape();\n  vertex(xBottom + nx * thick * 0.5, yBottom + ny * thick * 0.5);\n  bezierVertex(\n    bx1x + nx * thick * 0.48, bx1y + ny * thick * 0.48,\n    bx2x + nx * thick * 0.42, bx2y + ny * thick * 0.42,\n    xTop + nx * thick * 0.35, yTop + ny * thick * 0.35\n  );\n  vertex(xTop - nx * thick * 0.35, yTop - ny * thick * 0.35);\n  bezierVertex(\n    bx2x - nx * thick * 0.42, bx2y - ny * thick * 0.42,\n    bx1x - nx * thick * 0.48, bx1y - ny * thick * 0.48,\n    xBottom - nx * thick * 0.5, yBottom - ny * thick * 0.5\n  );\n  endShape(CLOSE);\n\n  stroke(255, 120);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.12,\n    yBottom + ny * thick * 0.12,\n    xTop + nx * thick * 0.05,\n    yTop + ny * thick * 0.05\n  );\n\n  stroke(70, 60, 40, 90);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.5,\n    yBottom + ny * thick * 0.5,\n    xTop + nx * thick * 0.35,\n    yTop + ny * thick * 0.35\n  );\n  line(\n    xBottom - nx * thick * 0.5,\n    yBottom - ny * thick * 0.5,\n    xTop - nx * thick * 0.35,\n    yTop - ny * thick * 0.35\n  );\n}\n\nfunction drawNodeBand(x, y, thick) {\n  push();\n  translate(x, y);\n\n  noFill();\n  stroke(90, 75, 50, 160);\n  strokeWeight(2);\n  arc(0, 0, thick * 1.1, thick * 0.45, PI, TWO_PI);\n  arc(0, 0, thick * 1.1, thick * 0.45, 0, PI);\n\n  stroke(255, 90);\n  strokeWeight(1);\n  arc(0, -1, thick * 0.9, thick * 0.22, PI * 1.05, TWO_PI * 0.98);\n\n  pop();\n}",
+        "bg.jpg": "#UPLOADED_FILE#assets/Serene_Japanese_garden_with_moon_gate.png# Uploaded file: Serene Japanese garden with moon gate.png\n"
+      },
+      "thumbnailPath": "/thumbs/n362.png",
+      "kind": "normal",
+      "starredId": "n364"
+    },
+    "n364": {
+      "id": "n364",
+      "label": "n364",
+      "kind": "star",
+      "sourceId": "n362",
+      "expandedChildren": []
+    },
+    "n365": {
+      "id": "n365",
+      "label": "n365",
+      "kind": "star",
+      "sourceId": "n244",
+      "expandedChildren": []
+    },
+    "n366": {
+      "id": "n366",
+      "label": "n366",
+      "kind": "star",
+      "sourceId": "n265",
+      "expandedChildren": []
+    },
+    "n367": {
+      "id": "n367",
+      "label": "n367",
+      "kind": "star",
+      "sourceId": "n270",
+      "expandedChildren": []
+    },
+    "n368": {
+      "id": "n368",
+      "label": "n368",
+      "kind": "star",
+      "sourceId": "n275",
+      "expandedChildren": []
+    },
+    "n369": {
+      "id": "n369",
+      "label": "n369",
+      "kind": "star",
+      "sourceId": "n287",
+      "expandedChildren": []
+    },
+    "n370": {
+      "id": "n370",
+      "label": "n370",
+      "kind": "star",
+      "sourceId": "n299",
+      "expandedChildren": []
+    },
+    "n371": {
+      "id": "n371",
+      "label": "n371",
+      "kind": "star",
+      "sourceId": "n323",
+      "expandedChildren": []
+    },
+    "n372": {
+      "id": "n372",
+      "label": "n372",
+      "kind": "star",
+      "sourceId": "n325",
+      "expandedChildren": []
+    },
+    "n373": {
+      "id": "n373",
+      "label": "n373",
+      "kind": "star",
+      "sourceId": "n327",
+      "expandedChildren": []
     }
   }
 }

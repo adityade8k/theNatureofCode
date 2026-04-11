@@ -41,9 +41,9 @@ export function layoutForest(state, opts = {}) {
     gapY = 14,
     gapX = 140,
     plusHeight = 44,
-    siblingGap = 38,
-    sameParentSetGap = 28,
-    rootGap = 80
+    siblingGap = 10,
+    sameParentSetGap = 10,
+    rootGap = 10
   } = opts;
 
   const ROW_H = nodeSize + gapY;
