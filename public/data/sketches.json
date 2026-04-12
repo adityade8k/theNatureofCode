@@ -3232,9 +3232,12 @@
       "title": "Week 5: Particle Systems",
       "description": "",
       "children": [
-        "n204"
+        "n204",
+        "n374"
       ],
-      "expandedChildren": [],
+      "expandedChildren": [
+        "n374"
+      ],
       "files": {},
       "thumbnailPath": "",
       "kind": "root",
@@ -3244,7 +3247,8 @@
           "id": "default",
           "label": "Children",
           "children": [
-            "n204"
+            "n204",
+            "n374"
           ]
         }
       ]
@@ -5622,7 +5626,8 @@
         "sketch.js": "// ======================\n// GLOBAL CONTROLS\n// ======================\n\n// ---- composition ----\nlet SYSTEM_COUNT = 3;\n\n// ---- placement ----\nlet SYSTEM_X_MIN = 0.1;\nlet SYSTEM_X_MAX = 0.3;\nlet SYSTEM_Y_OFFSET_MIN = 0;\nlet SYSTEM_Y_OFFSET_MAX = 3;\n\nlet SYSTEM_SCALE_MIN = 0.7;\nlet SYSTEM_SCALE_MAX = 1.0;\n\n// ---- culm structure ----\nlet SEGMENT_COUNT_MIN = 7;\nlet SEGMENT_COUNT_MAX = 10;\n\nlet BASE_SEG_LEN_MIN = 62;\nlet BASE_SEG_LEN_MAX = 82;\n\nlet TOP_SEG_RATIO_MIN = 0.58;\nlet TOP_SEG_RATIO_MAX = 0.78;\n\nlet BASE_THICK_MIN = 13;\nlet BASE_THICK_MAX = 18;\n\nlet TOP_THICK_RATIO_MIN = 0.55;\nlet TOP_THICK_RATIO_MAX = 0.72;\n\n// ---- culm curvature ----\nlet CURVE_MIN = -50;\nlet CURVE_MAX = 50;\n\nlet DRIFT_START_MIN = 1;\nlet DRIFT_START_MAX = 5;\n\nlet DRIFT_END_MIN = 6;\nlet DRIFT_END_MAX = 8;\n\n// ---- culm color ----\nlet COL_R_MIN = 108;\nlet COL_R_MAX = 132;\nlet COL_G_MIN = 95;\nlet COL_G_MAX = 112;\nlet COL_B_MIN = 62;\nlet COL_B_MAX = 82;\nlet COL_ALPHA = 235;\n\n// ---- branch attachment ----\nlet BRANCH_START_T = 0.3;\n\nlet ATTACH_0_PROB = 0.35;\nlet ATTACH_1_PROB = 0.40;\n// remaining probability becomes 2 attachments\n\n// ---- branch angle placement ----\nlet BASE_ANGLE_LEFT_MIN = -0.95;\nlet BASE_ANGLE_LEFT_MAX = -0.35;\n\nlet BASE_ANGLE_RIGHT_MIN = 0.35;\nlet BASE_ANGLE_RIGHT_MAX = 0.95;\n\nlet BRANCH_ANGLE_MIN = 18;\nlet BRANCH_ANGLE_MAX = 28;\n\n// ---- L-system ----\nlet GENERATION_MIN = 1;\nlet GENERATION_MAX = 2;\n\nlet STEP_LEN_BOTTOM = 20;\nlet STEP_LEN_TOP = 20;\n\nlet CONNECTOR_SCALE_BOTTOM = 1.05;\nlet CONNECTOR_SCALE_TOP = 0.7;\n\n// ---- leaves ----\nlet LEAF_FAN_COUNT_MIN = 3;\nlet LEAF_FAN_COUNT_MAX = 5;\n\nlet LEAF_SPREAD_MIN = 50;\nlet LEAF_SPREAD_MAX = 72;\n\nlet LEAF_SIZE_MIN = 0.8;\nlet LEAF_SIZE_MAX = 1.15;\n\nlet LEAF_ROTATION_JITTER_MIN = -0.08;\nlet LEAF_ROTATION_JITTER_MAX = 0.08;\n\nlet SINGLE_LEAF_ROTATION_MIN = -0.06;\nlet SINGLE_LEAF_ROTATION_MAX = 0.06;\n\n// ---- background wash ----\nlet WASH_GREEN_COUNT = 2500;\nlet WASH_WHITE_COUNT = 1200;\n\nlet WASH_GREEN_ALPHA_MIN = 8;\nlet WASH_GREEN_ALPHA_MAX = 18;\nlet WASH_WHITE_ALPHA_MIN = 8;\nlet WASH_WHITE_ALPHA_MAX = 18;\n\nlet WASH_GREEN_SIZE_MIN = 8;\nlet WASH_GREEN_SIZE_MAX = 24;\n\nlet WASH_WHITE_SIZE_MIN = 12;\nlet WASH_WHITE_SIZE_MAX = 36;\n\n// ======================\n// L-SYSTEM RULES\n// ======================\n\nlet branchRules = [\n  {\n    a: \"F\",\n    b: \"FF+[F-F+F]-[+F+F-F]\"\n  }\n];\n\n// ======================\n// COMPOSITION DATA\n// ======================\n\nlet systems = [];\nlet bgSeed = 0;\n\nfunction setup() {\n  createCanvas(600, 600);\n  angleMode(RADIANS);\n  noLoop();\n\n  generateComposition();\n}\n\nfunction draw() {\n  background(235, 242, 223);\n\n  randomSeed(bgSeed);\n  drawPaperWash();\n\n  for (let s of systems) {\n    drawBambooSystem(s);\n  }\n}\n\nfunction mousePressed() {\n  generateComposition();\n  redraw();\n}\n\nfunction generateComposition() {\n  systems = [];\n  bgSeed = floor(random(1000000));\n\n  for (let i = 0; i < SYSTEM_COUNT; i++) {\n    systems.push(makeBambooSystem());\n  }\n\n  systems.sort((a, b) => a.baseX - b.baseX);\n}\n\nfunction makeBambooSystem() {\n  let baseX = width * random(SYSTEM_X_MIN, SYSTEM_X_MAX);\n  let baseY = height + random(SYSTEM_Y_OFFSET_MIN, SYSTEM_Y_OFFSET_MAX);\n  let overallScale = random(SYSTEM_SCALE_MIN, SYSTEM_SCALE_MAX);\n\n  let segmentCount = int(random(SEGMENT_COUNT_MIN, SEGMENT_COUNT_MAX));\n  let baseSegLen = random(BASE_SEG_LEN_MIN, BASE_SEG_LEN_MAX) * overallScale;\n  let topSegLen = baseSegLen * random(TOP_SEG_RATIO_MIN, TOP_SEG_RATIO_MAX);\n\n  let baseThickness = random(BASE_THICK_MIN, BASE_THICK_MAX) * overallScale;\n  let topThickness = baseThickness * random(TOP_THICK_RATIO_MIN, TOP_THICK_RATIO_MAX);\n\n  let curveAmount = random(CURVE_MIN, CURVE_MAX);\n  let driftStart = random(DRIFT_START_MIN, DRIFT_START_MAX);\n  let driftEnd = random(DRIFT_END_MIN, DRIFT_END_MAX);\n\n  let col = color(\n    random(COL_R_MIN, COL_R_MAX),\n    random(COL_G_MIN, COL_G_MAX),\n    random(COL_B_MIN, COL_B_MAX),\n    COL_ALPHA\n  );\n\n  let nodes = [];\n  let segments = [];\n\n  let drift = 0;\n  let xBottom = baseX;\n  let yBottom = baseY;\n\n  for (let i = 0; i < segmentCount; i++) {\n    let t = i / max(1, segmentCount - 1);\n\n    let segLen = lerp(baseSegLen, topSegLen, t);\n    let thick = lerp(baseThickness, topThickness, t);\n\n    let bendStep = map(i, 0, segmentCount - 1, driftStart, driftEnd);\n    drift += curveAmount * 0.06 * bendStep;\n\n    let xTop = baseX + drift;\n    let yTop = yBottom - segLen;\n\n    segments.push({\n      xBottom,\n      yBottom,\n      xTop,\n      yTop,\n      thick\n    });\n\n    nodes.push({\n      x: xTop,\n      y: yTop,\n      t: t,\n      thickness: thick\n    });\n\n    xBottom = xTop;\n    yBottom = yTop;\n  }\n\n  let branches = generateBranches(nodes);\n\n  return {\n    baseX,\n    baseY,\n    col,\n    segments,\n    nodes,\n    branches\n  };\n}\n\nfunction generateBranches(nodes) {\n  let branches = [];\n\n  for (let i = 0; i < nodes.length; i++) {\n    let node = nodes[i];\n\n    if (node.t < BRANCH_START_T) continue;\n\n    let countChoice = random();\n    let attachCount = 0;\n\n    if (countChoice < ATTACH_0_PROB) {\n      attachCount = 0;\n    } else if (countChoice < ATTACH_0_PROB + ATTACH_1_PROB) {\n      attachCount = 1;\n    } else {\n      attachCount = 2;\n    }\n\n    for (let k = 0; k < attachCount; k++) {\n      let side;\n\n      if (attachCount === 1) {\n        side = random() < 0.5 ? -1 : 1;\n      } else {\n        side = k === 0 ? -1 : 1;\n      }\n\n      let generations = int(random(GENERATION_MIN, GENERATION_MAX + 1));\n      let systemString = buildLSystem(\"F\", generations);\n\n      let baseAngle;\n      if (side < 0) {\n        baseAngle = random(BASE_ANGLE_LEFT_MIN, BASE_ANGLE_LEFT_MAX);\n      } else {\n        baseAngle = random(BASE_ANGLE_RIGHT_MIN, BASE_ANGLE_RIGHT_MAX);\n      }\n\n      let stepLen =\n        map(node.t, BRANCH_START_T, 1, STEP_LEN_BOTTOM, STEP_LEN_TOP) *\n        random(0.9, 1.15);\n\n      let branchAngle = radians(random(BRANCH_ANGLE_MIN, BRANCH_ANGLE_MAX));\n      let connectorScale = map(\n        node.t,\n        BRANCH_START_T,\n        1,\n        CONNECTOR_SCALE_BOTTOM,\n        CONNECTOR_SCALE_TOP\n      );\n\n      branches.push({\n        x: node.x,\n        y: node.y,\n        baseAngle,\n        stepLen,\n        branchAngle,\n        connectorScale,\n        systemString\n      });\n    }\n  }\n\n  return branches;\n}\n\nfunction drawBambooSystem(system) {\n  for (let seg of system.segments) {\n    drawCulmSegment(\n      seg.xBottom,\n      seg.yBottom,\n      seg.xTop,\n      seg.yTop,\n      seg.thick,\n      system.col\n    );\n    drawNodeBand(seg.xTop, seg.yTop, seg.thick);\n  }\n\n  for (let branch of system.branches) {\n    push();\n    translate(branch.x, branch.y);\n    rotate(branch.baseAngle);\n\n    stroke(85, 110, 75, 140);\n    strokeWeight(1.2);\n    line(0, 0, 6 * branch.connectorScale, 0);\n    translate(6 * branch.connectorScale, 0);\n\n    drawLeafLSystem(branch.systemString, branch.stepLen, branch.branchAngle);\n    pop();\n  }\n}\n\nfunction buildLSystem(axiom, generations) {\n  let str = axiom;\n\n  for (let i = 0; i < generations; i++) {\n    str = generate(str);\n  }\n\n  return str;\n}\n\nfunction generate(str) {\n  let next = \"\";\n\n  for (let i = 0; i < str.length; i++) {\n    let current = str.charAt(i);\n    let replaced = false;\n\n    for (let j = 0; j < branchRules.length; j++) {\n      if (current === branchRules[j].a) {\n        next += branchRules[j].b;\n        replaced = true;\n        break;\n      }\n    }\n\n    if (!replaced) {\n      next += current;\n    }\n  }\n\n  return next;\n}\n\nfunction drawLeafLSystem(sentence, stepLen, angle) {\n  let leafToggle = 0;\n\n  for (let i = 0; i < sentence.length; i++) {\n    let current = sentence.charAt(i);\n\n    if (current === \"F\") {\n      stroke(80, 110, 70, 130);\n      strokeWeight(1);\n      line(0, 0, stepLen, 0);\n\n      if (leafToggle % 2 === 0) {\n        push();\n        translate(stepLen * 0.18, 0);\n        drawLeafFan(\n          int(random(LEAF_FAN_COUNT_MIN, LEAF_FAN_COUNT_MAX)),\n          stepLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX)\n        );\n        pop();\n      }\n\n      translate(stepLen * 0.5, 0);\n      leafToggle++;\n\n    } else if (current === \"+\") {\n      rotate(angle);\n    } else if (current === \"-\") {\n      rotate(-angle);\n    } else if (current === \"[\") {\n      push();\n    } else if (current === \"]\") {\n      pop();\n    }\n  }\n}\n\nfunction drawLeafFan(count, leafLen) {\n  push();\n\n  let spread = radians(random(LEAF_SPREAD_MIN, LEAF_SPREAD_MAX));\n  let start = -spread / 2;\n\n  for (let i = 0; i < count; i++) {\n    let a = start;\n\n    if (count > 1) {\n      a += map(i, 0, count - 1, 0, spread);\n    }\n\n    push();\n    rotate(random(LEAF_ROTATION_JITTER_MIN, LEAF_ROTATION_JITTER_MAX) + a);\n    drawLeaf(leafLen * random(LEAF_SIZE_MIN, LEAF_SIZE_MAX));\n    pop();\n  }\n\n  pop();\n}\n\nfunction drawLeaf(len) {\n  push();\n\n  rotate(random(SINGLE_LEAF_ROTATION_MIN, SINGLE_LEAF_ROTATION_MAX));\n\n  noStroke();\n  fill(70, 135, 72, 210);\n\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.22, -len * 0.10,\n    len * 0.68, -len * 0.07,\n    len, 0\n  );\n  bezierVertex(\n    len * 0.68, len * 0.07,\n    len * 0.22, len * 0.10,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  fill(40, 90, 45, 85);\n  beginShape();\n  vertex(0, 0);\n  bezierVertex(\n    len * 0.18, -len * 0.07,\n    len * 0.60, -len * 0.04,\n    len * 0.92, -len * 0.01\n  );\n  bezierVertex(\n    len * 0.60, 0,\n    len * 0.18, len * 0.04,\n    0, 0\n  );\n  endShape(CLOSE);\n\n  stroke(45, 80, 40, 120);\n  strokeWeight(1);\n  line(0, 0, len, 0);\n\n  pop();\n}\n\nfunction drawCulmSegment(xBottom, yBottom, xTop, yTop, thick, col) {\n  let len = dist(xBottom, yBottom, xTop, yTop);\n\n  let nx = -(yTop - yBottom) / max(len, 0.0001);\n  let ny = (xTop - xBottom) / max(len, 0.0001);\n\n  let bx1x = lerp(xBottom, xTop, 0.33);\n  let bx1y = lerp(yBottom, yTop, 0.33);\n\n  let bx2x = lerp(xBottom, xTop, 0.66);\n  let bx2y = lerp(yBottom, yTop, 0.66);\n\n  noStroke();\n  fill(red(col), green(col), blue(col), alpha(col));\n\n  beginShape();\n  vertex(xBottom + nx * thick * 0.5, yBottom + ny * thick * 0.5);\n  bezierVertex(\n    bx1x + nx * thick * 0.48, bx1y + ny * thick * 0.48,\n    bx2x + nx * thick * 0.42, bx2y + ny * thick * 0.42,\n    xTop + nx * thick * 0.35, yTop + ny * thick * 0.35\n  );\n  vertex(xTop - nx * thick * 0.35, yTop - ny * thick * 0.35);\n  bezierVertex(\n    bx2x - nx * thick * 0.42, bx2y - ny * thick * 0.42,\n    bx1x - nx * thick * 0.48, bx1y - ny * thick * 0.48,\n    xBottom - nx * thick * 0.5, yBottom - ny * thick * 0.5\n  );\n  endShape(CLOSE);\n\n  stroke(255, 120);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.12,\n    yBottom + ny * thick * 0.12,\n    xTop + nx * thick * 0.05,\n    yTop + ny * thick * 0.05\n  );\n\n  stroke(70, 60, 40, 90);\n  strokeWeight(1);\n  line(\n    xBottom + nx * thick * 0.5,\n    yBottom + ny * thick * 0.5,\n    xTop + nx * thick * 0.35,\n    yTop + ny * thick * 0.35\n  );\n  line(\n    xBottom - nx * thick * 0.5,\n    yBottom - ny * thick * 0.5,\n    xTop - nx * thick * 0.35,\n    yTop - ny * thick * 0.35\n  );\n}\n\nfunction drawNodeBand(x, y, thick) {\n  push();\n  translate(x, y);\n\n  noFill();\n  stroke(90, 75, 50, 160);\n  strokeWeight(2);\n  arc(0, 0, thick * 1.1, thick * 0.45, PI, TWO_PI);\n  arc(0, 0, thick * 1.1, thick * 0.45, 0, PI);\n\n  stroke(255, 90);\n  strokeWeight(1);\n  arc(0, -1, thick * 0.9, thick * 0.22, PI * 1.05, TWO_PI * 0.98);\n\n  pop();\n}\n\nfunction drawPaperWash() {\n  noStroke();\n\n  for (let i = 0; i < WASH_GREEN_COUNT; i++) {\n    fill(120, 180, 90, random(WASH_GREEN_ALPHA_MIN, WASH_GREEN_ALPHA_MAX));\n    ellipse(\n      random(width),\n      random(height),\n      random(WASH_GREEN_SIZE_MIN, WASH_GREEN_SIZE_MAX),\n      random(WASH_GREEN_SIZE_MIN, WASH_GREEN_SIZE_MAX)\n    );\n  }\n\n  for (let i = 0; i < WASH_WHITE_COUNT; i++) {\n    fill(255, random(WASH_WHITE_ALPHA_MIN, WASH_WHITE_ALPHA_MAX));\n    ellipse(\n      random(width),\n      random(height),\n      random(WASH_WHITE_SIZE_MIN, WASH_WHITE_SIZE_MAX),\n      random(WASH_WHITE_SIZE_MIN, WASH_WHITE_SIZE_MAX)\n    );\n  }\n}"
       },
       "thumbnailPath": "/thumbs/n350.png",
-      "kind": "normal"
+      "kind": "normal",
+      "starredId": ""
     },
     "n362": {
       "id": "n362",
@@ -5647,70 +5652,323 @@
       "label": "n364",
       "kind": "star",
       "sourceId": "n362",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n365": {
       "id": "n365",
       "label": "n365",
       "kind": "star",
       "sourceId": "n244",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n366": {
       "id": "n366",
       "label": "n366",
       "kind": "star",
       "sourceId": "n265",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n367": {
       "id": "n367",
       "label": "n367",
       "kind": "star",
       "sourceId": "n270",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n368": {
       "id": "n368",
       "label": "n368",
       "kind": "star",
       "sourceId": "n275",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n369": {
       "id": "n369",
       "label": "n369",
       "kind": "star",
       "sourceId": "n287",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n370": {
       "id": "n370",
       "label": "n370",
       "kind": "star",
       "sourceId": "n299",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n371": {
       "id": "n371",
       "label": "n371",
       "kind": "star",
       "sourceId": "n323",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n372": {
       "id": "n372",
       "label": "n372",
       "kind": "star",
       "sourceId": "n325",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
     },
     "n373": {
       "id": "n373",
       "label": "n373",
       "kind": "star",
       "sourceId": "n327",
-      "expandedChildren": []
+      "expandedChildren": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "files": {}
+    },
+    "n374": {
+      "id": "n374",
+      "label": "n374",
+      "title": "Flow Field",
+      "description": "Added Flow field",
+      "childSets": [
+        {
+          "id": "branch-2",
+          "label": "Branch 2",
+          "children": [
+            "n375",
+            "n377",
+            "n378",
+            "n379",
+            "n380"
+          ]
+        }
+      ],
+      "children": [
+        "n375",
+        "n377",
+        "n378",
+        "n379",
+        "n380"
+      ],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n  flowField = new FlowField(cellSize);\n  emitter = new Emitter(mouseX, mouseY, { rate: 4 });\n}\n\nfunction draw() {\n  background(20, 30);\n\n  flowField.update();\n  // flowField.render(); // turn on to debug field\n\n  emitter.setPosition(mouseX, mouseY);\n  emitter.run(flowField);\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.vel = p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 5;\n    this.life = opts.life ?? 255;\n    this.decay = opts.decay ?? 2.5;\n    this.maxSpeed = 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    let force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  update() {\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    noStroke();\n    fill(255, this.life);\n    circle(this.pos.x, this.pos.y, this.size);\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n    this.rate = opts.rate ?? 3;\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(3, 7),\n          life: 255\n        })\n      );\n    }\n  }\n\n  update(flowField) {\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      let p = this.particles[i];\n\n      p.follow(flowField);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (let p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n\n        let angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        let v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n        xoff += 0.08;\n      }\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    let col = floor(constrain(x, 0, width - 1) / this.resolution);\n    let row = floor(constrain(y, 0, height - 1) / this.resolution);\n    let index = col + row * this.cols;\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n        let v = this.field[index];\n\n        let px = x * this.resolution;\n        let py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}\n\nclass Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n    this.rate = opts.rate ?? 3;\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(3, 7),\n          life: 255\n        })\n      );\n    }\n  }\n\n  update(flowField) {\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      let p = this.particles[i];\n\n      p.follow(flowField);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (let p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}\n\nclass Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.vel = p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 5;\n    this.life = opts.life ?? 255;\n    this.decay = opts.decay ?? 2.5;\n    this.maxSpeed = 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    let force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  update() {\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    noStroke();\n    fill(255, this.life);\n    circle(this.pos.x, this.pos.y, this.size);\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}\n\n"
+      },
+      "thumbnailPath": "/thumbs/n374.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n375": {
+      "id": "n375",
+      "label": "n375",
+      "title": "Longer lifespan",
+      "description": "Particles stay alive longer",
+      "childSets": [],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n  flowField = new FlowField(cellSize);\n  emitter = new Emitter(mouseX, mouseY, { rate: 4 });\n}\n\nfunction draw() {\n  background(20, 30);\n\n  flowField.update();\n  // flowField.render(); // turn on to debug field\n\n  emitter.setPosition(mouseX, mouseY);\n  emitter.run(flowField);\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.vel = p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 5;\n    this.life = opts.life ?? 255000;\n    this.MaxLife = this.life ?? 200000;\n    this.decay = 0.001\n    this.maxSpeed = 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    let force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  update() {\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    noStroke();\n    let alpha = map(this.life, 0, this.maxLife, 0, 255);\n    fill(255, alpha);\n    circle(this.pos.x, this.pos.y, this.size);\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}\n",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n    this.rate = opts.rate ?? 3;\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(1, 2),\n          life: 2000,\n          decay: 0.000002\n        })\n      );\n    }\n  }\n\n  update(flowField) {\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      let p = this.particles[i];\n\n      p.follow(flowField);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (let p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n\n        let angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        let v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n        xoff += 0.08;\n      }\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    let col = floor(constrain(x, 0, width - 1) / this.resolution);\n    let row = floor(constrain(y, 0, height - 1) / this.resolution);\n    let index = col + row * this.cols;\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n        let v = this.field[index];\n\n        let px = x * this.resolution;\n        let py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}\n\nclass Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n    this.rate = opts.rate ?? 3;\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(3, 7),\n          life: 255\n        })\n      );\n    }\n  }\n\n  update(flowField) {\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      let p = this.particles[i];\n\n      p.follow(flowField);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (let p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}\n\n\n\n"
+      },
+      "thumbnailPath": "/thumbs/n375.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n377": {
+      "id": "n377",
+      "label": "n377",
+      "title": "Anti clumping",
+      "description": "added anti clumping to the particles. Tends to freeze",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n  flowField = new FlowField(cellSize);\n  emitter = new Emitter(mouseX, mouseY, { rate: 4 });\n}\n\nfunction draw() {\n  background(20, 30);\n\n  flowField.update();\n  // flowField.render(); // turn on to debug field\n\n  emitter.setPosition(mouseX, mouseY);\n  emitter.run(flowField);\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.vel = p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 5;\n    this.life = opts.life ?? 2000;\n    this.maxLife = this.life;\n    this.decay = opts.decay ?? 1;\n    this.maxSpeed = 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    let force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  separate(particles) {\n    let desiredSeparation = this.size * 4;\n    let steer = createVector(0, 0);\n    let count = 0;\n\n    for (let other of particles) {\n      if (other === this) continue;\n\n      let d = p5.Vector.dist(this.pos, other.pos);\n\n      if (d > 0 && d < desiredSeparation) {\n        let diff = p5.Vector.sub(this.pos, other.pos);\n        diff.normalize();\n        diff.div(d);\n        steer.add(diff);\n        count++;\n      }\n    }\n\n    if (count > 0) {\n      steer.div(count);\n    }\n\n    if (steer.mag() > 0) {\n      steer.setMag(0.08);\n      this.applyForce(steer);\n    }\n  }\n\n  update() {\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    noStroke();\n    let alpha = map(this.life, 0, this.maxLife, 0, 255);\n    fill(255, alpha);\n    circle(this.pos.x, this.pos.y, this.size);\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n    this.rate = opts.rate ?? 3;\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(0.01, 1),\n          life: 2000,\n          decay: 0.000002\n        })\n      );\n    }\n  }\n\n  update(flowField) {\n  for (let i = this.particles.length - 1; i >= 0; i--) {\n    let p = this.particles[i];\n\n    p.follow(flowField);\n    p.separate(this.particles);\n    p.update();\n    p.edges();\n\n    if (p.isDead()) {\n      this.particles.splice(i, 1);\n    }\n  }\n}\n\n  render() {\n    for (let p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n\n        let angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        let v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n        xoff += 0.08;\n      }\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    let col = floor(constrain(x, 0, width - 1) / this.resolution);\n    let row = floor(constrain(y, 0, height - 1) / this.resolution);\n    let index = col + row * this.cols;\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        let index = x + y * this.cols;\n        let v = this.field[index];\n\n        let px = x * this.resolution;\n        let py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}\n\n\n\n"
+      },
+      "thumbnailPath": "/thumbs/n377.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n378": {
+      "id": "n378",
+      "label": "n378",
+      "title": "Spatial Hashing",
+      "description": "Improved performance",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n\n  flowField = new FlowField(cellSize);\n\n  emitter = new Emitter(mouseX, mouseY, {\n    rate: 3,\n    maxParticles: 1200,\n    hashCellSize: 24\n  });\n\n  background(20);\n}\n\nfunction draw() {\n  background(20, 30);\n\n  if (frameCount % 2 === 0) {\n    flowField.update();\n  }\n\n  emitter.setPosition(mouseX, mouseY);\n  emitter.run(flowField);\n\n  // flowField.render();\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.prevPos = this.pos.copy();\n\n    this.vel = p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 1.5;\n    this.life = opts.life ?? 250;\n    this.maxLife = this.life;\n    this.decay = opts.decay ?? 1;\n    this.maxSpeed = opts.maxSpeed ?? 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    const force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  separateFromSpatialHash(spatialHash, cellSize) {\n    const desiredSeparation = max(6, this.size * 8);\n    const desiredSeparationSq = desiredSeparation * desiredSeparation;\n\n    const cx = floor(this.pos.x / cellSize);\n    const cy = floor(this.pos.y / cellSize);\n\n    let steer = createVector(0, 0);\n    let count = 0;\n\n    for (let oy = -1; oy <= 1; oy++) {\n      for (let ox = -1; ox <= 1; ox++) {\n        const key = `${cx + ox},${cy + oy}`;\n        const neighbors = spatialHash.get(key);\n\n        if (!neighbors) continue;\n\n        for (const other of neighbors) {\n          if (other === this) continue;\n\n          const dx = this.pos.x - other.pos.x;\n          const dy = this.pos.y - other.pos.y;\n          const dSq = dx * dx + dy * dy;\n\n          if (dSq > 0 && dSq < desiredSeparationSq) {\n            const d = sqrt(dSq);\n            const diff = createVector(dx, dy);\n\n            diff.normalize();\n            diff.div(d);\n\n            steer.add(diff);\n            count++;\n          }\n        }\n      }\n    }\n\n    if (count > 0) {\n      steer.div(count);\n\n      if (steer.magSq() > 0) {\n        steer.setMag(0.05);\n        this.applyForce(steer);\n      }\n    }\n  }\n\n  update() {\n    this.prevPos.set(this.pos);\n\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    const alpha = map(this.life, 0, this.maxLife, 0, 255);\n\n    stroke(255, alpha);\n    strokeWeight(this.size);\n    line(this.prevPos.x, this.prevPos.y, this.pos.x, this.pos.y);\n  }\n\n  edges() {\n    let wrapped = false;\n\n    if (this.pos.x < 0) {\n      this.pos.x = width;\n      wrapped = true;\n    } else if (this.pos.x > width) {\n      this.pos.x = 0;\n      wrapped = true;\n    }\n\n    if (this.pos.y < 0) {\n      this.pos.y = height;\n      wrapped = true;\n    } else if (this.pos.y > height) {\n      this.pos.y = 0;\n      wrapped = true;\n    }\n\n    if (wrapped) {\n      this.prevPos.set(this.pos);\n    }\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n\n    this.rate = opts.rate ?? 2;\n    this.maxParticles = opts.maxParticles ?? 1000;\n    this.hashCellSize = opts.hashCellSize ?? 24;\n\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      if (this.particles.length >= this.maxParticles) break;\n\n      this.particles.push(\n        new Particle(this.x, this.y, {\n          size: random(0.75, 1.5),\n          life: 250,\n          decay: 1,\n          maxSpeed: 2\n        })\n      );\n    }\n  }\n\n  buildSpatialHash() {\n    const hash = new Map();\n\n    for (const p of this.particles) {\n      const cx = floor(p.pos.x / this.hashCellSize);\n      const cy = floor(p.pos.y / this.hashCellSize);\n      const key = `${cx},${cy}`;\n\n      if (!hash.has(key)) {\n        hash.set(key, []);\n      }\n\n      hash.get(key).push(p);\n    }\n\n    return hash;\n  }\n\n  update(flowField) {\n    const spatialHash = this.buildSpatialHash();\n\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      const p = this.particles[i];\n\n      p.follow(flowField);\n      p.separateFromSpatialHash(spatialHash, this.hashCellSize);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (const p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n\n        const angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        const v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n\n        xoff += 0.08;\n      }\n\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    const col = floor(constrain(x, 0, width - 1) / this.resolution);\n    const row = floor(constrain(y, 0, height - 1) / this.resolution);\n    const index = col + row * this.cols;\n\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n        const v = this.field[index];\n\n        const px = x * this.resolution;\n        const py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n378.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n379": {
+      "id": "n379",
+      "label": "n379",
+      "title": "Emitter update",
+      "description": "emitter has own force and flings particles radially",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(20);\n\n  flowField = new FlowField(cellSize);\n\n  emitter = new Emitter(mouseX, mouseY, {\n    rate: 3,\n    maxParticles: 12000,\n    hashCellSize: 24,\n    spawnRadius: 3,\n    radialSpeedMin: 1,\n    radialSpeedMax: 2.5,\n    repulsionRadius: 100,\n    repulsionStrength: 1\n  });\n}\n\nfunction draw() {\n  background(20, 30);\n\n  if (frameCount % 2 === 0) {\n    flowField.update();\n  }\n\n  emitter.setPosition(mouseX, mouseY);\n  emitter.run(flowField);\n\n  // flowField.render();\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.prevPos = this.pos.copy();\n\n    this.vel = opts.vel ? opts.vel.copy() : p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 1.5;\n    this.life = opts.life ?? 250;\n    this.maxLife = this.life;\n    this.decay = opts.decay ?? 1;\n    this.maxSpeed = opts.maxSpeed ?? 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    const force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  separateFromSpatialHash(spatialHash, cellSize) {\n    const desiredSeparation = max(6, this.size * 8);\n    const desiredSeparationSq = desiredSeparation * desiredSeparation;\n\n    const cx = floor(this.pos.x / cellSize);\n    const cy = floor(this.pos.y / cellSize);\n\n    let steer = createVector(0, 0);\n    let count = 0;\n\n    for (let oy = -1; oy <= 1; oy++) {\n      for (let ox = -1; ox <= 1; ox++) {\n        const key = `${cx + ox},${cy + oy}`;\n        const neighbors = spatialHash.get(key);\n\n        if (!neighbors) continue;\n\n        for (const other of neighbors) {\n          if (other === this) continue;\n\n          const dx = this.pos.x - other.pos.x;\n          const dy = this.pos.y - other.pos.y;\n          const dSq = dx * dx + dy * dy;\n\n          if (dSq > 0 && dSq < desiredSeparationSq) {\n            const d = sqrt(dSq);\n            const diff = createVector(dx, dy);\n            diff.normalize();\n            diff.div(d);\n            steer.add(diff);\n            count++;\n          }\n        }\n      }\n    }\n\n    if (count > 0) {\n      steer.div(count);\n\n      if (steer.magSq() > 0) {\n        steer.setMag(0.05);\n        this.applyForce(steer);\n      }\n    }\n  }\n\n  update() {\n    this.prevPos.set(this.pos);\n\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    const alpha = map(this.life, 0, this.maxLife, 0, 255);\n    stroke(255, alpha);\n    strokeWeight(this.size);\n    line(this.prevPos.x, this.prevPos.y, this.pos.x, this.pos.y);\n  }\n\n  edges() {\n    let wrapped = false;\n\n    if (this.pos.x < 0) {\n      this.pos.x = width;\n      wrapped = true;\n    } else if (this.pos.x > width) {\n      this.pos.x = 0;\n      wrapped = true;\n    }\n\n    if (this.pos.y < 0) {\n      this.pos.y = height;\n      wrapped = true;\n    } else if (this.pos.y > height) {\n      this.pos.y = 0;\n      wrapped = true;\n    }\n\n    if (wrapped) {\n      this.prevPos.set(this.pos);\n    }\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n\n    this.rate = opts.rate ?? 2;\n    this.maxParticles = opts.maxParticles ?? 1000;\n    this.hashCellSize = opts.hashCellSize ?? 24;\n\n    this.spawnRadius = opts.spawnRadius ?? 2;\n    this.radialSpeedMin = opts.radialSpeedMin ?? 0.8;\n    this.radialSpeedMax = opts.radialSpeedMax ?? 2.2;\n\n    this.repulsionRadius = opts.repulsionRadius ?? 80;\n    this.repulsionStrength = opts.repulsionStrength ?? 0.12;\n\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      if (this.particles.length >= this.maxParticles) break;\n\n      const angle = random(TWO_PI);\n      const spawnOffset = p5.Vector.fromAngle(angle).mult(random(0, this.spawnRadius));\n      const radialVel = p5.Vector.fromAngle(angle).mult(\n        random(this.radialSpeedMin, this.radialSpeedMax)\n      );\n\n      this.particles.push(\n        new Particle(this.x + spawnOffset.x, this.y + spawnOffset.y, {\n          vel: radialVel,\n          size: random(0.75, 1.5),\n          life: 250,\n          decay: 1,\n          maxSpeed: 2.5\n        })\n      );\n    }\n  }\n\n  buildSpatialHash() {\n    const hash = new Map();\n\n    for (const p of this.particles) {\n      const cx = floor(p.pos.x / this.hashCellSize);\n      const cy = floor(p.pos.y / this.hashCellSize);\n      const key = `${cx},${cy}`;\n\n      if (!hash.has(key)) {\n        hash.set(key, []);\n      }\n\n      hash.get(key).push(p);\n    }\n\n    return hash;\n  }\n\n  applyRepulsion(p) {\n    const dx = p.pos.x - this.x;\n    const dy = p.pos.y - this.y;\n    const dSq = dx * dx + dy * dy;\n    const radiusSq = this.repulsionRadius * this.repulsionRadius;\n\n    if (dSq > 0 && dSq < radiusSq) {\n      const d = sqrt(dSq);\n      const force = createVector(dx, dy);\n\n      force.normalize();\n\n      // stronger near center, weaker near edge\n      const strength = map(d, 0, this.repulsionRadius, this.repulsionStrength, 0);\n      force.mult(strength);\n\n      p.applyForce(force);\n    }\n  }\n\n  update(flowField) {\n    const spatialHash = this.buildSpatialHash();\n\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      const p = this.particles[i];\n\n      p.follow(flowField);\n      p.separateFromSpatialHash(spatialHash, this.hashCellSize);\n      this.applyRepulsion(p);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (const p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n\n        const angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        const v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n\n        xoff += 0.08;\n      }\n\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    const col = floor(constrain(x, 0, width - 1) / this.resolution);\n    const row = floor(constrain(y, 0, height - 1) / this.resolution);\n    const index = col + row * this.cols;\n\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n        const v = this.field[index];\n\n        const px = x * this.resolution;\n        const py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n379.png",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n380": {
+      "id": "n380",
+      "label": "n380",
+      "title": "Perlin walker",
+      "description": "Emitter is now a perlin walker",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let flowField;\nlet emitter;\nlet walker;\nlet cellSize = 20;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(20);\n\n  flowField = new FlowField(cellSize);\n\n  emitter = new Emitter(width / 2, height / 2, {\n    rate: 3,\n    maxParticles: 1200,\n    hashCellSize: 24,\n    spawnRadius: 3,\n    radialSpeedMin: 1,\n    radialSpeedMax: 2.5,\n    repulsionRadius: 90,\n    repulsionStrength: 1\n  });\n\n  walker = new PerlinWalker(width / 2, height / 2, {\n    xStep: 0.004,\n    yStep: 0.006,\n    speed: 8\n  });\n}\n\nfunction draw() {\n  background(20, 30);\n\n  if (frameCount % 2 === 0) {\n    flowField.update();\n  }\n\n  walker.update();\n\n  emitter.setPosition(walker.pos.x, walker.pos.y);\n  emitter.run(flowField);\n\n  // walker.render();\n  // flowField.render();\n}",
+        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.prevPos = this.pos.copy();\n\n    this.vel = opts.vel ? opts.vel.copy() : p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 1.5;\n    this.life = opts.life ?? 250;\n    this.maxLife = this.life;\n    this.decay = opts.decay ?? 1;\n    this.maxSpeed = opts.maxSpeed ?? 2;\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    const force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  separateFromSpatialHash(spatialHash, cellSize) {\n    const desiredSeparation = max(6, this.size * 8);\n    const desiredSeparationSq = desiredSeparation * desiredSeparation;\n\n    const cx = floor(this.pos.x / cellSize);\n    const cy = floor(this.pos.y / cellSize);\n\n    let steer = createVector(0, 0);\n    let count = 0;\n\n    for (let oy = -1; oy <= 1; oy++) {\n      for (let ox = -1; ox <= 1; ox++) {\n        const key = `${cx + ox},${cy + oy}`;\n        const neighbors = spatialHash.get(key);\n\n        if (!neighbors) continue;\n\n        for (const other of neighbors) {\n          if (other === this) continue;\n\n          const dx = this.pos.x - other.pos.x;\n          const dy = this.pos.y - other.pos.y;\n          const dSq = dx * dx + dy * dy;\n\n          if (dSq > 0 && dSq < desiredSeparationSq) {\n            const d = sqrt(dSq);\n            const diff = createVector(dx, dy);\n            diff.normalize();\n            diff.div(d);\n            steer.add(diff);\n            count++;\n          }\n        }\n      }\n    }\n\n    if (count > 0) {\n      steer.div(count);\n\n      if (steer.magSq() > 0) {\n        steer.setMag(0.05);\n        this.applyForce(steer);\n      }\n    }\n  }\n\n  update() {\n    this.prevPos.set(this.pos);\n\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    const alpha = map(this.life, 0, this.maxLife, 0, 255);\n    stroke(255, alpha);\n    strokeWeight(this.size);\n    line(this.prevPos.x, this.prevPos.y, this.pos.x, this.pos.y);\n  }\n\n  edges() {\n    let wrapped = false;\n\n    if (this.pos.x < 0) {\n      this.pos.x = width;\n      wrapped = true;\n    } else if (this.pos.x > width) {\n      this.pos.x = 0;\n      wrapped = true;\n    }\n\n    if (this.pos.y < 0) {\n      this.pos.y = height;\n      wrapped = true;\n    } else if (this.pos.y > height) {\n      this.pos.y = 0;\n      wrapped = true;\n    }\n\n    if (wrapped) {\n      this.prevPos.set(this.pos);\n    }\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}",
+        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n\n    this.rate = opts.rate ?? 2;\n    this.maxParticles = opts.maxParticles ?? 1000;\n    this.hashCellSize = opts.hashCellSize ?? 24;\n\n    this.spawnRadius = opts.spawnRadius ?? 2;\n    this.radialSpeedMin = opts.radialSpeedMin ?? 0.8;\n    this.radialSpeedMax = opts.radialSpeedMax ?? 2.2;\n\n    this.repulsionRadius = opts.repulsionRadius ?? 80;\n    this.repulsionStrength = opts.repulsionStrength ?? 0.12;\n\n    this.particles = [];\n  }\n\n  emit() {\n    for (let i = 0; i < this.rate; i++) {\n      if (this.particles.length >= this.maxParticles) break;\n\n      const angle = random(TWO_PI);\n      const spawnOffset = p5.Vector.fromAngle(angle).mult(random(0, this.spawnRadius));\n      const radialVel = p5.Vector.fromAngle(angle).mult(\n        random(this.radialSpeedMin, this.radialSpeedMax)\n      );\n\n      this.particles.push(\n        new Particle(this.x + spawnOffset.x, this.y + spawnOffset.y, {\n          vel: radialVel,\n          size: random(0.75, 1.5),\n          life: 250,\n          decay: 1,\n          maxSpeed: 2.5\n        })\n      );\n    }\n  }\n\n  buildSpatialHash() {\n    const hash = new Map();\n\n    for (const p of this.particles) {\n      const cx = floor(p.pos.x / this.hashCellSize);\n      const cy = floor(p.pos.y / this.hashCellSize);\n      const key = `${cx},${cy}`;\n\n      if (!hash.has(key)) {\n        hash.set(key, []);\n      }\n\n      hash.get(key).push(p);\n    }\n\n    return hash;\n  }\n\n  applyRepulsion(p) {\n    const dx = p.pos.x - this.x;\n    const dy = p.pos.y - this.y;\n    const dSq = dx * dx + dy * dy;\n    const radiusSq = this.repulsionRadius * this.repulsionRadius;\n\n    if (dSq > 0 && dSq < radiusSq) {\n      const d = sqrt(dSq);\n      const force = createVector(dx, dy);\n\n      force.normalize();\n\n      // stronger near center, weaker near edge\n      const strength = map(d, 0, this.repulsionRadius, this.repulsionStrength, 0);\n      force.mult(strength);\n\n      p.applyForce(force);\n    }\n  }\n\n  update(flowField) {\n    const spatialHash = this.buildSpatialHash();\n\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      const p = this.particles[i];\n\n      p.follow(flowField);\n      p.separateFromSpatialHash(spatialHash, this.hashCellSize);\n      this.applyRepulsion(p);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (const p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}",
+        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n\n        const angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        const v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n\n        xoff += 0.08;\n      }\n\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    const col = floor(constrain(x, 0, width - 1) / this.resolution);\n    const row = floor(constrain(y, 0, height - 1) / this.resolution);\n    const index = col + row * this.cols;\n\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n        const v = this.field[index];\n\n        const px = x * this.resolution;\n        const py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}",
+        "walker.js": "class PerlinWalker {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n\n    this.xoff = opts.xoff ?? random(1000);\n    this.yoff = opts.yoff ?? random(1000);\n\n    this.xStep = opts.xStep ?? 0.005;\n    this.yStep = opts.yStep ?? 0.005;\n\n    this.speed = opts.speed ?? 2;\n  }\n\n  update() {\n    const angle = noise(this.xoff, this.yoff) * TWO_PI * 4;\n    const step = p5.Vector.fromAngle(angle).mult(this.speed);\n\n    this.pos.add(step);\n\n    this.xoff += this.xStep;\n    this.yoff += this.yStep;\n\n    this.edges();\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  render() {\n    noStroke();\n    fill(255, 80, 80);\n    circle(this.pos.x, this.pos.y, 8);\n  }\n}"
+      },
+      "thumbnailPath": "/thumbs/n380.png",
+      "kind": "normal",
+      "starredId": ""
     }
   }
 }
