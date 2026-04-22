@@ -387,7 +387,9 @@
       "children": [
         "n24",
         "n27",
-        "n45"
+        "n45",
+        "n419",
+        "n420"
       ],
       "expandedChildren": [],
       "files": {
@@ -407,7 +409,9 @@
           "children": [
             "n24",
             "n27",
-            "n45"
+            "n45",
+            "n419",
+            "n420"
           ]
         }
       ]
@@ -1337,7 +1341,8 @@
       "children": [
         "n87",
         "n88",
-        "n94"
+        "n94",
+        "n421"
       ],
       "expandedChildren": [
         "n88"
@@ -1358,7 +1363,8 @@
           "children": [
             "n87",
             "n88",
-            "n94"
+            "n94",
+            "n421"
           ]
         }
       ]
@@ -6065,19 +6071,11 @@
             "n392",
             "n396"
           ]
-        },
-        {
-          "id": "branch-3",
-          "label": "Branch 3",
-          "children": [
-            "n419"
-          ]
         }
       ],
       "children": [
         "n392",
-        "n396",
-        "n419"
+        "n396"
       ],
       "expandedChildren": [
         "n396"
@@ -6395,19 +6393,72 @@
       "label": "n419",
       "title": "",
       "description": "",
-      "childSets": [],
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
       "children": [],
       "expandedChildren": [],
       "files": {
-        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"flowField.js\"></script>\n    <script src=\"particle.js\"></script>\n    <script src=\"emitter.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
         "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let flowField;\nlet walkers = [];\nlet emitters = [];\nlet cellSize = 20;\nlet palette = [\"#7e2e84\",\"#d14081\",\"#ef798a\",\"#f9f5e3\",\"#ccf5ac\"];\n\nlet numWalkers = 4;\n\nfunction setup() {\n  createCanvas(600, 600);\n  background(20);\n\n  flowField = new FlowField(cellSize);\n\n  for (let i = 0; i < numWalkers; i++) {\n    let x = random(width);\n    let y = random(height);\n\n    let walker = new PerlinWalker(x, y, {\n      xoff: random(1000),\n      yoff: random(1000),\n      xStep: random(0.0003, 0.0003),\n      yStep: random(0.0003, 0.0003),\n      speed: random(2, 3)\n    });\n\n    let emitter = new Emitter(x, y, {\n      rate: 3,\n      maxParticles: 200,\n      hashCellSize: 24,\n      spawnRadius: 3,\n      radialSpeedMin: 1,\n      radialSpeedMax: 2.5,\n      repulsionRadius: 10,\n      repulsionStrength: 100,\n      palette: palette\n    });\n\n    walkers.push(walker);\n    emitters.push(emitter);\n  }\n}\n\nfunction draw() {\n  background(20, 30);\n\n  if (frameCount % 2 === 0) {\n    flowField.update();\n  }\n\n  for (let i = 0; i < walkers.length; i++) {\n    walkers[i].update();\n\n    emitters[i].setPosition(walkers[i].pos.x, walkers[i].pos.y);\n    emitters[i].run(flowField);\n\n    // walkers[i].render();\n  }\n\n  // flowField.render();\n}",
-        "particle.js": "class Particle {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n    this.prevPos = this.pos.copy();\n\n    this.vel = opts.vel ? opts.vel.copy() : p5.Vector.random2D().mult(0.5);\n    this.acc = createVector(0, 0);\n\n    this.size = opts.size ?? 1.5;\n    this.life = opts.life ?? 250;\n    this.maxLife = this.life;\n    this.decay = opts.decay ?? 1;\n    this.maxSpeed = opts.maxSpeed ?? 2;\n    this.color = opts.color ?? color(random(255), random(255), random(255));\n  }\n\n  applyForce(force) {\n    this.acc.add(force);\n  }\n\n  follow(flowField) {\n    const force = flowField.lookup(this.pos.x, this.pos.y);\n    this.applyForce(force);\n  }\n\n  separateFromSpatialHash(spatialHash, cellSize) {\n    const desiredSeparation = max(6, this.size * 8);\n    const desiredSeparationSq = desiredSeparation * desiredSeparation;\n\n    const cx = floor(this.pos.x / cellSize);\n    const cy = floor(this.pos.y / cellSize);\n\n    let steer = createVector(0, 0);\n    let count = 0;\n\n    for (let oy = -1; oy <= 1; oy++) {\n      for (let ox = -1; ox <= 1; ox++) {\n        const key = `${cx + ox},${cy + oy}`;\n        const neighbors = spatialHash.get(key);\n\n        if (!neighbors) continue;\n\n        for (const other of neighbors) {\n          if (other === this) continue;\n\n          const dx = this.pos.x - other.pos.x;\n          const dy = this.pos.y - other.pos.y;\n          const dSq = dx * dx + dy * dy;\n\n          if (dSq > 0 && dSq < desiredSeparationSq) {\n            const d = sqrt(dSq);\n            const diff = createVector(dx, dy);\n            diff.normalize();\n            diff.div(d);\n            steer.add(diff);\n            count++;\n          }\n        }\n      }\n    }\n\n    if (count > 0) {\n      steer.div(count);\n\n      if (steer.magSq() > 0) {\n        steer.setMag(0.05);\n        this.applyForce(steer);\n      }\n    }\n  }\n\n  update() {\n    this.prevPos.set(this.pos);\n\n    this.vel.add(this.acc);\n    this.vel.limit(this.maxSpeed);\n    this.pos.add(this.vel);\n\n    this.acc.mult(0);\n    this.life -= this.decay;\n  }\n\n  render() {\n    const alpha = map(this.life, 0, this.maxLife, 0, 255);\n\n    let c = this.color;\n    stroke(red(c), green(c), blue(c), alpha);\n\n    strokeWeight(this.size);\n    line(this.prevPos.x, this.prevPos.y, this.pos.x, this.pos.y);\n  }\n\n  edges() {\n    let wrapped = false;\n\n    if (this.pos.x < 0) {\n      this.pos.x = width;\n      wrapped = true;\n    } else if (this.pos.x > width) {\n      this.pos.x = 0;\n      wrapped = true;\n    }\n\n    if (this.pos.y < 0) {\n      this.pos.y = height;\n      wrapped = true;\n    } else if (this.pos.y > height) {\n      this.pos.y = 0;\n      wrapped = true;\n    }\n\n    if (wrapped) {\n      this.prevPos.set(this.pos);\n    }\n  }\n\n  isDead() {\n    return this.life <= 0;\n  }\n}\n",
-        "emitter.js": "class Emitter {\n  constructor(x, y, opts = {}) {\n    this.x = x;\n    this.y = y;\n\n    this.rate = opts.rate ?? 2;\n    this.maxParticles = opts.maxParticles ?? 1000;\n    this.hashCellSize = opts.hashCellSize ?? 24;\n\n    this.spawnRadius = opts.spawnRadius ?? 2;\n    this.radialSpeedMin = opts.radialSpeedMin ?? 0.8;\n    this.radialSpeedMax = opts.radialSpeedMax ?? 2.2;\n\n    this.repulsionRadius = opts.repulsionRadius ?? 80;\n    this.repulsionStrength = opts.repulsionStrength ?? 0.12;\n\n    this.particles = [];\n    this.palette = opts.palette ?? [\"#ffffff\"];\n  }\n\n  emit() {\n    const hex = random(this.palette);\n    const col = color(hex); // 👈 convert once here\n    for (let i = 0; i < this.rate; i++) {\n      if (this.particles.length >= this.maxParticles) break;\n\n      const angle = random(TWO_PI);\n      const spawnOffset = p5.Vector.fromAngle(angle).mult(\n        random(0, this.spawnRadius),\n      );\n      const radialVel = p5.Vector.fromAngle(angle).mult(\n        random(this.radialSpeedMin, this.radialSpeedMax),\n      );\n\n      this.particles.push(\n        new Particle(this.x + spawnOffset.x, this.y + spawnOffset.y, {\n          vel: radialVel,\n          size: random(1, 5),\n          life: 250,\n          decay: 0.1,\n          maxSpeed: 2.5,\n          color: col\n        }),\n      );\n    }\n  }\n\n  buildSpatialHash() {\n    const hash = new Map();\n\n    for (const p of this.particles) {\n      const cx = floor(p.pos.x / this.hashCellSize);\n      const cy = floor(p.pos.y / this.hashCellSize);\n      const key = `${cx},${cy}`;\n\n      if (!hash.has(key)) {\n        hash.set(key, []);\n      }\n\n      hash.get(key).push(p);\n    }\n\n    return hash;\n  }\n\n  applyRepulsion(p) {\n    const dx = p.pos.x - this.x;\n    const dy = p.pos.y - this.y;\n    const dSq = dx * dx + dy * dy;\n    const radiusSq = this.repulsionRadius * this.repulsionRadius;\n\n    if (dSq > 0 && dSq < radiusSq) {\n      const d = sqrt(dSq);\n      const force = createVector(dx, dy);\n\n      force.normalize();\n\n      // stronger near center, weaker near edge\n      const strength = map(\n        d,\n        0,\n        this.repulsionRadius,\n        this.repulsionStrength,\n        0,\n      );\n      force.mult(strength);\n\n      p.applyForce(force);\n    }\n  }\n\n  update(flowField) {\n    const spatialHash = this.buildSpatialHash();\n\n    for (let i = this.particles.length - 1; i >= 0; i--) {\n      const p = this.particles[i];\n\n      p.follow(flowField);\n      p.separateFromSpatialHash(spatialHash, this.hashCellSize);\n      this.applyRepulsion(p);\n      p.update();\n      p.edges();\n\n      if (p.isDead()) {\n        this.particles.splice(i, 1);\n      }\n    }\n  }\n\n  render() {\n    for (const p of this.particles) {\n      p.render();\n    }\n  }\n\n  run(flowField) {\n    this.emit();\n    this.update(flowField);\n    this.render();\n  }\n\n  setPosition(x, y) {\n    this.x = x;\n    this.y = y;\n  }\n}\n",
-        "flowField.js": "class FlowField {\n  constructor(resolution) {\n    this.resolution = resolution;\n    this.cols = floor(width / this.resolution);\n    this.rows = floor(height / this.resolution);\n    this.field = new Array(this.cols * this.rows);\n    this.zoff = 0;\n    this.init();\n  }\n\n  init() {\n    let yoff = 0;\n\n    for (let y = 0; y < this.rows; y++) {\n      let xoff = 0;\n\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n\n        const angle = noise(xoff, yoff, this.zoff) * TWO_PI * 2;\n        const v = p5.Vector.fromAngle(angle);\n        v.setMag(0.15);\n\n        this.field[index] = v;\n\n        xoff += 0.08;\n      }\n\n      yoff += 0.08;\n    }\n  }\n\n  update() {\n    this.zoff += 0.003;\n    this.init();\n  }\n\n  lookup(x, y) {\n    const col = floor(constrain(x, 0, width - 1) / this.resolution);\n    const row = floor(constrain(y, 0, height - 1) / this.resolution);\n    const index = col + row * this.cols;\n\n    return this.field[index].copy();\n  }\n\n  render() {\n    stroke(255, 60);\n    strokeWeight(1);\n\n    for (let y = 0; y < this.rows; y++) {\n      for (let x = 0; x < this.cols; x++) {\n        const index = x + y * this.cols;\n        const v = this.field[index];\n\n        const px = x * this.resolution;\n        const py = y * this.resolution;\n\n        push();\n        translate(px, py);\n        rotate(v.heading());\n        line(0, 0, this.resolution * 0.8, 0);\n        pop();\n      }\n    }\n  }\n}",
-        "walker.js": "class PerlinWalker {\n  constructor(x, y, opts = {}) {\n    this.pos = createVector(x, y);\n\n    this.xoff = opts.xoff ?? random(1000);\n    this.yoff = opts.yoff ?? random(1000);\n\n    this.xStep = opts.xStep ?? 0.005;\n    this.yStep = opts.yStep ?? 0.005;\n\n    this.speed = opts.speed ?? 2;\n  }\n\n  update() {\n    const angle = noise(this.xoff, this.yoff) * TWO_PI * 4;\n    const step = p5.Vector.fromAngle(angle).mult(this.speed);\n\n    this.pos.add(step);\n\n    this.xoff += this.xStep;\n    this.yoff += this.yStep;\n\n    this.edges();\n  }\n\n  edges() {\n    if (this.pos.x < 0) this.pos.x = width;\n    if (this.pos.x > width) this.pos.x = 0;\n    if (this.pos.y < 0) this.pos.y = height;\n    if (this.pos.y > height) this.pos.y = 0;\n  }\n\n  render() {\n    noStroke();\n    fill(255, 80, 80);\n    circle(this.pos.x, this.pos.y, 8);\n  }\n}"
+        "sketch.js": "let walker;\nlet drawCalls = 10;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"blue\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n    this.t = 0;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let angle = map(noise(this.t), 0, 1, 0, TWO_PI*2);\n\n  this.x += cos(angle) * this.speed;\n  this.y += sin(angle) * this.speed;\n\n  // wrap\n  if (this.x < 0) this.x = width;\n  if (this.x > width) this.x = 0;\n  if (this.y < 0) this.y = height;\n  if (this.y > height) this.y = 0;\n\n  this.t += 0.005;\n    \n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
       },
       "thumbnailPath": "",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n420": {
+      "id": "n420",
+      "label": "n420",
+      "title": "",
+      "description": "",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"target.js\"></script>\n    <script src=\"walker.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let walker;\nlet drawCalls = 10;\nlet numTargets = 2000;\nlet targets = [];\n\nfunction setup() {\n  createCanvas(400, 400);\n\n  for (let i = 0; i < numTargets; i++) {\n    const x = randomGaussian(width / 2, width / 6);\n    const y = randomGaussian(height / 2, height / 6);\n    \n    //class Target {\n // constructor(x, y, pointColor, active, expandRate, popSize, activateRange)\n\n    targets.push(\n      new Target(\n        constrain(x, 0, width),\n        constrain(y, 0, height),\n        \"blue\",\n        false,\n        10,\n        100,\n        5,\n        0.1\n      )\n    );\n  }\n\n  walker = new Walker(width / 2, height / 2, \"#000000\", 2, 2);\n  background(\"#ffffff\");\n}\n\nfunction draw() {\n  for (let i = 0; i < drawCalls; i++) {\n    walker.render();\n    walker.move();\n  }\n\n  for (let t of targets) {\n    t.render();\n    t.hit(walker);\n  }\n}\n",
+        "walker.js": "// walker.js\n// testing file linking\n\nclass Walker {\n  constructor(x, y, pointColor, speed, size) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.speed = speed;\n    this.size = size;\n    this.t = 0;\n  }\n\n  render() {\n    stroke(this.pointColor);\n    strokeWeight(this.size);\n    point(this.x, this.y);\n  }\n  move() {\n    let angle = map(noise(this.t), 0, 1, 0, TWO_PI*2);\n\n  this.x += cos(angle) * this.speed;\n  this.y += sin(angle) * this.speed;\n\n  // wrap\n  if (this.x < 0) this.x = width;\n  if (this.x > width) this.x = 0;\n  if (this.y < 0) this.y = height;\n  if (this.y > height) this.y = 0;\n\n  this.t += 0.005;\n    \n  }\n}\n",
+        "target.js": "// target.js\n\nclass Target {\n  constructor(x, y, pointColor, active, expandRate, popSize, activateRange, lineThickness) {\n    this.x = x;\n    this.y = y;\n    this.pointColor = pointColor;\n    this.size = 1;\n    this.active = false;\n    this.expandRate = expandRate;\n    this.popSize = popSize;\n    this.activateRange = activateRange;\n    this.lineThickness = lineThickness\n  }\n\n  render() {\n    noFill();\n    stroke(this.pointColor);\n    strokeWeight(this.lineThickness)\n    if (this.active) {\n      this.size += this.expandRate;\n      circle(this.x, this.y, this.size);\n      if (this.size > this.popSize) {\n        this.active = false;\n      }\n    }\n  }\n\n  hit(walker) {\n    if (!this.active) {\n      if (dist(walker.x, walker.y, this.x, this.y) < this.activateRange) {\n        this.active = true;\n      }\n    }\n  }\n}\n"
+      },
+      "thumbnailPath": "",
+      "kind": "normal",
+      "starredId": ""
+    },
+    "n421": {
+      "id": "n421",
+      "label": "n421",
+      "title": "red",
+      "description": "test",
+      "childSets": [
+        {
+          "id": "default",
+          "label": "Children",
+          "children": []
+        }
+      ],
+      "children": [],
+      "expandedChildren": [],
+      "files": {
+        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
+        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
+        "sketch.js": "let f;\nlet colors = [\"#f1e8b8\", \"#f9e784\", \"#e58f65\", \"#d05353\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, colors, 4, 2);\n  fill(\"rgb(25, 25, 25\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  fill(\"rgba(25, 25, 25, 0.02)\");\n  rect(0, 0, width, height);\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n}\n",
+        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors; // <-- ARRAY of colors\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    this.angle = 0;\n    this.rotationSpeed = rotationSpeed;\n    this.count = count;\n  }\n\n  update(target) {\n    let desired = p5.Vector.sub(target, this.position);\n\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    let ringRadius = this.size * 0.8;\n    let dotSize = this.size * 0.25;\n\n    for (let i = 0; i < this.count; i++) {\n      // cycle colors\n      let c = this.colors[i % this.colors.length];\n      fill(c);\n\n      let a = map(i, 0, this.count, 0, TWO_PI);\n      let x = cos(a) * ringRadius;\n      let y = sin(a) * ringRadius;\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
+      },
+      "thumbnailPath": "/thumbs/n421.png",
       "kind": "normal",
       "starredId": ""
     }
