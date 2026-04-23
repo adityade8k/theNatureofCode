@@ -4291,25 +4291,6 @@
       "kind": "normal",
       "starredId": ""
     },
-    "n251": {
-      "id": "n251",
-      "label": "n251",
-      "title": "Week 8: Physics",
-      "description": "",
-      "childSets": [
-        {
-          "id": "default",
-          "label": "Children",
-          "children": []
-        }
-      ],
-      "children": [],
-      "expandedChildren": [],
-      "files": {},
-      "thumbnailPath": "",
-      "kind": "root",
-      "starredId": ""
-    },
     "n252": {
       "id": "n252",
       "label": "n252",
