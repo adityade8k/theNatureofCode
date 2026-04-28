@@ -90,6 +90,69 @@
       "width": 195.1161512565186,
       "height": 175.35042203710282,
       "fontSize": 14
+    },
+    {
+      "id": "tmoiuwsbl",
+      "text": "I remember struggling with vectors when they were taught as part of mathematics in high school. I also remember avoiding vectors in my p5.js sketches, often opting instead for trigonometric or algebraic approaches to motion.\n\nHowever, once I got the hang of them, vectors became one of the most powerful tools in my creative coding palette.",
+      "x": -132.96947739985623,
+      "y": 3447.9333580682833,
+      "width": 233.8143522349357,
+      "height": 230.01568684547559,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivdbs7",
+      "text": "Started with the basic bouncing ball example from the book. \n\nExperimented with systems with gravity and without. ",
+      "x": -202.56108080165998,
+      "y": 3953.2110285525127,
+      "width": 173.52839555542673,
+      "height": 181.03238199455035,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivgkt9",
+      "text": "Explored methods to smoothen motion. Created a ball class that follows the cursor",
+      "x": 360.31718798861084,
+      "y": 4592.557206395567,
+      "width": 155.9104642215277,
+      "height": 102.94835153396544,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivj00m",
+      "text": "I tried out different ways in which the ways in which the \"following\" object could render. \n",
+      "x": 656.2809646753008,
+      "y": 4493.926658665753,
+      "width": 173.60559946135967,
+      "height": 97.5029027021614,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivlr9s",
+      "text": "I also turn to grids whenever I’m lacking inspiration. For this implementation, I abstracted the Ball class so that it could operate within a Cell class.",
+      "x": 371.8617337168231,
+      "y": 3285.829575315479,
+      "width": 135.6367185235352,
+      "height": 143.54731220057238,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivo57d",
+      "text": "Experimented with offset of position and randomization of inital state of each cell",
+      "x": 647.284127956744,
+      "y": 3019.687059010272,
+      "width": 146.9033418626836,
+      "height": 155.29774668356725,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoivy75y",
+      "text": "What if the cell class itself became a perlin walker? \n\nexperimented with the cell class to create some interesting effects. Very paintbrush like",
+      "x": 656.9140456382999,
+      "y": 3847.5497765634627,
+      "width": 152.61643090172186,
+      "height": 221.51811026578895,
+      "fontSize": 12
     }
   ]
 }
