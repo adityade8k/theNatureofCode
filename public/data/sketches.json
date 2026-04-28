@@ -7,8 +7,7 @@
     "n135",
     "n201",
     "n202",
-    "n203",
-    "n251"
+    "n203"
   ],
   "nodes": {
     "n1": {
@@ -1337,8 +1336,7 @@
       "children": [
         "n87",
         "n88",
-        "n94",
-        "n421"
+        "n94"
       ],
       "expandedChildren": [
         "n88"
@@ -1359,8 +1357,7 @@
           "children": [
             "n87",
             "n88",
-            "n94",
-            "n421"
+            "n94"
           ]
         }
       ]
@@ -6364,30 +6361,6 @@
       ],
       "children": [],
       "files": {}
-    },
-    "n421": {
-      "id": "n421",
-      "label": "n421",
-      "title": "red",
-      "description": "test",
-      "childSets": [
-        {
-          "id": "default",
-          "label": "Children",
-          "children": []
-        }
-      ],
-      "children": [],
-      "expandedChildren": [],
-      "files": {
-        "index.html": "<!doctype html>\n<html>\n  <head>\n    <meta charset=\"utf-8\" />\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n    <title>p5 sketch</title>\n    <link rel=\"stylesheet\" href=\"style.css\" />\n  </head>\n  <body>\n    <script src=\"https://cdn.jsdelivr.net/npm/p5@1.9.0/lib/p5.min.js\"></script>\n    <script src=\"follower.js\"></script>\n    <script src=\"sketch.js\"></script>\n  </body>\n</html>\n",
-        "style.css": "html, body { margin: 0; padding: 0; background: #000; }\ncanvas { display: block; }\n",
-        "sketch.js": "let f;\nlet colors = [\"#f1e8b8\", \"#f9e784\", \"#e58f65\", \"#d05353\"];\n\nfunction setup() {\n  createCanvas(400, 400);\n  f = new Follower(width / 2, height / 2, 48, colors, 4, 2);\n  fill(\"rgb(25, 25, 25\");\n  rect(0, 0, width, height);\n}\n\nfunction draw() {\n  fill(\"rgba(25, 25, 25, 0.02)\");\n  rect(0, 0, width, height);\n\n  let target = createVector(mouseX, mouseY);\n\n  f.update(target);\n  f.render();\n}\n",
-        "follower.js": "// follower.js\nclass Follower {\n  constructor(posX, posY, size, colors, count, rotationSpeed) {\n    this.position = createVector(posX, posY);\n    this.velocity = createVector(0, 0);\n\n    this.size = size;\n    this.colors = colors; // <-- ARRAY of colors\n\n    this.maxSpeed = 24;\n    this.maxForce = 0.2;\n    this.damping = 0.9;\n\n    this.angle = 0;\n    this.rotationSpeed = rotationSpeed;\n    this.count = count;\n  }\n\n  update(target) {\n    let desired = p5.Vector.sub(target, this.position);\n\n    let d = desired.mag();\n    if (d < 120) {\n      let m = map(d, 0, 120, 0, this.maxSpeed);\n      desired.setMag(m);\n    } else {\n      desired.setMag(this.maxSpeed);\n    }\n\n    let steer = p5.Vector.sub(desired, this.velocity);\n    steer.limit(this.maxForce);\n\n    this.velocity.add(steer);\n    this.velocity.mult(this.damping);\n    this.position.add(this.velocity);\n  }\n\n  render() {\n    push();\n    translate(this.position.x, this.position.y);\n\n    let spin = this.rotationSpeed + this.velocity.mag() * 0.01;\n    this.angle += spin;\n    rotate(this.angle);\n\n    noStroke();\n\n    let ringRadius = this.size * 0.8;\n    let dotSize = this.size * 0.25;\n\n    for (let i = 0; i < this.count; i++) {\n      // cycle colors\n      let c = this.colors[i % this.colors.length];\n      fill(c);\n\n      let a = map(i, 0, this.count, 0, TWO_PI);\n      let x = cos(a) * ringRadius;\n      let y = sin(a) * ringRadius;\n      circle(x, y, dotSize);\n    }\n\n    pop();\n  }\n}\n"
-      },
-      "thumbnailPath": "/thumbs/n421.png",
-      "kind": "normal",
-      "starredId": ""
     }
   }
 }

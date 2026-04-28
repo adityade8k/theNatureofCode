@@ -1,7 +1,5 @@
 // src/main.js
-import { layoutForest } from "./tree/layout.js";
-import { renderForest } from "./tree/render.js";
-import { renderWires } from "./tree/wires.js";
+import { renderScene } from "./tree/renderScene.js";
 import { attachPanZoom } from "./tree/interactions.js";
 import { normalizeStarRoots } from "./tree/starRoots.js";
 import {
@@ -23,6 +21,8 @@ const wiresEl = document.getElementById("wires");
 const state = {
   roots: [],
   nodes: {},
+  textBoxes: [],
+  canvasImages: [],
   pan: { x: CAMERA_CONFIG.pointA.x, y: CAMERA_CONFIG.pointA.y },
   zoom: CAMERA_CONFIG.viewer.startZoom
 };
@@ -91,19 +91,14 @@ animateCamera({
 // Rendering
 // -----------------------------
 function render() {
-  const layout = layoutForest(state, { rootGap: 340 });
-
-  renderForest({
+  renderScene({
     state,
-    layout,
     viewportEl,
+    wiresEl,
     mode: "viewer",
     onNodeClick,
-    // IMPORTANT: star tiles render the SOURCE node's files (no duplication)
     getFilesForNode: (id) => state.nodes[id]?.files || {}
   });
-
-  renderWires({ state, layout, wiresEl });
 
   panzoom.applyTransform();
 }
@@ -171,6 +166,37 @@ async function loadStateFromJson() {
   }
 
   normalizeStarRoots(state);
+
+  await loadTextBoxesFromJson();
+  await loadCanvasImagesFromJson();
+}
+
+async function loadTextBoxesFromJson() {
+  try {
+    const res = await fetch("/data/textboxes.json");
+    if (!res.ok) {
+      state.textBoxes = [];
+      return;
+    }
+    const data = await res.json();
+    state.textBoxes = Array.isArray(data.textBoxes) ? data.textBoxes : [];
+  } catch (_) {
+    state.textBoxes = [];
+  }
+}
+
+async function loadCanvasImagesFromJson() {
+  try {
+    const res = await fetch("/data/canvas-images.json");
+    if (!res.ok) {
+      state.canvasImages = [];
+      return;
+    }
+    const data = await res.json();
+    state.canvasImages = Array.isArray(data.images) ? data.images : [];
+  } catch (_) {
+    state.canvasImages = [];
+  }
 }
 
 // -----------------------------

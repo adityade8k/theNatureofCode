@@ -34,16 +34,18 @@ import {
   makeColumnId,
   parseColumnId
 } from "./childrenModel.js";
+import { TREE_LAYOUT_CONFIG } from "../config.js";
 
 export function layoutForest(state, opts = {}) {
   const {
-    nodeSize = 90,
-    gapY = 14,
-    gapX = 140,
-    plusHeight = 44,
-    siblingGap = 10,
-    sameParentSetGap = 10,
-    rootGap = 10
+    nodeSize = TREE_LAYOUT_CONFIG.nodeSize,
+    gapY = TREE_LAYOUT_CONFIG.gapY,
+    gapX = TREE_LAYOUT_CONFIG.gapX,
+    plusHeight = TREE_LAYOUT_CONFIG.plusHeight,
+    siblingGap = TREE_LAYOUT_CONFIG.siblingGap,
+    sameParentSetGap = TREE_LAYOUT_CONFIG.sameParentSetGap,
+    rootGap = TREE_LAYOUT_CONFIG.rootGap,
+    startY = 0
   } = opts;
 
   const ROW_H = nodeSize + gapY;
@@ -90,14 +92,19 @@ export function layoutForest(state, opts = {}) {
   const columnHeight = (columnId) => {
     const { nodeId } = parseColumnId(columnId);
     const n = getNode(nodeId);
+    const childCount = getColumnChildren(columnId).length;
 
     // Star column: no plus button; rows are 2× height (for 2× tiles)
     if (isStarRootNode(n, nodeId)) {
-      const rowsH = getColumnChildren(columnId).length * STAR_ROW_H;
+      const rowsH = childCount === 0
+        ? 0
+        : childCount * (nodeSize * 2) + (childCount - 1) * gapY;
       return rowsH; // no plusHeight in star column
     }
 
-    const rowsH = getColumnChildren(columnId).length * ROW_H;
+    const rowsH = childCount === 0
+      ? 0
+      : childCount * nodeSize + (childCount - 1) * gapY;
     return rowsH + plusHeight;
   };
 
@@ -274,7 +281,7 @@ export function layoutForest(state, opts = {}) {
   const allPos = {};
   const allEdges = [];
 
-  let topY = 0;
+  let topY = startY;
 
   // IMPORTANT: Star columns are NOT stacked roots in the forest.
   const roots = (state.roots || []).filter((rid) => {

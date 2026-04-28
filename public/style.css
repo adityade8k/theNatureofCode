@@ -41,7 +41,6 @@ body {
   letter-spacing: 0.4px;
   color: rgba(255, 255, 255, 0.95);
   pointer-events: none;
-  transform: translate(-220px, -380px);
 }
 
 .viewport {
@@ -67,6 +66,34 @@ body {
   margin-bottom: 14px;
 }
 
+.tile-stack {
+  position: relative;
+  width: max-content;
+  height: max-content;
+  transition: opacity 160ms ease;
+}
+
+.tile-serial {
+  position: absolute;
+  right: calc(100% + var(--tile-index-offset-x, 7px));
+  top: 0;
+  color: var(--tile-index-color, rgba(255, 255, 255, 0.58));
+  font-size: var(--tile-index-font-size, 11px);
+  font-weight: var(--tile-index-font-weight, 800);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+  text-align: right;
+}
+
+.featured-chain-active .tile-stack:not(.featured-chain-keep) {
+  opacity: 0.18;
+}
+
+.featured-chain-active .tile-stack.featured-chain-keep {
+  opacity: 1;
+}
+
 .square {
   width: 90px;
   height: 90px;
@@ -80,12 +107,86 @@ body {
   font-size: 14px;
   overflow: hidden;
   cursor: pointer;
+  position: relative;
 }
 
 .square.has-thumb {
   background-size: cover;
   background-position: center;
   color: transparent;
+}
+
+.tile-hover-meta {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background: rgba(0, 0, 0, 0.58);
+  color: rgba(255, 255, 255, 0.94);
+  opacity: 0;
+  transition: opacity 120ms ease;
+  pointer-events: none;
+  text-align: left;
+}
+
+.square:hover .tile-hover-meta {
+  opacity: 1;
+}
+
+.tile-hover-title-band {
+  width: 100%;
+  padding: 6px 8px;
+  background: rgba(0, 0, 0, 0.78);
+  overflow: hidden;
+}
+
+.tile-hover-title {
+  width: 100%;
+  overflow: hidden;
+}
+
+.tile-hover-title-text {
+  display: block;
+  width: max-content;
+  max-width: none;
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.1;
+  color: rgba(255, 255, 255, 0.98);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.square:hover .tile-hover-title-text {
+  animation: tile-title-reveal 4.8s ease-in-out 350ms infinite alternate;
+}
+
+.tile-hover-description {
+  display: -webkit-box;
+  margin: 7px 8px 8px;
+  font-size: 9px;
+  font-weight: 650;
+  line-height: 1.15;
+  color: rgba(255, 255, 255, 0.78);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 3;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+@keyframes tile-title-reveal {
+  0%,
+  18% {
+    transform: translateX(0);
+  }
+
+  82%,
+  100% {
+    transform: translateX(min(0px, calc(var(--tile-title-window, 74px) - 100%)));
+  }
 }
 
 /* =========================================================
@@ -145,6 +246,18 @@ body {
   transform: translateY(1px);
 }
 
+.fab-text {
+  bottom: 96px;
+  border-style: solid;
+  font-size: 28px;
+}
+
+.fab-image {
+  bottom: 170px;
+  border-style: solid;
+  font-size: 28px;
+}
+
 /* =========================================================
    SVG wires
    ========================================================= */
@@ -154,6 +267,160 @@ body {
   pointer-events: none;
   overflow: visible;
   transform-origin: 0 0;
+}
+
+/* =========================================================
+   Canvas text boxes
+   ========================================================= */
+.canvas-image-layer,
+.text-box-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.canvas-image-layer {
+  z-index: 9;
+}
+
+.text-box-layer {
+  z-index: 10;
+}
+
+.canvas-image {
+  position: absolute;
+  min-width: 40px;
+  min-height: 40px;
+  pointer-events: auto;
+}
+
+.canvas-image-media {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.canvas-image.is-selected .canvas-image-media {
+  outline: 1px solid rgba(255, 255, 255, 0.72);
+}
+
+.text-box {
+  position: absolute;
+  min-width: 80px;
+  min-height: 44px;
+  pointer-events: auto;
+}
+
+.text-box-content {
+  width: 100%;
+  height: 100%;
+  padding: 10px 12px;
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.94);
+  line-height: 1.2;
+  white-space: pre-wrap;
+  overflow: hidden;
+  outline: none;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.75);
+}
+
+.text-box-link {
+  color: rgba(150, 205, 255, 0.98);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  pointer-events: auto;
+}
+
+.text-box.is-selected .text-box-content {
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(12, 12, 16, 0.2);
+}
+
+.canvas-image-toolbar,
+.text-box-toolbar {
+  position: absolute;
+  left: 0;
+  top: -30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 7px 7px 0 0;
+  background: rgba(18, 18, 24, 0.94);
+  cursor: move;
+}
+
+.text-box-toolbar input {
+  width: 56px;
+  height: 22px;
+  padding: 2px 5px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.canvas-image-move-handle,
+.text-box-move-handle {
+  width: 26px;
+  height: 22px;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: move;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0;
+}
+
+.canvas-image-move-handle:active,
+.text-box-move-handle:active {
+  transform: translateY(1px);
+}
+
+.canvas-image-delete-btn,
+.text-box-delete-btn {
+  width: 22px;
+  height: 22px;
+  border: 1px solid rgba(255, 90, 90, 0.42);
+  border-radius: 5px;
+  background: rgba(255, 70, 70, 0.08);
+  color: rgba(255, 160, 160, 0.98);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  font-weight: 900;
+  line-height: 1;
+  padding: 0;
+}
+
+.canvas-image-delete-btn:active,
+.text-box-delete-btn:active {
+  transform: translateY(1px);
+}
+
+.canvas-image-resize-handle,
+.text-box-resize-handle {
+  position: absolute;
+  right: -5px;
+  bottom: -5px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.88);
+  background: #121218;
+  cursor: nwse-resize;
+}
+
+.text-box-resize-handle {
 }
 
 /* =========================================================
@@ -295,10 +562,10 @@ textarea::placeholder {
    ========================================================= */
 .root-title {
   position: absolute;
-  text-align: right;
   width: 700px;
   left: -615px;
   top: -50px; /* sits above first node */
+  text-align: right;
   font-size: 26px;
   font-weight: 900;
   color: rgba(255, 255, 255, 0.92);
@@ -306,6 +573,39 @@ textarea::placeholder {
   white-space: nowrap;
   pointer-events: none;
   z-index: 5; 
+}
+
+.root-title-text {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: middle;
+}
+
+.root-title-controls {
+  display: inline-flex;
+  gap: 5px;
+  margin-right: 8px;
+  pointer-events: auto;
+  vertical-align: middle;
+}
+
+.root-title-btn {
+  height: 24px;
+  padding: 0 8px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  background: rgba(18, 18, 24, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.root-title-delete {
+  border-color: rgba(255, 90, 90, 0.38);
+  color: rgba(255, 150, 150, 0.95);
 }
 
 .canvasTitleInTree {
@@ -1065,8 +1365,15 @@ textarea::placeholder {
   color: rgba(255, 255, 255, 0.85);
   pointer-events: none;
 
-  /* Position relative to the big canvas header */
-  transform: translate(1100px, -440px);
+}
+
+.intro-text {
+  white-space: pre-line;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(255, 255, 255, 0.78);
+  pointer-events: none;
 }
 
 /* =========================================================

@@ -15,18 +15,59 @@ import {
   makeColumnId,
   parseColumnId
 } from "./childrenModel.js";
+import { WIRE_CONFIG } from "../config.js";
 
 export function renderWires({ state, layout, wiresEl }) {
   const { pos, edges, metrics } = layout;
   const { nodeSize, rowHeight } = metrics;
 
   // Star tiles are 2× size; layout.js provides starRowHeight
-  const starRowHeight = metrics.starRowHeight ?? (nodeSize * 2 + (metrics.gapY ?? 14));
+  const starRowHeight = metrics.starRowHeight ?? (nodeSize * 2 + (metrics.gapY ?? 0));
 
-  wiresEl.setAttribute("width", "50000");
-  wiresEl.setAttribute("height", "50000");
-  wiresEl.setAttribute("viewBox", "0 0 50000 50000");
+  wiresEl.setAttribute("width", String(WIRE_CONFIG.svgSize));
+  wiresEl.setAttribute("height", String(WIRE_CONFIG.svgSize));
+  wiresEl.setAttribute("viewBox", `0 0 ${WIRE_CONFIG.svgSize} ${WIRE_CONFIG.svgSize}`);
   wiresEl.innerHTML = "";
+  ensureArrowMarker(wiresEl);
+
+  // ------------------------------------------------------------
+  // 0) Same-column wires between neighboring tiles
+  // ------------------------------------------------------------
+  for (const [colId, p] of Object.entries(pos)) {
+    if (!p) continue;
+
+    const { nodeId, setId } = parseColumnId(colId);
+    const node = state.nodes[nodeId];
+    if (!node) continue;
+
+    const children = getChildrenForSet(node, setId).filter((id) => !!state.nodes[id]);
+    if (children.length < 2) continue;
+
+    const isStarColumn = isStarRootNode(node, nodeId);
+    const rowH = isStarColumn ? starRowHeight : rowHeight;
+    const tileSize = isStarColumn ? nodeSize * 2 : nodeSize;
+    const x = p.x + tileSize / 2;
+
+    for (let i = 0; i < children.length - 1; i++) {
+      const y1 = p.yTop + i * rowH + tileSize;
+      const y2 = p.yTop + (i + 1) * rowH;
+
+      drawCubicWire({
+        wiresEl,
+        x1: x,
+        y1,
+        x2: x,
+        y2,
+        stroke: WIRE_CONFIG.sameColumnStroke,
+        width: WIRE_CONFIG.sameColumnStrokeWidth,
+        className: "same-column-wire",
+        data: {
+          "from-id": children[i],
+          "to-id": children[i + 1]
+        }
+      });
+    }
+  }
 
   // ------------------------------------------------------------
   // 1) Normal expanded-branch wires (existing behavior)
@@ -64,7 +105,18 @@ export function renderWires({ state, layout, wiresEl }) {
     const x2 = c.x;
     const y2 = c.yTop + nodeSize / 2;
 
-    drawCubicWire({ wiresEl, x1, y1, x2, y2 });
+    drawCubicWire({
+      wiresEl,
+      x1,
+      y1,
+      x2,
+      y2,
+      className: "branch-wire",
+      data: {
+        "from-id": childId,
+        "to-id": getChildrenForSet(childNode, parseColumnId(childColId).setId)[0] || childId
+      }
+    });
   }
 
   // ------------------------------------------------------------
@@ -131,13 +183,15 @@ export function renderWires({ state, layout, wiresEl }) {
       y1,
       x2,
       y2,
-      stroke: "rgba(255,255,255,0.35)",
-      width: 2.25,
-      dash: "6 6",
+      stroke: WIRE_CONFIG.starStroke,
+      width: WIRE_CONFIG.starStrokeWidth,
+      dash: WIRE_CONFIG.starDash,
       className: "star-wire",
       data: {
         "star-id": starId,
-        "source-id": sourceId
+        "source-id": sourceId,
+        "from-id": sourceId,
+        "to-id": starId
       }
     });
   }
@@ -153,21 +207,26 @@ function drawCubicWire({
   y1,
   x2,
   y2,
-  stroke = "rgba(255,255,255,0.25)",
-  width = 2,
+  stroke = WIRE_CONFIG.stroke,
+  width = WIRE_CONFIG.strokeWidth,
   dash = null,
   className = "",
   data = null
 }) {
   const mid = (x1 + x2) / 2;
+  const vertical = Math.abs(x1 - x2) < 0.001;
+  const d = vertical
+    ? `M ${x1} ${y1} C ${x1} ${(y1 + y2) / 2}, ${x2} ${(y1 + y2) / 2}, ${x2} ${y2}`
+    : `M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`;
 
   const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-  path.setAttribute("d", `M ${x1} ${y1} C ${mid} ${y1}, ${mid} ${y2}, ${x2} ${y2}`);
+  path.setAttribute("class", ["wire-path", className].filter(Boolean).join(" "));
+  path.setAttribute("d", d);
   path.setAttribute("fill", "none");
   path.setAttribute("stroke", stroke);
   path.setAttribute("stroke-width", String(width));
+  path.setAttribute("marker-end", "url(#wire-arrow)");
   if (dash) path.setAttribute("stroke-dasharray", dash);
-  if (className) path.setAttribute("class", className);
   if (data && typeof data === "object") {
     for (const [key, value] of Object.entries(data)) {
       if (value == null || value === "") continue;
@@ -176,4 +235,31 @@ function drawCubicWire({
   }
 
   wiresEl.appendChild(path);
+}
+
+function ensureArrowMarker(wiresEl) {
+  const defs = document.createElementNS("http://www.w3.org/2000/svg", "defs");
+  const marker = document.createElementNS("http://www.w3.org/2000/svg", "marker");
+  const markerWidth = WIRE_CONFIG.arrowMarkerWidth;
+  const markerHeight = WIRE_CONFIG.arrowMarkerHeight;
+  marker.setAttribute("id", "wire-arrow");
+  marker.setAttribute("viewBox", `0 0 ${markerWidth} ${markerHeight}`);
+  marker.setAttribute("markerWidth", String(markerWidth));
+  marker.setAttribute("markerHeight", String(markerHeight));
+  marker.setAttribute("refX", String(markerWidth));
+  marker.setAttribute("refY", String(markerHeight / 2));
+  marker.setAttribute("orient", "auto");
+  marker.setAttribute("markerUnits", "userSpaceOnUse");
+  marker.setAttribute("overflow", "visible");
+
+  const tip = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  tip.setAttribute(
+    "d",
+    `M 0 0 L ${markerWidth} ${markerHeight / 2} L 0 ${markerHeight} z`
+  );
+  tip.setAttribute("fill", WIRE_CONFIG.arrowFill);
+
+  marker.appendChild(tip);
+  defs.appendChild(marker);
+  wiresEl.appendChild(defs);
 }

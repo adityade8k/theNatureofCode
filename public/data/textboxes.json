@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "textBoxes": [
+    {
+      "id": "tmohkvdqi",
+      "text": "Fractals are by far my favorite topic to explore in p5.js. Here, I have explored four different techniques to generate fractals.",
+      "x": -135.45322359093615,
+      "y": 13444.888428129841,
+      "width": 253.21360743211642,
+      "height": 142.02124481097061,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi28dnv",
+      "text": "Computational randomness formed the basis of my first encounter with generative art.\n\nMy creative coding explorations have consistently centered on systems that incorporate elements of randomness, rather than fully deterministic compositions.",
+      "x": -196.54997062109737,
+      "y": 1089.1557860845678,
+      "width": 220,
+      "height": 212.445673853458,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi2q4hz",
+      "text": "I was introduced to the work of artist *Desmond Paul Henry*[https://en.wikipedia.org/wiki/Desmond_Paul_Henry] in the first p5.js class I took in 2018.\n\nHe used WW2 bomb sight computers to create mechanical randomness. His contraptions physcally plotted complex patterns.",
+      "x": -84.22431279224159,
+      "y": 851.9755620690919,
+      "width": 218.53452270620946,
+      "height": 189.57333178869322,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi3v8be",
+      "text": "In this section I implemented the basic walker class.\n\nRandomly picks a direction moves in that direction per frame",
+      "x": 112.00376020024903,
+      "y": 1117.3900877138476,
+      "width": 140.01884990993963,
+      "height": 224.75697584444077,
+      "fontSize": 14
+    },
+    {
+      "id": "tmoi43ql8",
+      "text": "Extended the walker class to support color.\n \nExperimented with rendering multiple walkers.",
+      "x": 384.3329139719569,
+      "y": 855.3359111123946,
+      "width": 131.53130078257155,
+      "height": 135.68471649112882,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi46bfr",
+      "text": "The blur filter is my favourite. \n\nWhenever I feel uninspired I just experiment with the blur filter.",
+      "x": 928.845152640225,
+      "y": 686.831765993247,
+      "width": 141.5746475865015,
+      "height": 130.013812268079,
+      "fontSize": 14
+    },
+    {
+      "id": "tmoi4exb3",
+      "text": "I wanted to explore multiples axis of randomness in this composition.\n \nI started by randomly plotting points on the canvas.",
+      "x": 115.8598855375565,
+      "y": 1495.4674418018276,
+      "width": 130.66643455054543,
+      "height": 184.30818336930525,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi4ixbv",
+      "text": "I implemented non uniform randomness to spawn points more towards the centre. \n\nI wanted to explore how the walker could interact with the points. Everytime a walker hits a point it should activate.",
+      "x": 305.53364684245093,
+      "y": 1838.2906587771263,
+      "width": 190.3931784202812,
+      "height": 183.51768861584037,
+      "fontSize": 12
+    },
+    {
+      "id": "tmoi4ohn8",
+      "text": "I am taking a class with the *Ken Perlin*[https://en.wikipedia.org/wiki/Ken_Perlin] himself. I had to implement Perlin noise in some way!",
+      "x": 618.2449548759859,
+      "y": 2229.0385135757774,
+      "width": 155.38074866193486,
+      "height": 251.92519637152802,
+      "fontSize": 14
+    },
+    {
+      "id": "tmoi4xday",
+      "text": "I experimented with different kinds of walkers and different visual variations of the points activation",
+      "x": 986.8014669289174,
+      "y": 1861.0586439910924,
+      "width": 195.1161512565186,
+      "height": 175.35042203710282,
+      "fontSize": 14
+    }
+  ]
+}

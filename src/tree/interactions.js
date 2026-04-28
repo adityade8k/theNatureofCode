@@ -1,5 +1,7 @@
 // src/tree/interactions.js
 
+import { PAN_ZOOM_CONFIG } from "../config.js";
+
 export function attachPanZoom({
   canvasEl,
   viewportEl,
@@ -11,11 +13,11 @@ export function attachPanZoom({
   let enabled = true;
 
   // Allow constructor-provided limits (viewer uses config)
-  let zoomMin = typeof minZoom === "number" ? minZoom : 0.25;
-  let zoomMax = typeof maxZoom === "number" ? maxZoom : 2.5;
+  let zoomMin = typeof minZoom === "number" ? minZoom : PAN_ZOOM_CONFIG.minZoom;
+  let zoomMax = typeof maxZoom === "number" ? maxZoom : PAN_ZOOM_CONFIG.maxZoom;
 
-  let isPanning = false;
-  let last = { x: 0, y: 0 };
+  let isDragZooming = false;
+  let dragZoomStart = { x: 0, y: 0, zoom: 1, anchorX: 0, anchorY: 0 };
 
   let animRaf = null;
 
@@ -42,7 +44,7 @@ export function attachPanZoom({
 
   function setEnabled(v) {
     enabled = !!v;
-    if (!enabled) isPanning = false;
+    if (!enabled) isDragZooming = false;
   }
 
   // Supports:
@@ -116,7 +118,7 @@ export function attachPanZoom({
   function animateTo({
     pan,
     zoom,
-    duration = 900,
+    duration = PAN_ZOOM_CONFIG.animationMs,
     easing = easeInOutCubic,
     lock = true,
     onDone
@@ -166,28 +168,38 @@ export function attachPanZoom({
     if (!enabled) return;
     if (e.button !== 0) return;
     if (e.target.closest("button")) return;
+    if (e.target.closest(".text-box")) return;
+    if (e.target.closest(".canvas-image")) return;
     if (e.target.closest(".modal, .modal-overlay")) return;
 
-    isPanning = true;
-    last = { x: e.clientX, y: e.clientY };
+    const { x, y } = getCanvasLocalXY(e.clientX, e.clientY);
+    isDragZooming = true;
+    dragZoomStart = {
+      x: e.clientX,
+      y: e.clientY,
+      zoom: state.zoom,
+      anchorX: x,
+      anchorY: y
+    };
   });
 
   window.addEventListener("mousemove", (e) => {
     if (!enabled) return;
-    if (!isPanning) return;
+    if (!isDragZooming) return;
 
-    const dx = e.clientX - last.x;
-    const dy = e.clientY - last.y;
-    last = { x: e.clientX, y: e.clientY };
+    const dy = e.clientY - dragZoomStart.y;
+    const zoomFactor = Math.exp(-dy * 0.006);
 
-    state.pan.x += dx;
-    state.pan.y += dy;
-
+    zoomAboutPoint(
+      dragZoomStart.zoom * zoomFactor,
+      dragZoomStart.anchorX,
+      dragZoomStart.anchorY
+    );
     applyTransform();
   });
 
   window.addEventListener("mouseup", () => {
-    isPanning = false;
+    isDragZooming = false;
   });
 
   canvasEl.addEventListener(
@@ -196,10 +208,8 @@ export function attachPanZoom({
       if (!enabled) return;
       e.preventDefault();
 
-      const { x, y } = getCanvasLocalXY(e.clientX, e.clientY);
-      const zoomFactor = Math.exp(-e.deltaY * 0.001);
-
-      zoomAboutPoint(state.zoom * zoomFactor, x, y);
+      state.pan.x -= e.deltaX;
+      state.pan.y -= e.deltaY;
       applyTransform();
     },
     { passive: false }
