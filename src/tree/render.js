@@ -79,7 +79,7 @@ export function renderForest({
 
   headerEl.textContent = CANVAS_INTRO_CONFIG.header.text;
   headerTagEl.textContent = CANVAS_INTRO_CONFIG.subheader.text;
-  introTextEl.textContent = CANVAS_INTRO_CONFIG.body.text;
+  renderLinkedText(introTextEl, CANVAS_INTRO_CONFIG.body.text, CANVAS_INTRO_CONFIG.body.links);
   
   const tileSerials = createTileSerialMap(state);
 
@@ -107,6 +107,41 @@ export function renderForest({
       onSaveThumbnailForNode
     });
     worldEl.appendChild(col);
+  }
+}
+
+function renderLinkedText(el, text, links = []) {
+  el.replaceChildren();
+
+  if (!Array.isArray(links) || links.length === 0) {
+    el.textContent = text;
+    return;
+  }
+
+  let cursor = 0;
+
+  for (const link of links) {
+    if (!link?.text || !link?.href) continue;
+
+    const index = text.indexOf(link.text, cursor);
+    if (index < 0) continue;
+
+    if (index > cursor) {
+      el.appendChild(document.createTextNode(text.slice(cursor, index)));
+    }
+
+    const anchor = document.createElement("a");
+    anchor.href = link.href;
+    anchor.target = "_blank";
+    anchor.rel = "noopener noreferrer";
+    anchor.textContent = link.text;
+    el.appendChild(anchor);
+
+    cursor = index + link.text.length;
+  }
+
+  if (cursor < text.length) {
+    el.appendChild(document.createTextNode(text.slice(cursor)));
   }
 }
 

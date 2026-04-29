@@ -3,12 +3,12 @@
 export const CAMERA_CONFIG = {
   // Treat these as "pan offsets" (translate values) in your current system:
   // transform = translate(pan.x, pan.y) scale(zoom)
-  pointA: { x: 500, y: 800 },
-  pointB: { x: 500, y: 800 },
+  pointA: { x: 400, y: 400 },
+  pointB: { x: 300, y: 400 },
 
   // Zoom settings
   viewer: {
-    startZoom: 0.7,
+    startZoom: 0.4,
     endZoom: 0.9,
     introMs: 5000
   },
@@ -60,7 +60,13 @@ export const CANVAS_INTRO_CONFIG = {
     y: -290
   },
   body: {
-    text: `This website began as a simple attempt to document my assignments for The Nature of Code class at NYU ITP. As I continued building it, the project gradually evolved into a code-blogging tool: a space where writing, experimentation, iteration, and outcomes could exist together rather than as separate parts of the learning process.\n\nThe idea draws from my own experience teaching a p5.js curriculum and reflecting on how rapidly AI has transformed education. The leap in AI capability between 2023–24 and 2024–25 made me question what we are really teaching when we teach code today, and what we are actually evaluating when we assess assignments. For me, the answer lies in process. I want to see the path a student took to arrive at an outcome: the experiments they tried, the mistakes they made, the iterations they refined, and the logic they developed along the way.\n\nThe structure of this site was also inspired by my collaboration with Adam Kallish, mentor and friend. He is a Professor of Design at the Institute of Design at Illinois Institute of Technology in Chicago and at BITS Design School in Mumbai. His curriculum is focused on design thinking, and I found his pedagogical methods made documentation and outcome feel like a single streamlined process.\n\nScroll to navigate and drag to zoom. Click on any tile to open the editor and interact with the code. I welcome anyone interested to try this editor themselves by cloning the repository, which contains a blank version of the tool. It runs locally on the user’s device and works offline.`,
+    text: `This website began as a simple attempt to document my assignments for the Nature of Code class at NYU ITP. As I continued building it, the project gradually evolved into a code-blogging tool: a space where writing, experimentation, iteration, and outcomes could exist together rather than as separate parts of the learning process.\n\nThe idea draws from my own experience teaching a p5.js curriculum and reflecting on how rapidly AI has transformed education. The leap in AI capability between 2023–24 and 2024–25 made me question what we are really teaching when we teach code today, and what we are actually evaluating when we assess assignments. For me, the answer lies in process. I want to see the path a student took to arrive at an outcome: the experiments they tried, the mistakes they made, the iterations they refined, and the logic they developed along the way.\n\nThe structure of this site was also inspired by my collaboration with Adam Kallish, mentor and friend. He is a Professor of Design at the Institute of Design at Illinois Institute of Technology in Chicago and at BITS Design School in Mumbai. His curriculum is focused on design thinking, and I found his pedagogical methods made documentation and outcome feel like a single streamlined process.\n\nScroll to navigate and drag to zoom. Click on any tile to open the editor and interact with the code. I welcome anyone interested to try this editor themselves by cloning the repository, which contains a blank version of the tool. It runs locally on the user’s device and works offline.`,
+    links: [
+      {
+        text: "Adam Kallish",
+        href: "https://www.linkedin.com/in/kallish01/"
+      }
+    ],
     x: -225,
     y: -20,
     width: 1500

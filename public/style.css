@@ -1376,6 +1376,13 @@ textarea::placeholder {
   pointer-events: none;
 }
 
+.intro-text a {
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  pointer-events: auto;
+}
+
 /* =========================================================
    Star square
    ========================================================= */
