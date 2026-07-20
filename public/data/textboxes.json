@@ -153,6 +153,303 @@
       "width": 152.61643090172186,
       "height": 221.51811026578895,
       "fontSize": 12
+    },
+    {
+      "id": "tmrtaqt4b",
+      "text": "Blur just makes everthing more intersting. A very water shader-esque outcome",
+      "x": 927.3466644900154,
+      "y": 2958.3713336881724,
+      "width": 142.67373674688656,
+      "height": 96,
+      "fontSize": 12
+    },
+    {
+      "id": "tw3forcesintro",
+      "text": "This week I explored forces as vectors: quantities with both direction and magnitude. Making the vectors visible helped me understand how acceleration changes a mover's velocity over time.",
+      "x": -114.93707378832477,
+      "y": 5604.106041007733,
+      "width": 190,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tw3moverclass",
+      "text": "I built a reusable Mover class around position, velocity, and acceleration. Separating this logic made it much easier to apply the same forces to one object or an entire system of movers.",
+      "x": 108,
+      "y": 5390,
+      "width": 148,
+      "height": 176,
+      "fontSize": 12
+    },
+    {
+      "id": "tw3flowfield",
+      "text": "I converted Perlin noise into angles, then used those angles to build a vector field. The continuous noise creates a flow that feels organic while still giving every point in the grid a clear direction.",
+      "x": 385.2555982824907,
+      "y": 6092.797181238417,
+      "width": 154,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw3fieldfollow",
+      "text": "The movers sample the vector beneath them and apply it as a force. Their paths reveal the invisible field, turning a grid of arrows into a moving particle system.",
+      "x": 648,
+      "y": 6060,
+      "width": 148,
+      "height": 162,
+      "fontSize": 12
+    },
+    {
+      "id": "tw3separation",
+      "text": "When many movers followed the same field they began to clump together. I added a short-range separation force so nearby particles push away from one another while continuing to follow the larger flow.",
+      "x": 918,
+      "y": 6655,
+      "width": 150,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4oscillationintro",
+      "text": "For oscillation, I wanted to move beyond drawing a single sine wave. I used periodic values as controls that could drive position, rotation, scale, and color across a larger composition.",
+      "x": -174.57251237131936,
+      "y": 7917.228291251924,
+      "width": 190,
+      "height": 175,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4tileclass",
+      "text": "I started by creating a Tile class that could contain a small animation. This gave me one reusable unit to repeat, offset, and combine without rewriting the drawing logic.",
+      "x": 108,
+      "y": 7440,
+      "width": 148,
+      "height": 165,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4phaseoffsets",
+      "text": "Once the tiles were arranged in a grid, I offset the phase of each cell. A small change in timing creates waves that travel horizontally, diagonally, or outward from the center.",
+      "x": 108,
+      "y": 8160,
+      "width": 148,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4radial",
+      "text": "The radial offset was especially interesting because distance from the center became a timing value. The grid stopped reading as separate cells and began behaving like one surface.",
+      "x": 375,
+      "y": 8460,
+      "width": 150,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4tilelogic",
+      "text": "I moved the oscillation logic into each tile so that position, rotation, and shape could be varied independently. This made the later experiments much easier to compose.",
+      "x": 645,
+      "y": 7970,
+      "width": 150,
+      "height": 165,
+      "fontSize": 12
+    },
+    {
+      "id": "tw4composition",
+      "text": "The final compositions combine several simple periodic systems. I explored polygons, lava-lamp-like motion, and color changes to see how far the same oscillation structure could stretch visually.",
+      "x": 915,
+      "y": 8310,
+      "width": 150,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5particlesintro",
+      "text": "Particle systems shifted my focus from controlling one object to designing rules for a population. The individual particles are simple; the visual complexity comes from emission, lifespan, forces, and accumulation.",
+      "x": -249.67447916666666,
+      "y": 9478.780381944445,
+      "width": 190,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5emitter",
+      "text": "I separated the system into Particle and Emitter classes. The emitter manages when and where particles are born, while each particle carries its own motion and lifespan.",
+      "x": 114.86631944444444,
+      "y": 9358.971354166666,
+      "width": 148,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5lifespan",
+      "text": "Extending particle lifespan made the flow field easier to read because each path remained visible for longer. It also made performance and cleanup more important as the population grew.",
+      "x": 108,
+      "y": 9960,
+      "width": 148,
+      "height": 180,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5spatialhash",
+      "text": "A direct anti-clumping check compares every particle with every other particle and quickly becomes expensive. I introduced spatial hashing so each particle only checks nearby grid cells.",
+      "x": 376.4583333333333,
+      "y": 9503.663194444445,
+      "width": 150,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5walkingemitters",
+      "text": "I turned the emitter itself into a Perlin walker. The source now drifts through the canvas, and using multiple walkers creates overlapping streams instead of a single fixed fountain.",
+      "x": 645,
+      "y": 9580,
+      "width": 150,
+      "height": 175,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5palette",
+      "text": "Random color created energy but very little cohesion. Fixing a palette gave the system a stronger identity while still allowing variation at the moment each particle is emitted.",
+      "x": 645,
+      "y": 9940,
+      "width": 150,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tw5blurcamera",
+      "text": "Blur and translucent trails turn particle movement into texture. I eventually connected the system to camera input, letting live sampled colors enter the same force-based drawing process.",
+      "x": 915,
+      "y": 10010,
+      "width": 150,
+      "height": 180,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6lsystems",
+      "text": "My first L-system uses a short grammar to replace symbols over multiple generations. Angle, segment length, and generation depth become compact controls for surprisingly complex branching structures.",
+      "x": 108,
+      "y": 10680,
+      "width": 148,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6linteraction",
+      "text": "Mapping the mouse and sine functions to angle and length made the grammar feel less static. The underlying rules stay the same while the rendered structure continuously changes character.",
+      "x": 375,
+      "y": 10870,
+      "width": 150,
+      "height": 180,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6bamboo",
+      "text": "I adapted the L-system into bamboo by separating the fixed stem from generative leaves. This was an exercise in using formal rules toward a recognizable visual subject rather than pure abstraction.",
+      "x": 645,
+      "y": 11680,
+      "width": 150,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6recursiveframes",
+      "text": "For the recursive drawing tool, each frame can contain shapes and render other frames. The frame becomes both a composition boundary and a reusable instruction inside a deeper render pass.",
+      "x": 335.65625,
+      "y": 12735.9375,
+      "width": 148,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6recursiontool",
+      "text": "As the recursive frame experiment grew, I added multiple frames, a better brush, undo, hideable controls, and saved configuration. The sketch gradually became a small drawing tool.",
+      "x": 915,
+      "y": 12570,
+      "width": 150,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6chaosgame",
+      "text": "The chaos game creates structure by repeatedly moving a point partway toward a randomly selected anchor. Local random choices eventually reveal a stable global form such as the Sierpiński triangle.",
+      "x": 108,
+      "y": 14820,
+      "width": 148,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6chaosrules",
+      "text": "I varied anchor count, step size, rotation, and selection rules. Restrictions such as not repeating an anchor transform the attractor, showing how small rule changes reshape the entire system.",
+      "x": 595.0669642857143,
+      "y": 15225.479910714286,
+      "width": 150,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6mandelbrot",
+      "text": "Rendering the Mandelbrot set began with mapping pixels onto the complex plane. Each pixel records whether repeated iteration escapes, translating an invisible mathematical process into an image.",
+      "x": 375,
+      "y": 16570,
+      "width": 150,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tw6mandelbrotcolor",
+      "text": "I added smooth coloring, zoom, adaptive iteration counts, and saved render settings. Color is based on escape behavior, so the palette exposes subtle differences around the set's boundary.",
+      "x": 1185,
+      "y": 16920,
+      "width": 150,
+      "height": 190,
+      "fontSize": 12
+    },
+    {
+      "id": "tmidemergenceintro",
+      "text": "For the midterm I explored emergence through Conway's Game of Life. Each cell follows a tiny local rule, yet the grid produces motion, repetition, growth, and collapse without a central controller.",
+      "x": -192.99107142857142,
+      "y": 17848.582589285714,
+      "width": 190,
+      "height": 185,
+      "fontSize": 12
+    },
+    {
+      "id": "tmidcellgrid",
+      "text": "I began with a Cell class and then organized the cells into a grid. Keeping state inside each cell made the larger simulation easier to update and render consistently.",
+      "x": 108,
+      "y": 17820,
+      "width": 148,
+      "height": 170,
+      "fontSize": 12
+    },
+    {
+      "id": "tmidrules",
+      "text": "Every generation is calculated from the eight neighboring cells. Birth, survival, and death are simple Boolean decisions, but they create patterns that appear almost intentional.",
+      "x": 375,
+      "y": 18150,
+      "width": 150,
+      "height": 175,
+      "fontSize": 12
+    },
+    {
+      "id": "tmidinteraction",
+      "text": "Mouse interaction lets me activate cells and interrupt the simulation's current state. Instead of only observing emergence, I can seed a pattern and watch how the system responds.",
+      "x": 645,
+      "y": 17820,
+      "width": 150,
+      "height": 180,
+      "fontSize": 12
+    },
+    {
+      "id": "tmidvisuals",
+      "text": "After the rules were working, I explored color, glyphs, neon, sound reactivity, and a blood-cell variation. The same cellular logic can support many different visual identities.",
+      "x": 915,
+      "y": 18300,
+      "width": 150,
+      "height": 180,
+      "fontSize": 12
     }
   ]
 }

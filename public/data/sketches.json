@@ -5995,14 +5995,16 @@
           "children": [
             "n408",
             "n410",
-            "n418"
+            "n418",
+            "n419"
           ]
         }
       ],
       "children": [
         "n408",
         "n410",
-        "n418"
+        "n418",
+        "n419"
       ],
       "expandedChildren": [],
       "files": {},
@@ -6344,7 +6346,7 @@
       },
       "thumbnailPath": "/thumbs/n416.png",
       "kind": "normal",
-      "starredId": ""
+      "starredId": "n419"
     },
     "n418": {
       "id": "n418",
@@ -6361,6 +6363,13 @@
       ],
       "children": [],
       "files": {}
+    },
+    "n419": {
+      "id": "n419",
+      "label": "n419",
+      "kind": "star",
+      "sourceId": "n416",
+      "expandedChildren": []
     }
   }
 }

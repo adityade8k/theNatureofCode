@@ -21,7 +21,7 @@ export function renderWires({ state, layout, wiresEl }) {
   const { pos, edges, metrics } = layout;
   const { nodeSize, rowHeight } = metrics;
 
-  // Star tiles are 2× size; layout.js provides starRowHeight
+  // Featured tiles are 2× size; this spacing is still used by source wires.
   const starRowHeight = metrics.starRowHeight ?? (nodeSize * 2 + (metrics.gapY ?? 0));
 
   wiresEl.setAttribute("width", String(WIRE_CONFIG.svgSize));
@@ -40,12 +40,16 @@ export function renderWires({ state, layout, wiresEl }) {
     const node = state.nodes[nodeId];
     if (!node) continue;
 
+    // Featured tiles are independent highlights, not a sequential chain.
+    // Keep their source-to-featured wires, but do not connect featured tiles
+    // vertically to one another.
+    if (isStarRootNode(node, nodeId)) continue;
+
     const children = getChildrenForSet(node, setId).filter((id) => !!state.nodes[id]);
     if (children.length < 2) continue;
 
-    const isStarColumn = isStarRootNode(node, nodeId);
-    const rowH = isStarColumn ? starRowHeight : rowHeight;
-    const tileSize = isStarColumn ? nodeSize * 2 : nodeSize;
+    const rowH = rowHeight;
+    const tileSize = nodeSize;
     const x = p.x + tileSize / 2;
 
     for (let i = 0; i < children.length - 1; i++) {
